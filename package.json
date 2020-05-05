@@ -1,5 +1,5 @@
 {
-  "name": "postgraphile-fe",
+  "name": "blogmatica-mst-apollo",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -64,6 +64,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "react-scripts start --mode=development",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
