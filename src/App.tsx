@@ -32,7 +32,7 @@ const App: React.FunctionComponent = () => {
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />
               <PrivateRoute path={"/apps/connect"} component={OAuthApps} />
-            <PrivateRoute path={"/gusto/*"} component={GustoAPI} />
+              <PrivateRoute path={"/gusto/*"} component={GustoAPI} />
               <PrivateRoute path="*" component={Home} />
             </Switch>
           </ApolloProvider>
