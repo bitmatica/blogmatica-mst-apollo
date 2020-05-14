@@ -1,8 +1,8 @@
 import React, { useState, FormEvent } from "react";
-import { Text, Button, Flex } from "@chakra-ui/core";
+import { Text, Flex } from "@chakra-ui/core";
 import InputWithLabel from "./InputWithLabel";
-import theme from "../../theme";
 import Form from "./Form";
+import Button from "./Button";
 
 interface UserLoginArgs {
   email: string;
@@ -35,28 +35,26 @@ const LoginUserForm: React.FunctionComponent<LoginUserFormProps> = ({
       <InputWithLabel
         name="email"
         type="email"
-        autoComplete="email"
         label="Email:"
         value={inputs.email}
         placeholder="example@bitmatica.com"
-        onChange={handleInputChange}
-        display="inline-block"
+        handleUpdate={handleInputChange}
+        isRequired
       />
       <InputWithLabel
         name="password"
         type="password"
-        autoComplete="password"
         label="Password:"
         value={inputs.password}
+        handleUpdate={handleInputChange}
         isRequired
-        onChange={handleInputChange}
       />
+      <Text color="red">{errorMessage}</Text>
       <Flex direction="row" justifyContent="flex-end">
-        <Button {...theme.buttons.variants.primary} type="submit">
+        <Button type="submit" themeVariant="primary">
           Login
         </Button>
       </Flex>
-      <Text color="red">{errorMessage}</Text>
     </Form>
   );
 };

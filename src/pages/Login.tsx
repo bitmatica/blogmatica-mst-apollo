@@ -23,7 +23,7 @@ const Login: React.FunctionComponent<RouteComponentProps> = () => {
     <Redirect to={"/"} />
   ) : (
     <Layout>
-      <Box pt={8}>
+      <Box>
         <LoginUserForm handleSubmit={handleSubmit} errorMessage={errorMessage} />
       </Box>
     </Layout>

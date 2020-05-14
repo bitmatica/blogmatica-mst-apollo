@@ -1,7 +1,7 @@
-import { theme } from "@chakra-ui/core";
+import { theme as defaultTheme } from "@chakra-ui/core";
 
-export default {
-  ...theme,
+const theme = {
+  ...defaultTheme,
   breakpoints: ["30em", "48em", "62em", "80em"],
   fonts: {
     heading: '"Avenir Next", sans-serif',
@@ -9,7 +9,7 @@ export default {
     mono: "Menlo, monospace",
   },
   colors: {
-    ...theme.colors,
+    ...defaultTheme.colors,
     primary: "purple",
   },
   buttons: {
@@ -22,7 +22,7 @@ export default {
     },
   },
   fontSizes: {
-    ...theme.fontSizes,
+    ...defaultTheme.fontSizes,
     xs: "0.75rem",
     sm: "0.875rem",
     md: "1rem",
@@ -35,3 +35,7 @@ export default {
     "6xl": "4rem",
   },
 };
+
+export default theme;
+
+export type ButtonVariants = keyof typeof theme.buttons.variants

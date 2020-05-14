@@ -1,34 +1,36 @@
 import React from "react";
-import LogoutButton from "./LogoutButton";
 import { Text, Icon, Flex } from "@chakra-ui/core";
-import { useWhoAmIQuery } from "../../graphql";
-import LoadingContainer from "./LoadingContainer";
-
+import LogoutButton from "./LogoutButton";
+import { useStore } from "../../store/RootStore";
+import { observer } from "mobx-react-lite"
 const ICON_MARGIN = 8;
 
 const Header: React.FunctionComponent = () => {
-  const { loading, data } = useWhoAmIQuery({ pollInterval: 400 })
+  const { currentUser } = useStore()
 
   return (
-    <LoadingContainer loading={loading}>
-      <Flex
-        direction="row"
-        align="center"
-        height={16}
-        color={"white"}
-        backgroundColor={"primary"}>
-        <Icon ml={ICON_MARGIN} name="view" size="24px" />
-        <Text ml={ICON_MARGIN} fontSize={"4xl"}>
-          Bitmatiblog
-        </Text>
-        {data?.whoAmI && (
-          <LogoutButton ml="auto" mr={4}>
-            Logout
-          </LogoutButton>
-        )}
-      </Flex>
-    </LoadingContainer>
+    <Flex
+      direction="row"
+      align="center"
+      height={16}
+      color={"white"}
+      backgroundColor={"primary"}>
+      <Icon
+        ml={ICON_MARGIN}
+        name="view"
+        size="24px"
+      />
+      <Text
+        ml={ICON_MARGIN}
+        fontSize={"4xl"}
+      >
+        Bitmatiblog
+      </Text>
+      <LogoutButton ml="auto" mr={4}>
+        {currentUser.id ? "Logout" : "Logged Out"}
+      </LogoutButton>
+    </Flex>
   )
 }
 
-export default Header
+export default observer(Header)

@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
-import { useWhoAmIQuery } from "../../graphql";
 import LoadingContainer from "./LoadingContainer";
+import useGetCurrentUser from "../../hooks/useGetCurrentUser";
 
 interface PrivateRouteProps extends RouteProps {
   redirect?: string;
@@ -14,7 +14,10 @@ const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
   mustBeLoggedOut,
   ...rest
 }) => {
-  const { loading, data } = useWhoAmIQuery({ fetchPolicy: "no-cache" })
+  const { loading, data } = useGetCurrentUser();
+  if (loading) {
+    return null;
+  }
 
   const isLoggedIn = data?.whoAmI;
   const shouldRedirect = mustBeLoggedOut ? isLoggedIn : !isLoggedIn;

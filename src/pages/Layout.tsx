@@ -9,15 +9,19 @@ const Layout: React.FunctionComponent = ({ children }) => {
       border="1px solid black"
       alignContent="center"
       minHeight={"100vh"}
-      direction="column">
+      direction="column"
+    >
       <Header />
       <Box
         maxWidth={["100%", "100%", theme.sizes["3xl"]]}
         width={[null, null, "80%"]}
         mx={[4, 4, "0 auto"]}
-        pt={[4]}
+        pt={4}
+        px={8}
         bg="blackAlpha.50"
-        flexGrow={2}>
+        flexGrow={2}
+        alignSelf="center"
+      >
         {children}
       </Box>
     </Flex>
