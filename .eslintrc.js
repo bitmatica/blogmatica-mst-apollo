@@ -109,6 +109,12 @@ module.exports = {
           },
         ],
       },
-    },
+    }, {
+      files: [ "src/models/*.ts" ],
+      rules: {
+        "@typescript-eslint/no-empty-interface": 0,
+        "@typescript-eslint/no-use-before-define": 0,
+      }
+    }
   ],
 };
