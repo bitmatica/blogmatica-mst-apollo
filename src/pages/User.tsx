@@ -7,10 +7,13 @@ interface MatchParams {
   userId: string;
 }
 
-const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match }) => (
-  <Layout>
-    <UserProfile userId={match.params.userId} />
-  </Layout>
-);
+const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match }) => {
+  debugger
+  return (
+    <Layout>
+      <UserProfile userId={match.params.userId} />
+    </Layout>
+  )
+};
 
 export default User;

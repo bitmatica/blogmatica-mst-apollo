@@ -1,16 +1,17 @@
 import React from "react";
-import { Post as IPost } from "../graphql";
+import { PostModelType } from "../models";
+import { Text, Box } from "@chakra-ui/core";
 
 interface PostProps {
-  post: Partial<IPost>;
+  post: Partial<PostModelType>;
 }
 
-const Post: React.FunctionComponent<PostProps> = ({ post }) => (
-  <div>
-    <div>{post.id}</div>
-    <div>{post.title}</div>
-    <div>{post.body}</div>
-  </div>
+const Post: React.FunctionComponent<PostProps> = ({ post: { id, title, body} }) => (
+  <Box>
+    <Text>Id: {id}</Text>
+    <Text>Title: {title}</Text>
+    <Text>Body: {body}</Text>
+  </Box>
 );
 
 export default Post;

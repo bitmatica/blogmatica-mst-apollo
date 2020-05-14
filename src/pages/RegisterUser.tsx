@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import RegisterUserForm from "../components/common/RegisterUserForm";
-import { CreateUserMutationVariables, useCreateUserMutation } from "../graphql";
-import useLogin from "../hooks/useLogin";
 import Layout from "./Layout";
+import { useQuery } from "../models";
+import { CreateUserInput } from "../models/RootStore.base";
+import LoadingContainer from "../components/common/LoadingContainer";
 
 const INITIAL_REGISTER_USER_FORM_STATE = {
   email: "",
@@ -12,32 +13,29 @@ const INITIAL_REGISTER_USER_FORM_STATE = {
 
 const RegisterUser: React.FunctionComponent = () => {
   const [inputs, setInputs] = useState(INITIAL_REGISTER_USER_FORM_STATE);
-  const [createUser, { data: registerUserData }] = useCreateUserMutation();
-  const [login, { called, loading, data: loginData }] = useLogin();
-
-  if (registerUserData?.createUser.success && !called) {
-    login({ variables: inputs });
-  }
+  const { setQuery, loading, store, error } = useQuery()
 
   const handleSubmit = (): void => {
-    createUser({ variables: inputs });
+    setQuery(store.createUserAndLogin(inputs))
   };
 
   const handleUpdate = (event: React.FormEvent<HTMLInputElement>): void => {
     const { name, value } = event.currentTarget;
-    setInputs((inputs): CreateUserMutationVariables => ({ ...inputs, [name]: value }));
+    setInputs((inputs): CreateUserInput => ({ ...inputs, [name]: value }));
   };
 
-  return !loading && loginData?.login.success ? (
+  return store.currentUser ? (
     <Redirect to="/" />
   ) : (
     <Layout>
-      <RegisterUserForm
-        inputs={inputs}
-        errorMessage={registerUserData?.createUser.message}
-        handleSubmit={handleSubmit}
-        handleUpdate={handleUpdate}
-      />
+      <LoadingContainer loading={loading}>
+        <RegisterUserForm
+          inputs={inputs}
+          errorMessage={error}
+          handleSubmit={handleSubmit}
+          handleUpdate={handleUpdate}
+        />
+      </LoadingContainer>
     </Layout>
   );
 };

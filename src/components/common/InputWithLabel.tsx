@@ -5,7 +5,7 @@ import InlineStack from "./InlineStack";
 interface InputWithLabelProps extends StackProps {
   name: string;
   label: string;
-  type: string;
+  type?: string;
   value?: string | number;
   labelWidth?: string;
   inputProps?: InputProps;
@@ -17,7 +17,7 @@ interface InputWithLabelProps extends StackProps {
 const InputWithLabel: React.FunctionComponent<InputWithLabelProps> = ({
   name,
   label,
-  type,
+  type = "text",
   value,
   labelWidth,
   inputProps,

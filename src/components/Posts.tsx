@@ -1,16 +1,16 @@
 import React from "react";
-import { Post as IPost } from "../graphql";
 import Post from "./Post";
+import { PostModelType } from "../models";
 
 interface PostsProps {
-  posts?: Partial<IPost>[];
+  posts?: Partial<PostModelType>[];
 }
 
 const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
   posts?.length ? (
     <div>
       {posts.map(
-        (p: Partial<IPost>): React.ReactElement => (
+        (p: Partial<PostModelType>): React.ReactElement => (
           <Post key={p.id} post={p} />
         ),
       )}

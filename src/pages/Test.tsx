@@ -1,12 +1,11 @@
 import React from "react"
 import { Flex, Text, Stack } from "@chakra-ui/core";
 import Button from "../components/common/Button";
-import { useStore } from "../store/RootStore";
 import Layout from "./Layout";
 import { observer } from "mobx-react-lite";
-import LoadingContainer from "../components/common/LoadingContainer";
+import { useStore } from "../getMstGql";
 
-const ButtonClickTracker: React.FunctionComponent = () => {
+const ButtonClickTracker: React.FunctionComponent = observer(() => {
   const { isButtonClicked } = useStore()
 
   return (
@@ -14,49 +13,41 @@ const ButtonClickTracker: React.FunctionComponent = () => {
       button clicked: {isButtonClicked()}
     </Flex>
   )
-}
+})
 
-const TestButton: React.FC = () => {
-  const { updateButtonClicked, weather } = useStore()
-
+const TestButton: React.FC = observer(() => {
+  const { getTheWeather, updateButtonClicked } = useStore()
   return (
     <Flex justify="center">
       <Button onClick={(): void => {
-        weather.getTheWeather()
+        getTheWeather()
         updateButtonClicked()
       }}>
         click me
       </Button>
     </Flex>
   )
-}
+})
 
-const ObservingButtonClickTracker = observer(ButtonClickTracker)
-
-const WeatherData: React.FunctionComponent = () => {
+const WeatherData: React.FunctionComponent = observer(() => {
   const { weather } = useStore()
-  const { temperature, humidity, description, status } = weather
 
   return (
-    <LoadingContainer loading={status === "pending"}>
-      <Stack>
-        <Text>Temperature: {temperature}</Text>
-        <Text>Humidity: {humidity}</Text>
-        <Text>Description: {description}</Text>
-      </Stack>
-    </LoadingContainer>
+    <Stack>
+      <Text>Temperature: {weather?.temperature}</Text>
+      <Text>Humidity: {weather?.humidity}</Text>
+      <Text>Description: {weather?.description}</Text>
+    </Stack>
   )
-}
-
-const ObservingWeatherData = observer(WeatherData)
+})
 
 const Test: React.FunctionComponent = () => {
   return (
     <Layout>
       <Flex direction="column" alignContent="center">
-        <ObservingButtonClickTracker />
+        <ButtonClickTracker />
         <TestButton />
-        <ObservingWeatherData />
+        <WeatherData />
       </Flex>
     </Layout>
   )

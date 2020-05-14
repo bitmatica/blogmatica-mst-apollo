@@ -1,13 +1,12 @@
 import React from "react";
 import { Text, Icon, Flex } from "@chakra-ui/core";
 import LogoutButton from "./LogoutButton";
-import { useStore } from "../../store/RootStore";
 import { observer } from "mobx-react-lite"
+import { useStore } from "../../getMstGql";
 const ICON_MARGIN = 8;
 
 const Header: React.FunctionComponent = () => {
   const { currentUser } = useStore()
-
   return (
     <Flex
       direction="row"
@@ -27,7 +26,7 @@ const Header: React.FunctionComponent = () => {
         Bitmatiblog
       </Text>
       <LogoutButton ml="auto" mr={4}>
-        {currentUser.id ? "Logout" : "Logged Out"}
+        {currentUser ? "Logout" : "Logged Out"}
       </LogoutButton>
     </Flex>
   )
