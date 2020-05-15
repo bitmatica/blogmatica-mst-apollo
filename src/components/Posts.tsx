@@ -1,9 +1,10 @@
-import React from "react";
-import Post from "./Post";
-import { PostModelType } from "../models";
+import { observer } from "mobx-react-lite"
+import React from "react"
+import { PostModelType } from "../models"
+import Post from "./Post"
 
 interface PostsProps {
-  posts?: Partial<PostModelType>[];
+  posts?: Partial<PostModelType>[]
 }
 
 const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
@@ -19,4 +20,4 @@ const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
     <div>No posts!</div>
   )
 
-export default Posts
+export default observer(Posts)
