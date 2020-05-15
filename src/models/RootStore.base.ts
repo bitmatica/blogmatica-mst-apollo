@@ -11,6 +11,25 @@ import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
 import { CommentModel, CommentModelType } from "./CommentModel"
 import { commentModelPrimitives, CommentModelSelector } from "./CommentModel.base"
+import { GustoUserModel, GustoUserModelType } from "./GustoUserModel"
+import { gustoUserModelPrimitives, GustoUserModelSelector } from "./GustoUserModel.base"
+import { GustoRolesModel, GustoRolesModelType } from "./GustoRolesModel"
+import { gustoRolesModelPrimitives, GustoRolesModelSelector } from "./GustoRolesModel.base"
+import { GustoRoleModel, GustoRoleModelType } from "./GustoRoleModel"
+import { gustoRoleModelPrimitives, GustoRoleModelSelector } from "./GustoRoleModel.base"
+import { GustoCompanyModel, GustoCompanyModelType } from "./GustoCompanyModel"
+import {
+  gustoCompanyModelPrimitives,
+  GustoCompanyModelSelector,
+} from "./GustoCompanyModel.base"
+import {
+  GustoCompanyLocationModel,
+  GustoCompanyLocationModelType,
+} from "./GustoCompanyLocationModel"
+import {
+  gustoCompanyLocationModelPrimitives,
+  GustoCompanyLocationModelSelector,
+} from "./GustoCompanyLocationModel.base"
 import {
   PostUpdateResponseModel,
   PostUpdateResponseModelType,
@@ -62,6 +81,14 @@ import {
   MutationResponseModelSelector,
 } from "./MutationResponseModel.base"
 import {
+  GenerateAuthorizationUriResponseModel,
+  GenerateAuthorizationUriResponseModelType,
+} from "./GenerateAuthorizationUriResponseModel"
+import {
+  generateAuthorizationUriResponseModelPrimitives,
+  GenerateAuthorizationUriResponseModelSelector,
+} from "./GenerateAuthorizationUriResponseModel.base"
+import {
   CommentCreationResponseModel,
   CommentCreationResponseModelType,
 } from "./CommentCreationResponseModel"
@@ -77,6 +104,8 @@ import {
   commentUpdateResponseModelPrimitives,
   CommentUpdateResponseModelSelector,
 } from "./CommentUpdateResponseModel.base"
+
+import { OAuthProvider } from "./OAuthProviderEnum"
 
 export type UpdatePostInput = {
   title?: string
@@ -98,6 +127,9 @@ export type CreateUserInput = {
 export type UserLoginArgs = {
   email: string
   password: string
+}
+export type GenerateAuthorizationUriInput = {
+  provider: OAuthProvider
 }
 export type CreateCommentInput = {
   body: string
@@ -127,6 +159,11 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           ["Post", () => PostModel],
           ["User", () => UserModel],
           ["Comment", () => CommentModel],
+          ["GustoUser", () => GustoUserModel],
+          ["GustoRoles", () => GustoRolesModel],
+          ["GustoRole", () => GustoRoleModel],
+          ["GustoCompany", () => GustoCompanyModel],
+          ["GustoCompanyLocation", () => GustoCompanyLocationModel],
           ["PostUpdateResponse", () => PostUpdateResponseModel],
           ["DeletionResponse", () => DeletionResponseModel],
           ["PostCreationResponse", () => PostCreationResponseModel],
@@ -134,6 +171,7 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           ["UserCreationResponse", () => UserCreationResponseModel],
           ["UserLoginResponse", () => UserLoginResponseModel],
           ["MutationResponse", () => MutationResponseModel],
+          ["GenerateAuthorizationUriResponse", () => GenerateAuthorizationUriResponseModel],
           ["CommentCreationResponse", () => CommentCreationResponseModel],
           ["CommentUpdateResponse", () => CommentUpdateResponseModel],
         ],
@@ -277,6 +315,48 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         ${
           typeof resultSelector === "function"
             ? resultSelector(new CommentModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryGustoCurrentUser(
+        variables?: {},
+        resultSelector:
+          | string
+          | ((
+              qb: GustoUserModelSelector,
+            ) => GustoUserModelSelector) = gustoUserModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ gustoCurrentUser: GustoUserModelType }>(
+          `query gustoCurrentUser { gustoCurrentUser {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new GustoUserModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryGustoCompanyById(
+        variables: { id: number },
+        resultSelector:
+          | string
+          | ((
+              qb: GustoCompanyModelSelector,
+            ) => GustoCompanyModelSelector) = gustoCompanyModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ gustoCompanyById: GustoCompanyModelType }>(
+          `query gustoCompanyById($id: Float!) { gustoCompanyById(id: $id) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new GustoCompanyModelSelector()).toString()
             : resultSelector
         }
       } }`,
@@ -445,6 +525,29 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         ${
           typeof resultSelector === "function"
             ? resultSelector(new MutationResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
+      mutateGenerateAuthorizationUri(
+        variables: { input: GenerateAuthorizationUriInput },
+        resultSelector:
+          | string
+          | ((
+              qb: GenerateAuthorizationUriResponseModelSelector,
+            ) => GenerateAuthorizationUriResponseModelSelector) = generateAuthorizationUriResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{
+          generateAuthorizationUri: GenerateAuthorizationUriResponseModelType
+        }>(
+          `mutation generateAuthorizationUri($input: GenerateAuthorizationUriInput!) { generateAuthorizationUri(input: $input) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new GenerateAuthorizationUriResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,

@@ -1,11 +1,11 @@
-import React, { useState } from "react"
-import { RouteComponentProps, Redirect } from "react-router-dom"
 import { Box } from "@chakra-ui/core"
+import { observer } from "mobx-react-lite"
+import React, { useState } from "react"
+import { Redirect, RouteComponentProps } from "react-router-dom"
 import LoginUserForm from "../components/common/LoginUserForm"
 import Layout from "../components/Layout"
-import { useQuery } from "../models"
+import { useQuery } from "../models/reactUtils"
 import { UserLoginArgs } from "../models/RootStore.base"
-import { observer } from "mobx-react-lite"
 
 const Login: React.FunctionComponent<RouteComponentProps> = () => {
   const { setQuery, store, error } = useQuery()

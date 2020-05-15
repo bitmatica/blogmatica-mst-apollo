@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { postModelPrimitives, useQuery, userModelPrimitives } from "../models"
+import { postModelPrimitives, userModelPrimitives } from "../models"
+import { useQuery } from "../models/reactUtils"
 import LoadingContainer from "./common/LoadingContainer"
 import Posts from "./Posts"
 

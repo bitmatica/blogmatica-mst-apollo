@@ -39,6 +39,7 @@ export const UserModelBase = withTypedRefs<Refs>()(
         types.array(MSTGQLRef(types.late((): any => CommentModel))),
       ),
       roles: types.union(types.undefined, types.array(types.string)),
+      gustoAccess: types.union(types.undefined, types.boolean),
     })
     .views((self) => ({
       get store() {
@@ -63,6 +64,9 @@ export class UserModelSelector extends QueryBuilder {
   get roles() {
     return this.__attr(`roles`)
   }
+  get gustoAccess() {
+    return this.__attr(`gustoAccess`)
+  }
   posts(
     builder?:
       | string
@@ -85,3 +89,4 @@ export function selectFromUser() {
 }
 
 export const userModelPrimitives = selectFromUser().createdAt.updatedAt.email.roles
+  .gustoAccess

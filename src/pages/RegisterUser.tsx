@@ -1,10 +1,10 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
+import LoadingContainer from "../components/common/LoadingContainer"
 import RegisterUserForm from "../components/common/RegisterUserForm"
 import Layout from "../components/Layout"
-import { useQuery } from "../models"
+import { useQuery } from "../models/reactUtils"
 import { CreateUserInput } from "../models/RootStore.base"
-import LoadingContainer from "../components/common/LoadingContainer"
 
 const INITIAL_REGISTER_USER_FORM_STATE = {
   email: "",

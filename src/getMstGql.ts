@@ -1,6 +1,7 @@
-import { useContext } from "react"
 import { createHttpClient } from "mst-gql"
-import { RootStore, StoreContext, RootStoreType } from "./models"
+import { useContext } from "react"
+import { RootStore, RootStoreType } from "./models"
+import { StoreContext } from "./models/reactUtils"
 import { getAuthHeader } from "./utilities/jwtHelpers"
 
 const defaultState = {
