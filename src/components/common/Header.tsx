@@ -7,7 +7,7 @@ import LoadingContainer from "./LoadingContainer";
 const ICON_MARGIN = 8;
 
 const Header: React.FunctionComponent = () => {
-  const { loading, data } = useWhoAmIQuery({ pollInterval: 400 })
+  const { loading, data } = useWhoAmIQuery({ pollInterval: 400 });
 
   return (
     <LoadingContainer loading={loading}>
@@ -28,7 +28,7 @@ const Header: React.FunctionComponent = () => {
         )}
       </Flex>
     </LoadingContainer>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

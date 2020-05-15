@@ -1,4 +1,4 @@
-import { types, Instance, ModelActions } from "mobx-state-tree";
+import { Instance, ModelActions, types } from "mobx-state-tree";
 
 const CURRENT_USER_MODEL_NAME = "CurrentUser";
 
@@ -7,7 +7,6 @@ const CurrentUser = types
     id: "",
     email: "",
   })
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   .actions(
     (self): ModelActions => ({
       updateUser({ id, email }: { id?: string; email?: string }): void {

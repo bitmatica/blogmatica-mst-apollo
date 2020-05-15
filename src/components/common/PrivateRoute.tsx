@@ -14,7 +14,7 @@ const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
   mustBeLoggedOut,
   ...rest
 }) => {
-  const { loading, data } = useWhoAmIQuery({ fetchPolicy: "no-cache" })
+  const { loading, data } = useWhoAmIQuery({ fetchPolicy: "no-cache" });
 
   const isLoggedIn = data?.whoAmI;
   const shouldRedirect = mustBeLoggedOut ? isLoggedIn : !isLoggedIn;
@@ -31,7 +31,7 @@ const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
         <Route {...rest} />
       )}
     </LoadingContainer>
-  )
-}
+  );
+};
 
-export default PrivateRoute
+export default PrivateRoute;

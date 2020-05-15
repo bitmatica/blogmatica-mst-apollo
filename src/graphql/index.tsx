@@ -8,335 +8,335 @@ export type Maybe<T> = T | null;
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-    ID: string;
-    String: string;
-    Boolean: boolean;
-    Int: number;
-    Float: number;
-    /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-    DateTime: any;
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
+  DateTime: any;
 };
 
 export type Comment = {
-    __typename?: "Comment";
-    id: Scalars["ID"];
-    createdAt: Scalars["DateTime"];
-    updatedAt: Scalars["DateTime"];
-    body: Scalars["String"];
-    author: User;
-    post: Post;
-    authorId: Scalars["String"];
-    postId: Scalars["String"];
+  __typename?: "Comment";
+  id: Scalars["ID"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  body: Scalars["String"];
+  author: User;
+  post: Post;
+  authorId: Scalars["String"];
+  postId: Scalars["String"];
 };
 
 export type CommentCreationResponse = {
-    __typename?: "CommentCreationResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    comment?: Maybe<Comment>;
+  __typename?: "CommentCreationResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  comment?: Maybe<Comment>;
 };
 
 export type CommentUpdateResponse = {
-    __typename?: "CommentUpdateResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    comment?: Maybe<Comment>;
+  __typename?: "CommentUpdateResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  comment?: Maybe<Comment>;
 };
 
 export type CreateCommentInput = {
-    body: Scalars["String"];
-    authorId: Scalars["String"];
-    postId: Scalars["String"];
+  body: Scalars["String"];
+  authorId: Scalars["String"];
+  postId: Scalars["String"];
 };
 
 export type CreatePostInput = {
-    title: Scalars["String"];
-    body: Scalars["String"];
+  title: Scalars["String"];
+  body: Scalars["String"];
 };
 
 export type CreateUserInput = {
-    email: Scalars["String"];
-    password: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type DeletionResponse = {
-    __typename?: "DeletionResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
+  __typename?: "DeletionResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
 };
 
 export type Mutation = {
-    __typename?: "Mutation";
-    createComment: CommentCreationResponse;
-    createPost: PostCreationResponse;
-    createUser: UserCreationResponse;
-    deleteComment: DeletionResponse;
-    deletePost: DeletionResponse;
-    deleteUser: DeletionResponse;
-    login: UserLoginResponse;
-    logout: MutationResponse;
-    updateAuth?: Maybe<UpdateAuthReturn>;
-    updateComment: CommentUpdateResponse;
-    updatePost: PostUpdateResponse;
-    updateUser: UserUpdateResponse;
+  __typename?: "Mutation";
+  createComment: CommentCreationResponse;
+  createPost: PostCreationResponse;
+  createUser: UserCreationResponse;
+  deleteComment: DeletionResponse;
+  deletePost: DeletionResponse;
+  deleteUser: DeletionResponse;
+  login: UserLoginResponse;
+  logout: MutationResponse;
+  updateAuth?: Maybe<UpdateAuthReturn>;
+  updateComment: CommentUpdateResponse;
+  updatePost: PostUpdateResponse;
+  updateUser: UserUpdateResponse;
 };
 
 export type MutationCreateCommentArgs = {
-    input: CreateCommentInput;
+  input: CreateCommentInput;
 };
 
 export type MutationCreatePostArgs = {
-    input: CreatePostInput;
+  input: CreatePostInput;
 };
 
 export type MutationCreateUserArgs = {
-    input: CreateUserInput;
+  input: CreateUserInput;
 };
 
 export type MutationDeleteCommentArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type MutationDeletePostArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type MutationDeleteUserArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type MutationLoginArgs = {
-    input: UserLoginArgs;
+  input: UserLoginArgs;
 };
 
 export type MutationUpdateAuthArgs = {
-    newState: Scalars["Boolean"];
+  newState: Scalars["Boolean"];
 };
 
 export type MutationUpdateCommentArgs = {
-    input: UpdateCommentInput;
-    id: Scalars["ID"];
+  input: UpdateCommentInput;
+  id: Scalars["ID"];
 };
 
 export type MutationUpdatePostArgs = {
-    input: UpdatePostInput;
-    id: Scalars["ID"];
+  input: UpdatePostInput;
+  id: Scalars["ID"];
 };
 
 export type MutationUpdateUserArgs = {
-    input: UpdateUserInput;
-    id: Scalars["ID"];
+  input: UpdateUserInput;
+  id: Scalars["ID"];
 };
 
 export type MutationResponse = {
-    __typename?: "MutationResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
+  __typename?: "MutationResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
 };
 
 export type Post = {
-    __typename?: "Post";
-    id: Scalars["ID"];
-    createdAt: Scalars["DateTime"];
-    updatedAt: Scalars["DateTime"];
-    title: Scalars["String"];
-    body: Scalars["String"];
-    author: User;
-    comments: Array<Comment>;
-    authorId: Scalars["String"];
+  __typename?: "Post";
+  id: Scalars["ID"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  title: Scalars["String"];
+  body: Scalars["String"];
+  author: User;
+  comments: Array<Comment>;
+  authorId: Scalars["String"];
 };
 
 export type PostCreationResponse = {
-    __typename?: "PostCreationResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    post?: Maybe<Post>;
+  __typename?: "PostCreationResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  post?: Maybe<Post>;
 };
 
 export type PostUpdateResponse = {
-    __typename?: "PostUpdateResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    post?: Maybe<Post>;
+  __typename?: "PostUpdateResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  post?: Maybe<Post>;
 };
 
 export type Query = {
-    __typename?: "Query";
-    comment?: Maybe<Comment>;
-    comments: Array<Comment>;
-    isAuthenticated: Scalars["Boolean"];
-    post?: Maybe<Post>;
-    posts: Array<Post>;
-    user?: Maybe<User>;
-    users: Array<User>;
-    whoAmI?: Maybe<User>;
+  __typename?: "Query";
+  comment?: Maybe<Comment>;
+  comments: Array<Comment>;
+  isAuthenticated: Scalars["Boolean"];
+  post?: Maybe<Post>;
+  posts: Array<Post>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  whoAmI?: Maybe<User>;
 };
 
 export type QueryCommentArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type QueryPostArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type QueryUserArgs = {
-    id: Scalars["ID"];
+  id: Scalars["ID"];
 };
 
 export type UpdateAuthReturn = {
-    __typename?: "UpdateAuthReturn";
-    isAuthed: Scalars["Boolean"];
+  __typename?: "UpdateAuthReturn";
+  isAuthed: Scalars["Boolean"];
 };
 
 export type UpdateCommentInput = {
-    body?: Maybe<Scalars["String"]>;
-    authorId?: Maybe<Scalars["String"]>;
-    postId?: Maybe<Scalars["String"]>;
+  body?: Maybe<Scalars["String"]>;
+  authorId?: Maybe<Scalars["String"]>;
+  postId?: Maybe<Scalars["String"]>;
 };
 
 export type UpdatePostInput = {
-    title?: Maybe<Scalars["String"]>;
-    body?: Maybe<Scalars["String"]>;
-    authorId?: Maybe<Scalars["String"]>;
+  title?: Maybe<Scalars["String"]>;
+  body?: Maybe<Scalars["String"]>;
+  authorId?: Maybe<Scalars["String"]>;
 };
 
 export type UpdateUserInput = {
-    email?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
 };
 
 export type User = {
-    __typename?: "User";
-    id: Scalars["ID"];
-    createdAt: Scalars["DateTime"];
-    updatedAt: Scalars["DateTime"];
-    email: Scalars["String"];
-    posts: Array<Post>;
-    comments: Array<Comment>;
+  __typename?: "User";
+  id: Scalars["ID"];
+  createdAt: Scalars["DateTime"];
+  updatedAt: Scalars["DateTime"];
+  email: Scalars["String"];
+  posts: Array<Post>;
+  comments: Array<Comment>;
 };
 
 export type UserCreationResponse = {
-    __typename?: "UserCreationResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    user?: Maybe<User>;
+  __typename?: "UserCreationResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  user?: Maybe<User>;
 };
 
 export type UserLoginArgs = {
-    email: Scalars["String"];
-    password: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type UserLoginResponse = {
-    __typename?: "UserLoginResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    user?: Maybe<User>;
-    token?: Maybe<Scalars["String"]>;
+  __typename?: "UserLoginResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  user?: Maybe<User>;
+  token?: Maybe<Scalars["String"]>;
 };
 
 export type UserUpdateResponse = {
-    __typename?: "UserUpdateResponse";
-    success: Scalars["Boolean"];
-    message: Scalars["String"];
-    user?: Maybe<User>;
+  __typename?: "UserUpdateResponse";
+  success: Scalars["Boolean"];
+  message: Scalars["String"];
+  user?: Maybe<User>;
 };
 
 export type PostFragment = { __typename?: "Post" } & Pick<Post, "id" | "title" | "body"> & {
-        author: { __typename?: "User" } & Pick<User, "email">;
-    };
+    author: { __typename?: "User" } & Pick<User, "email">;
+  };
 
 export type UserWithPostsFragment = { __typename?: "User" } & Pick<User, "email"> & {
-        posts: Array<{ __typename?: "Post" } & Pick<Post, "title" | "body">>;
-    };
+    posts: Array<{ __typename?: "Post" } & Pick<Post, "title" | "body">>;
+  };
 
 export type AllPostsQueryVariables = {};
 
 export type AllPostsQuery = { __typename?: "Query" } & {
-    posts: Array<{ __typename?: "Post" } & PostFragment>;
+  posts: Array<{ __typename?: "Post" } & PostFragment>;
 };
 
 export type UserWithPostsQueryVariables = {
-    userId: Scalars["ID"];
+  userId: Scalars["ID"];
 };
 
 export type UserWithPostsQuery = { __typename?: "Query" } & {
-    user?: Maybe<{ __typename?: "User" } & UserWithPostsFragment>;
+  user?: Maybe<{ __typename?: "User" } & UserWithPostsFragment>;
 };
 
 export type CreatePostMutationVariables = {
-    post: CreatePostInput;
+  post: CreatePostInput;
 };
 
 export type CreatePostMutation = { __typename?: "Mutation" } & {
-    createPost: { __typename?: "PostCreationResponse" } & Pick<
-        PostCreationResponse,
-        "success" | "message"
-    > & { post?: Maybe<{ __typename?: "Post" } & PostFragment> };
+  createPost: { __typename?: "PostCreationResponse" } & Pick<
+    PostCreationResponse,
+    "success" | "message"
+  > & { post?: Maybe<{ __typename?: "Post" } & PostFragment> };
 };
 
 export type WhoAmIQueryVariables = {};
 
 export type WhoAmIQuery = { __typename?: "Query" } & {
-    whoAmI?: Maybe<{ __typename?: "User" } & Pick<User, "id">>;
+  whoAmI?: Maybe<{ __typename?: "User" } & Pick<User, "id">>;
 };
 
 export type LoginMutationVariables = {
-    email: Scalars["String"];
-    password: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type LoginMutation = { __typename?: "Mutation" } & {
-    login: { __typename?: "UserLoginResponse" } & Pick<
-        UserLoginResponse,
-        "success" | "message" | "token"
-    > & { user?: Maybe<{ __typename?: "User" } & Pick<User, "id">> };
+  login: { __typename?: "UserLoginResponse" } & Pick<
+    UserLoginResponse,
+    "success" | "message" | "token"
+  > & { user?: Maybe<{ __typename?: "User" } & Pick<User, "id">> };
 };
 
 export type LogoutMutationVariables = {};
 
 export type LogoutMutation = { __typename?: "Mutation" } & {
-    logout: { __typename?: "MutationResponse" } & Pick<MutationResponse, "success">;
+  logout: { __typename?: "MutationResponse" } & Pick<MutationResponse, "success">;
 };
 
 export type CreateUserMutationVariables = {
-    email: Scalars["String"];
-    password: Scalars["String"];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type CreateUserMutation = { __typename?: "Mutation" } & {
-    createUser: { __typename?: "UserCreationResponse" } & Pick<
-        UserCreationResponse,
-        "success" | "message"
-    > & { user?: Maybe<{ __typename?: "User" } & Pick<User, "id">> };
+  createUser: { __typename?: "UserCreationResponse" } & Pick<
+    UserCreationResponse,
+    "success" | "message"
+  > & { user?: Maybe<{ __typename?: "User" } & Pick<User, "id">> };
 };
 
 export const PostFragmentDoc = gql`
-    fragment post on Post {
-        id
-        title
-        body
-        author {
-            email
-        }
+  fragment post on Post {
+    id
+    title
+    body
+    author {
+      email
     }
+  }
 `;
 export const UserWithPostsFragmentDoc = gql`
-    fragment userWithPosts on User {
-        email
-        posts {
-            title
-            body
-        }
+  fragment userWithPosts on User {
+    email
+    posts {
+      title
+      body
     }
+  }
 `;
 export const AllPostsDocument = gql`
-    query allPosts {
-        posts {
-            ...post
-        }
+  query allPosts {
+    posts {
+      ...post
     }
-    ${PostFragmentDoc}
+  }
+  ${PostFragmentDoc}
 `;
 
 /**
@@ -355,37 +355,37 @@ export const AllPostsDocument = gql`
  * });
  */
 export function useAllPostsQuery(
-    baseOptions?: ApolloReactHooks.QueryHookOptions<AllPostsQuery, AllPostsQueryVariables>,
+  baseOptions?: ApolloReactHooks.QueryHookOptions<AllPostsQuery, AllPostsQueryVariables>,
 ) {
-    return ApolloReactHooks.useQuery<AllPostsQuery, AllPostsQueryVariables>(
-        AllPostsDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useQuery<AllPostsQuery, AllPostsQueryVariables>(
+    AllPostsDocument,
+    baseOptions,
+  );
 }
 export function useAllPostsLazyQuery(
-    baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-        AllPostsQuery,
-        AllPostsQueryVariables
-    >,
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    AllPostsQuery,
+    AllPostsQueryVariables
+  >,
 ) {
-    return ApolloReactHooks.useLazyQuery<AllPostsQuery, AllPostsQueryVariables>(
-        AllPostsDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useLazyQuery<AllPostsQuery, AllPostsQueryVariables>(
+    AllPostsDocument,
+    baseOptions,
+  );
 }
 export type AllPostsQueryHookResult = ReturnType<typeof useAllPostsQuery>;
 export type AllPostsLazyQueryHookResult = ReturnType<typeof useAllPostsLazyQuery>;
 export type AllPostsQueryResult = ApolloReactCommon.QueryResult<
-    AllPostsQuery,
-    AllPostsQueryVariables
+  AllPostsQuery,
+  AllPostsQueryVariables
 >;
 export const UserWithPostsDocument = gql`
-    query userWithPosts($userId: ID!) {
-        user(id: $userId) {
-            ...userWithPosts
-        }
+  query userWithPosts($userId: ID!) {
+    user(id: $userId) {
+      ...userWithPosts
     }
-    ${UserWithPostsFragmentDoc}
+  }
+  ${UserWithPostsFragmentDoc}
 `;
 
 /**
@@ -405,48 +405,48 @@ export const UserWithPostsDocument = gql`
  * });
  */
 export function useUserWithPostsQuery(
-    baseOptions?: ApolloReactHooks.QueryHookOptions<
-        UserWithPostsQuery,
-        UserWithPostsQueryVariables
-    >,
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UserWithPostsQuery,
+    UserWithPostsQueryVariables
+  >,
 ) {
-    return ApolloReactHooks.useQuery<UserWithPostsQuery, UserWithPostsQueryVariables>(
-        UserWithPostsDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useQuery<UserWithPostsQuery, UserWithPostsQueryVariables>(
+    UserWithPostsDocument,
+    baseOptions,
+  );
 }
 export function useUserWithPostsLazyQuery(
-    baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-        UserWithPostsQuery,
-        UserWithPostsQueryVariables
-    >,
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UserWithPostsQuery,
+    UserWithPostsQueryVariables
+  >,
 ) {
-    return ApolloReactHooks.useLazyQuery<UserWithPostsQuery, UserWithPostsQueryVariables>(
-        UserWithPostsDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useLazyQuery<UserWithPostsQuery, UserWithPostsQueryVariables>(
+    UserWithPostsDocument,
+    baseOptions,
+  );
 }
 export type UserWithPostsQueryHookResult = ReturnType<typeof useUserWithPostsQuery>;
 export type UserWithPostsLazyQueryHookResult = ReturnType<typeof useUserWithPostsLazyQuery>;
 export type UserWithPostsQueryResult = ApolloReactCommon.QueryResult<
-    UserWithPostsQuery,
-    UserWithPostsQueryVariables
+  UserWithPostsQuery,
+  UserWithPostsQueryVariables
 >;
 export const CreatePostDocument = gql`
-    mutation createPost($post: CreatePostInput!) {
-        createPost(input: $post) {
-            success
-            message
-            post {
-                ...post
-            }
-        }
+  mutation createPost($post: CreatePostInput!) {
+    createPost(input: $post) {
+      success
+      message
+      post {
+        ...post
+      }
     }
-    ${PostFragmentDoc}
+  }
+  ${PostFragmentDoc}
 `;
 export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<
-    CreatePostMutation,
-    CreatePostMutationVariables
+  CreatePostMutation,
+  CreatePostMutationVariables
 >;
 
 /**
@@ -467,28 +467,28 @@ export type CreatePostMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useCreatePostMutation(
-    baseOptions?: ApolloReactHooks.MutationHookOptions<
-        CreatePostMutation,
-        CreatePostMutationVariables
-    >,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreatePostMutation,
+    CreatePostMutationVariables
+  >,
 ) {
-    return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(
-        CreatePostDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useMutation<CreatePostMutation, CreatePostMutationVariables>(
+    CreatePostDocument,
+    baseOptions,
+  );
 }
 export type CreatePostMutationHookResult = ReturnType<typeof useCreatePostMutation>;
 export type CreatePostMutationResult = ApolloReactCommon.MutationResult<CreatePostMutation>;
 export type CreatePostMutationOptions = ApolloReactCommon.BaseMutationOptions<
-    CreatePostMutation,
-    CreatePostMutationVariables
+  CreatePostMutation,
+  CreatePostMutationVariables
 >;
 export const WhoAmIDocument = gql`
-    query whoAmI {
-        whoAmI {
-            id
-        }
+  query whoAmI {
+    whoAmI {
+      id
     }
+  }
 `;
 
 /**
@@ -507,42 +507,42 @@ export const WhoAmIDocument = gql`
  * });
  */
 export function useWhoAmIQuery(
-    baseOptions?: ApolloReactHooks.QueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>,
+  baseOptions?: ApolloReactHooks.QueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>,
 ) {
-    return ApolloReactHooks.useQuery<WhoAmIQuery, WhoAmIQueryVariables>(
-        WhoAmIDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useQuery<WhoAmIQuery, WhoAmIQueryVariables>(
+    WhoAmIDocument,
+    baseOptions,
+  );
 }
 export function useWhoAmILazyQuery(
-    baseOptions?: ApolloReactHooks.LazyQueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>,
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>,
 ) {
-    return ApolloReactHooks.useLazyQuery<WhoAmIQuery, WhoAmIQueryVariables>(
-        WhoAmIDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useLazyQuery<WhoAmIQuery, WhoAmIQueryVariables>(
+    WhoAmIDocument,
+    baseOptions,
+  );
 }
 export type WhoAmIQueryHookResult = ReturnType<typeof useWhoAmIQuery>;
 export type WhoAmILazyQueryHookResult = ReturnType<typeof useWhoAmILazyQuery>;
 export type WhoAmIQueryResult = ApolloReactCommon.QueryResult<
-    WhoAmIQuery,
-    WhoAmIQueryVariables
+  WhoAmIQuery,
+  WhoAmIQueryVariables
 >;
 export const LoginDocument = gql`
-    mutation login($email: String!, $password: String!) {
-        login(input: { email: $email, password: $password }) {
-            success
-            message
-            user {
-                id
-            }
-            token
-        }
+  mutation login($email: String!, $password: String!) {
+    login(input: { email: $email, password: $password }) {
+      success
+      message
+      user {
+        id
+      }
+      token
     }
+  }
 `;
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<
-    LoginMutation,
-    LoginMutationVariables
+  LoginMutation,
+  LoginMutationVariables
 >;
 
 /**
@@ -564,32 +564,29 @@ export type LoginMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useLoginMutation(
-    baseOptions?: ApolloReactHooks.MutationHookOptions<
-        LoginMutation,
-        LoginMutationVariables
-    >,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>,
 ) {
-    return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
-        LoginDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    baseOptions,
+  );
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
-    LoginMutation,
-    LoginMutationVariables
+  LoginMutation,
+  LoginMutationVariables
 >;
 export const LogoutDocument = gql`
-    mutation logout {
-        logout {
-            success
-        }
+  mutation logout {
+    logout {
+      success
     }
+  }
 `;
 export type LogoutMutationFn = ApolloReactCommon.MutationFunction<
-    LogoutMutation,
-    LogoutMutationVariables
+  LogoutMutation,
+  LogoutMutationVariables
 >;
 
 /**
@@ -609,36 +606,36 @@ export type LogoutMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useLogoutMutation(
-    baseOptions?: ApolloReactHooks.MutationHookOptions<
-        LogoutMutation,
-        LogoutMutationVariables
-    >,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >,
 ) {
-    return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
-        LogoutDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+    baseOptions,
+  );
 }
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
-    LogoutMutation,
-    LogoutMutationVariables
+  LogoutMutation,
+  LogoutMutationVariables
 >;
 export const CreateUserDocument = gql`
-    mutation createUser($email: String!, $password: String!) {
-        createUser(input: { email: $email, password: $password }) {
-            success
-            message
-            user {
-                id
-            }
-        }
+  mutation createUser($email: String!, $password: String!) {
+    createUser(input: { email: $email, password: $password }) {
+      success
+      message
+      user {
+        id
+      }
     }
+  }
 `;
 export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<
-    CreateUserMutation,
-    CreateUserMutationVariables
+  CreateUserMutation,
+  CreateUserMutationVariables
 >;
 
 /**
@@ -660,19 +657,19 @@ export type CreateUserMutationFn = ApolloReactCommon.MutationFunction<
  * });
  */
 export function useCreateUserMutation(
-    baseOptions?: ApolloReactHooks.MutationHookOptions<
-        CreateUserMutation,
-        CreateUserMutationVariables
-    >,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    CreateUserMutation,
+    CreateUserMutationVariables
+  >,
 ) {
-    return ApolloReactHooks.useMutation<CreateUserMutation, CreateUserMutationVariables>(
-        CreateUserDocument,
-        baseOptions,
-    );
+  return ApolloReactHooks.useMutation<CreateUserMutation, CreateUserMutationVariables>(
+    CreateUserDocument,
+    baseOptions,
+  );
 }
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = ApolloReactCommon.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = ApolloReactCommon.BaseMutationOptions<
-    CreateUserMutation,
-    CreateUserMutationVariables
+  CreateUserMutation,
+  CreateUserMutationVariables
 >;
