@@ -2,7 +2,7 @@ import { MutationTuple } from "@apollo/react-hooks"
 import { useEffect } from "react"
 import { LoginMutation, LoginMutationVariables, useLoginMutation } from "../graphql"
 import { useStore } from "../store/RootStore"
-import { setJwt } from "../utilities/jwtHelpers"
+import { resetJwt, setJwt } from "../utilities/jwtHelpers"
 
 const useLogin: () => MutationTuple<LoginMutation, LoginMutationVariables> = () => {
   const useLoginResult = useLoginMutation()
@@ -11,7 +11,7 @@ const useLogin: () => MutationTuple<LoginMutation, LoginMutationVariables> = () 
 
   useEffect(() => {
     if (called && !loading) {
-      const jwt = data?.login?.token
+      const jwt = data?.login.token
       const id = data?.login.user?.id
       const email = data?.login.user?.email
 
@@ -19,7 +19,8 @@ const useLogin: () => MutationTuple<LoginMutation, LoginMutationVariables> = () 
         setJwt(jwt)
         store.currentUser.updateUser({ id, email })
       } else {
-        throw new Error("Wrong username/password.")
+        resetJwt()
+        store.currentUser.reset()
       }
     }
   })
