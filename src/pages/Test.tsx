@@ -1,7 +1,7 @@
 import React from "react"
 import { Flex, Text, Stack } from "@chakra-ui/core";
 import Button from "../components/common/Button";
-import Layout from "./Layout";
+import Layout from "../components/Layout";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../getMstGql";
 

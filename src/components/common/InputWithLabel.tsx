@@ -1,6 +1,6 @@
 import React from "react";
-import { FormLabel, Input, InputProps, StackProps } from "@chakra-ui/core";
-import InlineStack from "./InlineStack";
+import { FormLabel, Input, InputProps, StackProps } from "@chakra-ui/core"
+import InlineStack from "./InlineStack"
 
 interface InputWithLabelProps extends StackProps {
   name: string;
@@ -43,7 +43,7 @@ const InputWithLabel: React.FunctionComponent<InputWithLabelProps> = ({
         {...inputProps}
       />
     </InlineStack>
-  );
-};
+  )
+}
 
-export default InputWithLabel;
+export default InputWithLabel

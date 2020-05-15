@@ -1,6 +1,6 @@
-import React from "react";
-import { PostModelType } from "../models";
-import { Text, Box } from "@chakra-ui/core";
+import React from "react"
+import { PostModelType } from "../models"
+import { Text, Box } from "@chakra-ui/core"
 
 interface PostProps {
   post: Partial<PostModelType>;
@@ -14,4 +14,4 @@ const Post: React.FunctionComponent<PostProps> = ({ post: { id, title, body} }) 
   </Box>
 );
 
-export default Post;
+export default Post

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { RouteComponentProps, Redirect } from "react-router-dom";
-import { Box } from "@chakra-ui/core";
-import LoginUserForm from "../components/common/LoginUserForm";
-import Layout from "./Layout";
-import { useQuery } from "../models";
-import { UserLoginArgs } from "../models/RootStore.base";
-import { observer } from "mobx-react-lite";
+import React, { useState } from "react"
+import { RouteComponentProps, Redirect } from "react-router-dom"
+import { Box } from "@chakra-ui/core"
+import LoginUserForm from "../components/common/LoginUserForm"
+import Layout from "../components/Layout"
+import { useQuery } from "../models"
+import { UserLoginArgs } from "../models/RootStore.base"
+import { observer } from "mobx-react-lite"
 
 const Login: React.FunctionComponent<RouteComponentProps> = () => {
   const { setQuery, store, error } = useQuery();
@@ -25,7 +25,7 @@ const Login: React.FunctionComponent<RouteComponentProps> = () => {
         <LoginUserForm handleSubmit={handleSubmit} errorMessage={errorMessage} />
       </Box>
     </Layout>
-  );
-};
+  )
+}
 
 export default observer(Login);

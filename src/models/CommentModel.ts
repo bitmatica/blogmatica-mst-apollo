@@ -15,5 +15,5 @@ export const CommentModel = CommentModelBase
     // This is an auto-generated example action.
     log() {
       console.log(JSON.stringify(self))
-    }
+    },
   }))

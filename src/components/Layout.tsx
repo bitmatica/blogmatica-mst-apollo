@@ -1,7 +1,7 @@
-import React from "react";
-import Header from "../components/common/Header";
-import { Flex, Box } from "@chakra-ui/core";
-import theme from "../theme";
+import React from "react"
+import Header from "./common/Header"
+import { Flex, Box } from "@chakra-ui/core"
+import theme from "../theme"
 
 const Layout: React.FunctionComponent = ({ children }) => {
   return (
@@ -25,7 +25,7 @@ const Layout: React.FunctionComponent = ({ children }) => {
         {children}
       </Box>
     </Flex>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

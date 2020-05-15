@@ -1,36 +1,37 @@
-import React, { useState, FormEvent } from "react";
-import { Text, Flex } from "@chakra-ui/core";
-import InputWithLabel from "./InputWithLabel";
-import Form from "./Form";
-import Button from "./Button";
+import React, { useState, FormEvent } from "react"
+import { Text, Flex } from "@chakra-ui/core"
+import InputWithLabel from "./InputWithLabel"
+import Form from "./Form"
+import Button from "./Button"
 
 interface UserLoginArgs {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 interface LoginUserFormProps {
-  errorMessage: string;
-  handleSubmit(inputs: UserLoginArgs): void;
+  errorMessage: string
+  handleSubmit(inputs: UserLoginArgs): void
 }
 
 const LoginUserForm: React.FunctionComponent<LoginUserFormProps> = ({
   handleSubmit,
   errorMessage,
 }) => {
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [inputs, setInputs] = useState({ email: "", password: "" })
 
   const handleInputChange: React.FormEventHandler<HTMLInputElement> = (event) => {
-    const { name, value } = event.currentTarget;
-    setInputs({ ...inputs, [name]: value });
-  };
+    const { name, value } = event.currentTarget
+    setInputs({ ...inputs, [name]: value })
+  }
 
   return (
     <Form
       onSubmit={(e: FormEvent): void => {
-        e.preventDefault();
-        handleSubmit(inputs);
-      }}>
+        e.preventDefault()
+        handleSubmit(inputs)
+      }}
+    >
       <Text fontSize={"3xl"}>Welcome back!</Text>
       <InputWithLabel
         name="email"
@@ -56,7 +57,7 @@ const LoginUserForm: React.FunctionComponent<LoginUserFormProps> = ({
         </Button>
       </Flex>
     </Form>
-  );
-};
+  )
+}
 
-export default LoginUserForm;
+export default LoginUserForm

@@ -5,17 +5,17 @@ import InputWithLabel from "./common/InputWithLabel";
 import { Button } from "@chakra-ui/core";
 
 interface CreatePostFormProps {
-  authorId: string;
+  authorId: string
 }
 
 const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = () => {
-  const { setQuery } = useQuery();
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const { setQuery } = useQuery()
+  const [title, setTitle] = useState("")
+  const [body, setBody] = useState("")
   const post = {
     title,
     body,
-  };
+  }
   return (
     <Form
       onSubmit={(e): void => {
@@ -44,4 +44,4 @@ const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = () => {
   );
 };
 
-export default CreatePostForm;
+export default CreatePostForm

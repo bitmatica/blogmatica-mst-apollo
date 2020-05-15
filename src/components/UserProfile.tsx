@@ -5,7 +5,7 @@ import { useQuery, userModelPrimitives, postModelPrimitives } from "../models"
 import { observer } from "mobx-react-lite";
 
 interface UserProfileProps {
-  userId: string;
+  userId: string
 }
 
 const UserProfile: React.FunctionComponent<UserProfileProps> = ({ userId }) => {
@@ -23,7 +23,7 @@ const UserProfile: React.FunctionComponent<UserProfileProps> = ({ userId }) => {
         Posts: <Posts posts={data?.user.posts || []} />
       </div>
     </LoadingContainer>
-  );
-};
+  )
+}
 
 export default observer(UserProfile);

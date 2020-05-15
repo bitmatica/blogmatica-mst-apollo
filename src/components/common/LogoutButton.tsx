@@ -1,11 +1,11 @@
-import React from "react";
-import { Button, ButtonProps } from "@chakra-ui/core";
-import theme from "../../theme";
-import { useQuery } from "../../models";
-import { observer } from "mobx-react-lite";
+import React from "react"
+import { Button, ButtonProps } from "@chakra-ui/core"
+import theme from "../../theme"
+import { useQuery } from "../../models"
+import { observer } from "mobx-react-lite"
 
 const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
-  const { setQuery, store } = useQuery();
+  const { setQuery, store } = useQuery()
   return (
     <Button
       {...theme.buttons.variants.primary}

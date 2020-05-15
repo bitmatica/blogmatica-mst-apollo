@@ -1,5 +1,5 @@
-import React from "react";
-import { FormControl, FormControlProps } from "@chakra-ui/core";
+import React from "react"
+import { FormControl, FormControlProps } from "@chakra-ui/core"
 
 const Form: React.FunctionComponent<FormControlProps> = ({
   children,
@@ -14,7 +14,7 @@ const Form: React.FunctionComponent<FormControlProps> = ({
         {children}
       </FormControl>
     </form>
-  );
-};
+  )
+}
 
-export default Form;
+export default Form

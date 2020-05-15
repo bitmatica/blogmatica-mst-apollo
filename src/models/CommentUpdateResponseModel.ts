@@ -15,5 +15,5 @@ export const CommentUpdateResponseModel = CommentUpdateResponseModelBase
     // This is an auto-generated example action.
     log() {
       console.log(JSON.stringify(self))
-    }
+    },
   }))

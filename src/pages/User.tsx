@@ -1,14 +1,13 @@
-import React from "react";
-import { RouteComponentProps } from "react-router-dom";
-import UserProfile from "../components/UserProfile";
-import Layout from "./Layout";
+import React from "react"
+import { RouteComponentProps } from "react-router-dom"
+import UserProfile from "../components/UserProfile"
+import Layout from "../components/Layout"
 
 interface MatchParams {
-  userId: string;
+  userId: string
 }
 
 const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match }) => {
-  debugger
   return (
     <Layout>
       <UserProfile userId={match.params.userId} />
@@ -16,4 +15,4 @@ const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match
   )
 };
 
-export default User;
+export default User

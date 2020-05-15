@@ -17,6 +17,6 @@ const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
     </div>
   ) : (
     <div>No posts!</div>
-  );
+  )
 
-export default Posts;
+export default Posts

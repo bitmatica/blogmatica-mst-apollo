@@ -4,9 +4,10 @@ import LoadingContainer from "./LoadingContainer";
 import { useQuery } from "../../models";
 import { observer } from "mobx-react-lite";
 
+
 interface PrivateRouteProps extends RouteProps {
-  redirect?: string;
-  mustBeLoggedOut?: boolean;
+  redirect?: string
+  mustBeLoggedOut?: boolean
 }
 
 const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({

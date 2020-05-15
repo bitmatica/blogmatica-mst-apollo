@@ -1,0 +1,12 @@
+{
+  "name": "Remote Schema",
+  "schemaPath": "generated-remote-schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Remote GraphQL Endpoint": {
+        "url": "http://localhost:3001/graphql",
+        "introspect": true
+      }
+    }
+  }
+}

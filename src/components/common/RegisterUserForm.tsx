@@ -1,15 +1,15 @@
-import React, { FormEvent } from "react";
-import { Text, Flex, Box } from "@chakra-ui/core";
-import Form from "./Form";
-import InputWithLabel from "./InputWithLabel";
-import Button from "./Button";
+import React, { FormEvent } from "react"
+import { Text, Flex, Box } from "@chakra-ui/core"
+import Form from "./Form"
+import InputWithLabel from "./InputWithLabel"
+import Button from "./Button"
 
 
 interface RegisterUserFormProps {
-  inputs: { [key: string]: string | number };
-  errorMessage?: string;
-  handleSubmit(): void;
-  handleUpdate(event: React.FormEvent<HTMLInputElement>): void;
+  inputs: { [key: string]: string | number }
+  errorMessage?: string
+  handleSubmit(): void
+  handleUpdate(event: React.FormEvent<HTMLInputElement>): void
 }
 
 const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
@@ -22,7 +22,7 @@ const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
     <Form
       onSubmit={(event: FormEvent): void => {
         if (event) {
-          event.preventDefault();
+          event.preventDefault()
         }
         handleSubmit();
       }}>
@@ -55,4 +55,4 @@ const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
   );
 };
 
-export default RegisterUserForm;
+export default RegisterUserForm

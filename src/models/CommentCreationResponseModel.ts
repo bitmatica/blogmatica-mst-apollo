@@ -15,5 +15,5 @@ export const CommentCreationResponseModel = CommentCreationResponseModelBase
     // This is an auto-generated example action.
     log() {
       console.log(JSON.stringify(self))
-    }
+    },
   }))
