@@ -1,4 +1,4 @@
-import { theme } from "@chakra-ui/core";
+import { theme } from "@chakra-ui/core"
 
 export default {
   ...theme,
@@ -34,4 +34,4 @@ export default {
     "5xl": "3rem",
     "6xl": "4rem",
   },
-};
+}

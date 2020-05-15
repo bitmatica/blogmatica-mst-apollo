@@ -1,5 +1,5 @@
-import React from "react";
-import { Stack, StackProps } from "@chakra-ui/core";
+import React from "react"
+import { Stack, StackProps } from "@chakra-ui/core"
 
 const InlineStack: React.FunctionComponent<StackProps> = (props) => (
   <Stack
@@ -9,6 +9,6 @@ const InlineStack: React.FunctionComponent<StackProps> = (props) => (
       ...props,
     }}
   />
-);
+)
 
-export default InlineStack;
+export default InlineStack

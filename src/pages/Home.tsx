@@ -1,10 +1,10 @@
-import React from "react";
-import { RouteProps } from "react-router-dom";
-import UserProfile from "../components/UserProfile";
-import Layout from "./Layout";
-import CreatePostForm from "../components/CreatePostForm";
-import { useWhoAmIQuery } from "../graphql";
-import LoadingContainer from "../components/common/LoadingContainer";
+import React from "react"
+import { RouteProps } from "react-router-dom"
+import UserProfile from "../components/UserProfile"
+import Layout from "./Layout"
+import CreatePostForm from "../components/CreatePostForm"
+import { useWhoAmIQuery } from "../graphql"
+import LoadingContainer from "../components/common/LoadingContainer"
 
 const Home: React.FunctionComponent<RouteProps> = () => {
   const { loading, data } = useWhoAmIQuery()
@@ -19,4 +19,4 @@ const Home: React.FunctionComponent<RouteProps> = () => {
   )
 }
 
-export default Home;
+export default Home

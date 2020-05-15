@@ -1,24 +1,24 @@
-import React from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
-import { ApolloProvider } from "@apollo/react-hooks";
-import getApolloClient from "./getApolloClient";
-import theme from "./theme";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
-import { StoreProvider, useStore } from "./store/RootStore";
-import PrivateRoute from "./components/common/PrivateRoute";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
-import User from "./pages/User";
-import OnlyLoggedOutRoute from "./components/common/OnlyLoggedOutRoute";
-import RegisterUser from "./pages/RegisterUser";
+import React from "react"
+import { BrowserRouter, Switch } from "react-router-dom"
+import { ApolloProvider } from "@apollo/react-hooks"
+import getApolloClient from "./getApolloClient"
+import theme from "./theme"
+import { ThemeProvider, CSSReset } from "@chakra-ui/core"
+import { StoreProvider, useStore } from "./store/RootStore"
+import PrivateRoute from "./components/common/PrivateRoute"
+import Login from "./pages/Login"
+import Home from "./pages/Home"
+import User from "./pages/User"
+import OnlyLoggedOutRoute from "./components/common/OnlyLoggedOutRoute"
+import RegisterUser from "./pages/RegisterUser"
 
-const apolloClient = getApolloClient();
+const apolloClient = getApolloClient()
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).apolloClient = apolloClient;
+;(window as any).apolloClient = apolloClient
 
 const App: React.FunctionComponent = () => {
-  const store = useStore();
+  const store = useStore()
   return (
     <StoreProvider value={store}>
       <ThemeProvider theme={theme}>
@@ -35,7 +35,7 @@ const App: React.FunctionComponent = () => {
         </BrowserRouter>
       </ThemeProvider>
     </StoreProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App

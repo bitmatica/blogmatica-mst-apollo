@@ -1,9 +1,9 @@
-import React from "react";
-import { Post as IPost } from "../graphql";
-import Post from "./Post";
+import React from "react"
+import { Post as IPost } from "../graphql"
+import Post from "./Post"
 
 interface PostsProps {
-  posts?: Partial<IPost>[];
+  posts?: Partial<IPost>[]
 }
 
 const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
@@ -17,6 +17,6 @@ const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
     </div>
   ) : (
     <div>No posts!</div>
-  );
+  )
 
-export default Posts;
+export default Posts

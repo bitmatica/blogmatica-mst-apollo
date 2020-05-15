@@ -1,13 +1,13 @@
-import { JWT_SESSION_STORAGE_KEY } from "../config";
+import { JWT_SESSION_STORAGE_KEY } from "../config"
 
 export function setJwt(jwt: string): void {
-  sessionStorage.setItem(JWT_SESSION_STORAGE_KEY, jwt);
+  sessionStorage.setItem(JWT_SESSION_STORAGE_KEY, jwt)
 }
 
 export function resetJwt(): void {
-  setJwt("");
+  setJwt("")
 }
 
 export function getJwt(): string | null {
-  return sessionStorage.getItem(JWT_SESSION_STORAGE_KEY);
+  return sessionStorage.getItem(JWT_SESSION_STORAGE_KEY)
 }
