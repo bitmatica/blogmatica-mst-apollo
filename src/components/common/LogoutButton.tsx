@@ -1,8 +1,8 @@
-import React from "react"
 import { Button, ButtonProps } from "@chakra-ui/core"
-import theme from "../../theme"
-import { useQuery } from "../../models"
 import { observer } from "mobx-react-lite"
+import React from "react"
+import { useQuery } from "../../models"
+import theme from "../../theme"
 
 const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
   const { setQuery, store } = useQuery()
@@ -11,7 +11,7 @@ const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
       {...theme.buttons.variants.primary}
       variant={"outline"}
       onClick={(): void => {
-        store.currentUser && setQuery(store.logout())
+        setQuery(store.logout())
       }}
       isDisabled={!store.currentUser}
       {...props}
