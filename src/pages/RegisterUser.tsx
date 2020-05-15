@@ -20,8 +20,8 @@ const RegisterUser: React.FunctionComponent = () => {
   }
 
   const handleUpdate = (event: React.FormEvent<HTMLInputElement>): void => {
-    const { name, value } = event.currentTarget;
-    setInputs((inputs): CreateUserInput => ({ ...inputs, [name]: value }));
+    const { name, value } = event.currentTarget
+    setInputs((inputs): CreateUserInput => ({ ...inputs, [name]: value }))
   }
 
   return store.currentUser ? (

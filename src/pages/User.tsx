@@ -13,6 +13,6 @@ const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match
       <UserProfile userId={match.params.userId} />
     </Layout>
   )
-};
+}
 
 export default User

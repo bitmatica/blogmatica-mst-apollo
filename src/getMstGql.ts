@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { createHttpClient } from "mst-gql";
-import { RootStore, StoreContext, RootStoreType } from "./models";
-import { getAuthHeader } from "./utilities/jwtHelpers";
+import { useContext } from "react"
+import { createHttpClient } from "mst-gql"
+import { RootStore, StoreContext, RootStoreType } from "./models"
+import { getAuthHeader } from "./utilities/jwtHelpers"
 
 const defaultState = {
   currentUser: null,

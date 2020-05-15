@@ -7,12 +7,8 @@ const Form: React.FunctionComponent<FormControlProps> = ({
   ...rest
 }) => {
   return (
-    <form
-      onSubmit={onSubmit}
-    >
-      <FormControl {...rest}>
-        {children}
-      </FormControl>
+    <form onSubmit={onSubmit}>
+      <FormControl {...rest}>{children}</FormControl>
     </form>
   )
 }

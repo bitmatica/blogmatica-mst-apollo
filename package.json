@@ -85,12 +85,12 @@
     }
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
+    "src/**/*.{js,jsx,ts,tsx}": [
       "npx eslint",
       "npx prettier --write",
       "git add"
     ],
-    "*.{json,gql,md,html,css,scss}": [
+    "src/**/*.{json,gql,md,html,css,scss}": [
       "npx prettier --write",
       "git add"
     ]

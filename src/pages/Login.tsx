@@ -8,18 +8,20 @@ import { UserLoginArgs } from "../models/RootStore.base"
 import { observer } from "mobx-react-lite"
 
 const Login: React.FunctionComponent<RouteComponentProps> = () => {
-  const { setQuery, store, error } = useQuery();
-  const [errorMessage, setErrorMessage] = useState("");
+  const { setQuery, store, error } = useQuery()
+  const [errorMessage, setErrorMessage] = useState("")
 
   if (error && error !== errorMessage) {
-    setErrorMessage(error);
+    setErrorMessage(error)
   }
 
   const handleSubmit = async (variables: UserLoginArgs): Promise<void> => {
-    setQuery(store => store.login(variables));
-  };
+    setQuery((store) => store.login(variables))
+  }
 
-  return store.isLoggedIn() ? <Redirect to={"/"} /> : (
+  return store.isLoggedIn() ? (
+    <Redirect to={"/"} />
+  ) : (
     <Layout>
       <Box>
         <LoginUserForm handleSubmit={handleSubmit} errorMessage={errorMessage} />
@@ -28,4 +30,4 @@ const Login: React.FunctionComponent<RouteComponentProps> = () => {
   )
 }
 
-export default observer(Login);
+export default observer(Login)

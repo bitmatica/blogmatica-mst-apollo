@@ -7,27 +7,29 @@ import { QueryBuilder } from "mst-gql"
 import { ModelBase } from "./ModelBase"
 import { RootStoreType } from "./index"
 
-
 /**
  * DeletionResponseBase
  * auto generated base class for the model DeletionResponseModel.
  */
-export const DeletionResponseModelBase = ModelBase
-  .named('DeletionResponse')
+export const DeletionResponseModelBase = ModelBase.named("DeletionResponse")
   .props({
     __typename: types.optional(types.literal("DeletionResponse"), "DeletionResponse"),
     success: types.union(types.undefined, types.boolean),
     message: types.union(types.undefined, types.string),
   })
-  .views(self => ({
+  .views((self) => ({
     get store() {
       return self.__getStore<RootStoreType>()
-    }
+    },
   }))
 
 export class DeletionResponseModelSelector extends QueryBuilder {
-  get success() { return this.__attr(`success`) }
-  get message() { return this.__attr(`message`) }
+  get success() {
+    return this.__attr(`success`)
+  }
+  get message() {
+    return this.__attr(`message`)
+  }
 }
 export function selectFromDeletionResponse() {
   return new DeletionResponseModelSelector()

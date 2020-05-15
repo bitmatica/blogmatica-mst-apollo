@@ -5,15 +5,18 @@ import { CommentModelBase } from "./CommentModel.base"
 export interface CommentModelType extends Instance<typeof CommentModel.Type> {}
 
 /* A graphql query fragment builders for CommentModel */
-export { selectFromComment, commentModelPrimitives, CommentModelSelector } from "./CommentModel.base"
+export {
+  selectFromComment,
+  commentModelPrimitives,
+  CommentModelSelector,
+} from "./CommentModel.base"
 
 /**
  * CommentModel
  */
-export const CommentModel = CommentModelBase
-  .actions(self => ({
-    // This is an auto-generated example action.
-    log() {
-      console.log(JSON.stringify(self))
-    },
-  }))
+export const CommentModel = CommentModelBase.actions((self) => ({
+  // This is an auto-generated example action.
+  log() {
+    console.log(JSON.stringify(self))
+  },
+}))

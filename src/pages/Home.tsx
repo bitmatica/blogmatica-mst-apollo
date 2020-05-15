@@ -20,4 +20,4 @@ const Home: React.FunctionComponent<RouteProps> = () => {
   )
 }
 
-export default observer(Home);
+export default observer(Home)

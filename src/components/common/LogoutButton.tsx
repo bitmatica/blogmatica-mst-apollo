@@ -11,12 +11,12 @@ const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
       {...theme.buttons.variants.primary}
       variant={"outline"}
       onClick={(): void => {
-        store.currentUser && setQuery(store.logout()) }
-      }
+        store.currentUser && setQuery(store.logout())
+      }}
       isDisabled={!store.currentUser}
       {...props}
     />
   )
 }
 
-export default observer(LogoutButton);
+export default observer(LogoutButton)

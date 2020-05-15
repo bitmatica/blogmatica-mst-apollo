@@ -1,9 +1,9 @@
 import React from "react"
-import { Flex, Text, Stack } from "@chakra-ui/core";
-import Button from "../components/common/Button";
-import Layout from "../components/Layout";
-import { observer } from "mobx-react-lite";
-import { useStore } from "../getMstGql";
+import { Flex, Text, Stack } from "@chakra-ui/core"
+import Button from "../components/common/Button"
+import Layout from "../components/Layout"
+import { observer } from "mobx-react-lite"
+import { useStore } from "../getMstGql"
 
 const ButtonClickTracker: React.FunctionComponent = observer(() => {
   const { isButtonClicked } = useStore()
@@ -19,10 +19,12 @@ const TestButton: React.FC = observer(() => {
   const { getTheWeather, updateButtonClicked } = useStore()
   return (
     <Flex justify="center">
-      <Button onClick={(): void => {
-        getTheWeather()
-        updateButtonClicked()
-      }}>
+      <Button
+        onClick={(): void => {
+          getTheWeather()
+          updateButtonClicked()
+        }}
+      >
         click me
       </Button>
     </Flex>

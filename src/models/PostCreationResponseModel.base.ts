@@ -9,37 +9,56 @@ import { PostModel, PostModelType } from "./PostModel"
 import { PostModelSelector } from "./PostModel.base"
 import { RootStoreType } from "./index"
 
-
 /* The TypeScript type that explicits the refs to other models in order to prevent a circular refs issue */
 type Refs = {
-  post: PostModelType;
+  post: PostModelType
 }
 
 /**
  * PostCreationResponseBase
  * auto generated base class for the model PostCreationResponseModel.
  */
-export const PostCreationResponseModelBase = withTypedRefs<Refs>()(ModelBase
-  .named('PostCreationResponse')
-  .props({
-    __typename: types.optional(types.literal("PostCreationResponse"), "PostCreationResponse"),
-    success: types.union(types.undefined, types.boolean),
-    message: types.union(types.undefined, types.string),
-    post: types.union(types.undefined, types.null, MSTGQLRef(types.late((): any => PostModel))),
-  })
-  .views(self => ({
-    get store() {
-      return self.__getStore<RootStoreType>()
-    }
-  })))
+export const PostCreationResponseModelBase = withTypedRefs<Refs>()(
+  ModelBase.named("PostCreationResponse")
+    .props({
+      __typename: types.optional(
+        types.literal("PostCreationResponse"),
+        "PostCreationResponse",
+      ),
+      success: types.union(types.undefined, types.boolean),
+      message: types.union(types.undefined, types.string),
+      post: types.union(
+        types.undefined,
+        types.null,
+        MSTGQLRef(types.late((): any => PostModel)),
+      ),
+    })
+    .views((self) => ({
+      get store() {
+        return self.__getStore<RootStoreType>()
+      },
+    })),
+)
 
 export class PostCreationResponseModelSelector extends QueryBuilder {
-  get success() { return this.__attr(`success`) }
-  get message() { return this.__attr(`message`) }
-  post(builder?: string | PostModelSelector | ((selector: PostModelSelector) => PostModelSelector)) { return this.__child(`post`, PostModelSelector, builder) }
+  get success() {
+    return this.__attr(`success`)
+  }
+  get message() {
+    return this.__attr(`message`)
+  }
+  post(
+    builder?:
+      | string
+      | PostModelSelector
+      | ((selector: PostModelSelector) => PostModelSelector),
+  ) {
+    return this.__child(`post`, PostModelSelector, builder)
+  }
 }
 export function selectFromPostCreationResponse() {
   return new PostCreationResponseModelSelector()
 }
 
-export const postCreationResponseModelPrimitives = selectFromPostCreationResponse().success.message
+export const postCreationResponseModelPrimitives = selectFromPostCreationResponse().success
+  .message

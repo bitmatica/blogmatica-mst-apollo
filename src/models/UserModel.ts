@@ -10,5 +10,4 @@ export { selectFromUser, userModelPrimitives, UserModelSelector } from "./UserMo
 /**
  * UserModel
  */
-export const UserModel = UserModelBase
-  .actions(() => ({}))
+export const UserModel = UserModelBase.actions(() => ({}))

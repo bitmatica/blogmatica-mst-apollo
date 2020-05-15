@@ -4,7 +4,6 @@ import Form from "./Form"
 import InputWithLabel from "./InputWithLabel"
 import Button from "./Button"
 
-
 interface RegisterUserFormProps {
   inputs: { [key: string]: string | number }
   errorMessage?: string
@@ -24,8 +23,9 @@ const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
         if (event) {
           event.preventDefault()
         }
-        handleSubmit();
-      }}>
+        handleSubmit()
+      }}
+    >
       <Text fontSize={"3xl"}>Get on board!</Text>
       <InputWithLabel
         name="email"
@@ -44,15 +44,16 @@ const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
         isRequired
         handleUpdate={handleUpdate}
       />
-      <Box minH={8} color="red" textAlign="center">{errorMessage}</Box>
+      <Box minH={8} color="red" textAlign="center">
+        {errorMessage}
+      </Box>
       <Flex direction="row" justifyContent="flex-end">
         <Button type="submit" themeVariant="primary">
           Login
         </Button>
       </Flex>
-
     </Form>
-  );
-};
+  )
+}
 
 export default RegisterUserForm

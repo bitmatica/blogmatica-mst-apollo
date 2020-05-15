@@ -1,4 +1,4 @@
-import { theme as defaultTheme } from "@chakra-ui/core";
+import { theme as defaultTheme } from "@chakra-ui/core"
 
 const theme = {
   ...defaultTheme,
@@ -34,8 +34,8 @@ const theme = {
     "5xl": "3rem",
     "6xl": "4rem",
   },
-};
+}
 
-export default theme;
+export default theme
 
 export type ButtonVariants = keyof typeof theme.buttons.variants

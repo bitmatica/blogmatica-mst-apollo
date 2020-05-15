@@ -10,10 +10,9 @@ export { selectFromPost, postModelPrimitives, PostModelSelector } from "./PostMo
 /**
  * PostModel
  */
-export const PostModel = PostModelBase
-  .actions(self => ({
-    // This is an auto-generated example action.
-    log() {
-      console.log(JSON.stringify(self))
-    },
-  }))
+export const PostModel = PostModelBase.actions((self) => ({
+  // This is an auto-generated example action.
+  log() {
+    console.log(JSON.stringify(self))
+  },
+}))
