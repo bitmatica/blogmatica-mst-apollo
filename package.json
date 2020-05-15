@@ -77,7 +77,9 @@
     "lint-fix": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,gql,md,html,css,scss}' 'src/*.{ts,tsx,js,jsx,json,gql,md,html,css,scss}'",
     "ts-compile-check": "tsc -p tsconfig.json --noEmit --skipLibCheck",
-    "codegen": "yarn mst-gql --format ts http://localhost:3001/graphql --noReact"
+    "schema:load": "apollo client:download-schema --endpoint=http://localhost:3001/graphql generated-remote-schema.graphql",
+    "codegen:generateOnly": "mst-gql --format ts generated-remote-schema.graphql --noReact",
+    "codegen": "npm run schema:load && npm run codegen:generateOnly && npm run format"
   },
   "husky": {
     "hooks": {
