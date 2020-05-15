@@ -10,6 +10,8 @@ import { MutationResponseModelType } from "./MutationResponseModel"
 import { UserLoginResponseModelType } from "./UserLoginResponseModel"
 import { UserCreationResponseModelType } from "./UserCreationResponseModel"
 import { OpenWeatherResponse, fetchWeatherData } from "./Weather"
+import { postCreationResponseModelPrimitives } from "./PostCreationResponseModel.base"
+import { postModelPrimitives } from "./PostModel.base"
 
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
 
@@ -23,10 +25,14 @@ export const RootStore = RootStoreBase
     createPost(input: CreatePostInput): Query<{
       createPost: PostCreationResponseModelType
     }> {
-      const query = self.mutateCreatePost({ input })
+      const query = self.mutateCreatePost(
+        { input },
+        postCreationResponseModelPrimitives.post(postModelPrimitives).toString())
       query.then(data => {
-        console.log(data)
-
+        const authorId = data.createPost?.post.authorId
+        if (authorId) {
+          self.users.get(authorId)?.posts.push(data?.createPost.post)
+        }
       })
       return query
     },
@@ -47,6 +53,53 @@ export const RootStore = RootStoreBase
       setJwt(token)
       getEnv(self).gqlHttpClient.setHeaders({ Authorization: getAuthHeader() })
     },
+  }))
+  .actions(self => ({
+    login(input: UserLoginArgs): Query<{ login: UserLoginResponseModelType }> {
+      const query = self.mutateLogin({ input })
+      query.then(data => {
+        const { token, success } = data.login
+        if (token && success) {
+          self.setLogin(token)
+        }
+        return self.getCurrentUser()
+      })
+      return query
+    },
+  }))
+  .actions(self => ({
+    logout(): Query<{ logout: MutationResponseModelType}> {
+      const query = self.mutateLogout()
+      query.then(() => {
+        self.currentUser = null
+        resetJwt()
+        getEnv(self).gqlHttpClient.setHeaders({ authorization: "" })
+      })
+      return query
+    },
+    updateButtonClicked(): boolean {
+      return self.buttonClicked = !self.buttonClicked
+    },
+    createUserAndLogin(input: CreateUserInput): Query<{ createUser: UserCreationResponseModelType }> {
+      const query = self.mutateCreateUser({ input })
+      query.then(() => {
+        self.login(input)
+      })
+      return query
+    },
+    getTheWeather: flow(function* fetchWeather(){
+      try {
+        const weatherData: OpenWeatherResponse = yield fetchWeatherData()
+        self.weather = Weather.create({
+          temperature: weatherData.main.temp,
+          humidity: weatherData.main.humidity,
+          description: weatherData.weather.map((w) => w.description).join(" "),
+          status: "loaded",
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }),
   }))
   // to use a method already declared in actions, chain a new actions call
   .actions(self => ({
@@ -76,7 +129,7 @@ export const RootStore = RootStoreBase
     createUserAndLogin(input: CreateUserInput): Query<{ createUser: UserCreationResponseModelType }> {
       const query = self.mutateCreateUser({ input })
       query.then(() => {
-        this.login(input)
+        self.login(input)
       })
       return query
     },
