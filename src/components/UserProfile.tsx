@@ -1,14 +1,14 @@
-import React from "react";
-import { useUserWithPostsQuery } from "../graphql";
-import LoadingContainer from "./common/LoadingContainer";
-import Posts from "./Posts";
+import React from "react"
+import { useUserWithPostsQuery } from "../graphql"
+import LoadingContainer from "./common/LoadingContainer"
+import Posts from "./Posts"
 
 interface UserProfileProps {
-  userId: string;
+  userId: string
 }
 
 const UserProfile: React.FunctionComponent<UserProfileProps> = ({ userId }) => {
-  const { loading, data } = useUserWithPostsQuery({ variables: { userId } });
+  const { loading, data } = useUserWithPostsQuery({ variables: { userId } })
 
   return (
     <LoadingContainer loading={loading}>
@@ -19,7 +19,7 @@ const UserProfile: React.FunctionComponent<UserProfileProps> = ({ userId }) => {
         Posts: <Posts posts={data?.user?.posts || []} />
       </div>
     </LoadingContainer>
-  );
-};
+  )
+}
 
-export default UserProfile;
+export default UserProfile

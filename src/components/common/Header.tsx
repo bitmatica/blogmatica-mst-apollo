@@ -1,13 +1,13 @@
-import React from "react";
-import LogoutButton from "./LogoutButton";
-import { Text, Icon, Flex } from "@chakra-ui/core";
-import { useWhoAmIQuery } from "../../graphql";
-import LoadingContainer from "./LoadingContainer";
+import React from "react"
+import LogoutButton from "./LogoutButton"
+import { Text, Icon, Flex } from "@chakra-ui/core"
+import { useWhoAmIQuery } from "../../graphql"
+import LoadingContainer from "./LoadingContainer"
 
-const ICON_MARGIN = 8;
+const ICON_MARGIN = 8
 
 const Header: React.FunctionComponent = () => {
-  const { loading, data } = useWhoAmIQuery({ pollInterval: 400 });
+  const { loading, data } = useWhoAmIQuery({ pollInterval: 400 })
 
   return (
     <LoadingContainer loading={loading}>
@@ -28,7 +28,7 @@ const Header: React.FunctionComponent = () => {
         )}
       </Flex>
     </LoadingContainer>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

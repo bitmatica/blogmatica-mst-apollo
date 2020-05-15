@@ -1,10 +1,10 @@
-import React from "react";
-import { FormLabel, Input, InputProps } from "@chakra-ui/core";
-import InlineStack from "./InlineStack";
+import React from "react"
+import { FormLabel, Input, InputProps } from "@chakra-ui/core"
+import InlineStack from "./InlineStack"
 
 interface InputWithLabelProps {
-  label: string;
-  labelWidth?: string;
+  label: string
+  labelWidth?: string
 }
 
 const InputWithLabel: React.FunctionComponent<InputWithLabelProps & InputProps> = ({
@@ -20,7 +20,7 @@ const InputWithLabel: React.FunctionComponent<InputWithLabelProps & InputProps> 
       </FormLabel>
       <Input name={name} display="inline-block" {...rest} />
     </InlineStack>
-  );
-};
+  )
+}
 
-export default InputWithLabel;
+export default InputWithLabel
