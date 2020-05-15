@@ -15,7 +15,8 @@ const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
       onClick={(): void => {
         logout()
       }}
-      {...props}>
+      {...props}
+    >
       {props.children}
     </Button>
   )

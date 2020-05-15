@@ -30,7 +30,8 @@ const LoginUserForm: React.FunctionComponent<LoginUserFormProps> = ({
       onSubmit={(e: FormEvent): void => {
         e.preventDefault()
         handleSubmit(inputs)
-      }}>
+      }}
+    >
       <Text fontSize={"3xl"}>Welcome back!</Text>
       <InputWithLabel
         name="email"

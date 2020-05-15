@@ -21,7 +21,8 @@ const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
           event.preventDefault()
         }
         handleSubmit()
-      }}>
+      }}
+    >
       Register User Form
       <FormInputs values={inputs} handleChange={handleUpdate} />
       <input type="submit" value="Submit" />

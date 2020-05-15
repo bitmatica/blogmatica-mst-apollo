@@ -1,7 +1,6 @@
 {
   "trailingComma": "all",
   "arrowParens": "always",
-  "jsxBracketSameLine": true,
   "printWidth": 92,
   "semi": false
 }

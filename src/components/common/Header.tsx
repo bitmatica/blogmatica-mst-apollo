@@ -16,7 +16,8 @@ const Header: React.FunctionComponent = () => {
         align="center"
         height={16}
         color={"white"}
-        backgroundColor={"primary"}>
+        backgroundColor={"primary"}
+      >
         <Icon ml={ICON_MARGIN} name="view" size="24px" />
         <Text ml={ICON_MARGIN} fontSize={"4xl"}>
           Bitmatiblog

@@ -19,7 +19,8 @@ const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = ({ authorId
       onSubmit={(e): void => {
         e.preventDefault()
         createPost({ variables: { post } })
-      }}>
+      }}
+    >
       Create Post:
       <input value={title} onChange={(newTitle): void => setTitle(newTitle.target.value)} />
       <input value={body} onChange={(newBody): void => setBody(newBody.target.value)} />

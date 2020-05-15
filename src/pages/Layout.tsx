@@ -9,7 +9,8 @@ const Layout: React.FunctionComponent = ({ children }) => {
       border="1px solid black"
       alignContent="center"
       minHeight={"100vh"}
-      direction="column">
+      direction="column"
+    >
       <Header />
       <Box
         maxWidth={["100%", "100%", theme.sizes["3xl"]]}
@@ -17,7 +18,8 @@ const Layout: React.FunctionComponent = ({ children }) => {
         mx={[4, 4, "0 auto"]}
         pt={[4]}
         bg="blackAlpha.50"
-        flexGrow={2}>
+        flexGrow={2}
+      >
         {children}
       </Box>
     </Flex>
