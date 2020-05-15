@@ -1,16 +1,16 @@
 Setup the app:
 
-- `yarn install`
+- `npm install`
 
 Generate hooks from graphql:
 
 - add graphql query or mutation in `src/graphql/index.ts`
 - start your graphql server, so `codegen` can get the schema
-- `yarn codegen` will add an exported `use<queryNameHere>` hook to `src/graphql/index.ts` for use in any component, as well as all the typescript and graphql you need to use the query (or mutation...)
+- `npm run codegen` will add an exported `use<queryNameHere>` hook to `src/graphql/index.ts` for use in any component, as well as all the typescript and graphql you need to use the query (or mutation...)
 
 Run the app:
 
-- `yarn start`
+- `npm run start`
 
 Graphql queries are managed by ApolloClient (although a good deal of the syntax is generated in the step above): https://www.apollographql.com/docs/react/
 
