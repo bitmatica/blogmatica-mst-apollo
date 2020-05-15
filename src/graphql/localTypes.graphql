@@ -1,11 +1,11 @@
 type Query {
-    isAuthenticated: Boolean!
+  isAuthenticated: Boolean!
 }
 
 type UpdateAuthReturn {
-    isAuthed: Boolean!
+  isAuthed: Boolean!
 }
 
 type Mutation {
-    updateAuth(newState: Boolean!): UpdateAuthReturn
+  updateAuth(newState: Boolean!): UpdateAuthReturn
 }
