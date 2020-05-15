@@ -1,25 +1,22 @@
 import React from "react"
-import useLogout from "../../hooks/useLogout"
-import { Redirect } from "react-router-dom"
 import { Button, ButtonProps } from "@chakra-ui/core"
 import theme from "../../theme"
+import { useQuery } from "../../models"
+import { observer } from "mobx-react-lite"
 
 const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
-  const [logout, { called, loading, data }] = useLogout()
-  return called && !loading && data?.logout.success ? (
-    <Redirect to={"login"} />
-  ) : (
+  const { setQuery, store } = useQuery()
+  return (
     <Button
       {...theme.buttons.variants.primary}
       variant={"outline"}
       onClick={(): void => {
-        logout()
-      }}
+        store.currentUser && setQuery(store.logout()) }
+      }
+      isDisabled={!store.currentUser}
       {...props}
-    >
-      {props.children}
-    </Button>
+    />
   )
 }
 
-export default LogoutButton
+export default observer(LogoutButton);

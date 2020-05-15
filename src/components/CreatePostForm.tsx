@@ -1,32 +1,47 @@
-import React, { useState } from "react"
-import useCreatePost from "../hooks/useCreatePost"
+import React, { useState } from "react";
+import { useQuery } from "../models";
+import Form from "./common/Form";
+import InputWithLabel from "./common/InputWithLabel";
+import { Button } from "@chakra-ui/core";
 
 interface CreatePostFormProps {
   authorId: string
 }
 
-const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = ({ authorId }) => {
-  const [createPost] = useCreatePost()
+const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = () => {
+  const { setQuery } = useQuery()
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")
   const post = {
     title,
-    authorId,
     body,
   }
   return (
-    <form
+    <Form
       onSubmit={(e): void => {
-        e.preventDefault()
-        createPost({ variables: { post } })
-      }}
-    >
+        e.preventDefault();
+        setQuery(store => store.createPost(post));
+      }}>
       Create Post:
-      <input value={title} onChange={(newTitle): void => setTitle(newTitle.target.value)} />
-      <input value={body} onChange={(newBody): void => setBody(newBody.target.value)} />
-      <input value="Submit" type="submit" />
-    </form>
-  )
-}
+      <InputWithLabel
+        value={title}
+        name="title"
+        label="Title:"
+        handleUpdate={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setTitle(e.target.value)}
+        }
+      />
+      <InputWithLabel
+        value={body}
+        name="body"
+        label="Body:"
+        handleUpdate={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setBody(e.target.value)}
+        }
+      />
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
 
 export default CreatePostForm

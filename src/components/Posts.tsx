@@ -1,16 +1,17 @@
+import { observer } from "mobx-react-lite"
 import React from "react"
-import { Post as IPost } from "../graphql"
+import { PostModelType } from "../models"
 import Post from "./Post"
 
 interface PostsProps {
-  posts?: Partial<IPost>[]
+  posts?: Partial<PostModelType>[]
 }
 
 const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
   posts?.length ? (
     <div>
       {posts.map(
-        (p: Partial<IPost>): React.ReactElement => (
+        (p: Partial<PostModelType>): React.ReactElement => (
           <Post key={p.id} post={p} />
         ),
       )}
@@ -19,4 +20,4 @@ const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
     <div>No posts!</div>
   )
 
-export default Posts
+export default observer(Posts)

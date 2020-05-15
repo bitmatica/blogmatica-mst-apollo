@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "../components/common/Header"
+import Header from "./common/Header"
 import { Flex, Box } from "@chakra-ui/core"
 import theme from "../theme"
 
@@ -16,9 +16,11 @@ const Layout: React.FunctionComponent = ({ children }) => {
         maxWidth={["100%", "100%", theme.sizes["3xl"]]}
         width={[null, null, "80%"]}
         mx={[4, 4, "0 auto"]}
-        pt={[4]}
+        pt={4}
+        px={8}
         bg="blackAlpha.50"
         flexGrow={2}
+        alignSelf="center"
       >
         {children}
       </Box>

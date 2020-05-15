@@ -1,17 +1,18 @@
 import React from "react"
 import { RouteProps } from "react-router-dom"
 import UserProfile from "../components/UserProfile"
-import Layout from "./Layout"
+import Layout from "../components/Layout"
 import CreatePostForm from "../components/CreatePostForm"
-import { useWhoAmIQuery } from "../graphql"
 import LoadingContainer from "../components/common/LoadingContainer"
+import { useStore } from "../getMstGql"
+import { observer } from "mobx-react-lite"
 
 const Home: React.FunctionComponent<RouteProps> = () => {
-  const { loading, data } = useWhoAmIQuery()
-  const id = data?.whoAmI?.id || ""
+  const { currentUser } = useStore()
+  const id = currentUser?.id || ""
   return (
     <Layout>
-      <LoadingContainer loading={loading}>
+      <LoadingContainer loading={!currentUser}>
         <CreatePostForm authorId={id} />
         <UserProfile userId={id} />
       </LoadingContainer>
@@ -19,4 +20,4 @@ const Home: React.FunctionComponent<RouteProps> = () => {
   )
 }
 
-export default Home
+export default observer(Home);

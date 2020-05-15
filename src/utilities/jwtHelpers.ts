@@ -11,3 +11,8 @@ export function resetJwt(): void {
 export function getJwt(): string | null {
   return sessionStorage.getItem(JWT_SESSION_STORAGE_KEY)
 }
+
+export function getAuthHeader(): string {
+  const token = getJwt()
+  return token ? `Bearer ${token}` : ""
+}
