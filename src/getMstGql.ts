@@ -1,5 +1,6 @@
 import { createHttpClient } from "mst-gql"
 import { useContext } from "react"
+import { SERVER_URI } from "./config"
 import { RootStore, RootStoreType } from "./models"
 import { StoreContext } from "./models/reactUtils"
 import { getAuthHeader } from "./utilities/jwtHelpers"
@@ -11,7 +12,7 @@ const defaultState = {
 }
 
 export const rootStore = RootStore.create(defaultState, {
-  gqlHttpClient: createHttpClient("http://localhost:3001/graphql", {
+  gqlHttpClient: createHttpClient(SERVER_URI, {
     headers: {
       Authorization: getAuthHeader() || "",
     },
