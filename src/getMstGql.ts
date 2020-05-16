@@ -18,4 +18,14 @@ export const rootStore = RootStore.create(defaultState, {
   }),
 })
 
+declare global {
+  interface Window {
+    STORE: RootStoreType
+  }
+}
+
+if (process.env.NODE_ENV === "development") {
+  window.STORE = rootStore
+}
+
 export const useStore = (): RootStoreType => useContext(StoreContext)
