@@ -5,6 +5,7 @@ import OnlyLoggedOutRoute from "./components/common/OnlyLoggedOutRoute"
 import PrivateRoute from "./components/common/PrivateRoute"
 import { rootStore } from "./getMstGql"
 import { StoreContext } from "./models/reactUtils"
+import { AdminDashboard } from "./pages/admin"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
@@ -23,6 +24,7 @@ const App: React.FunctionComponent = () => {
             <OnlyLoggedOutRoute path="/login" component={Login} />
             <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
             <PrivateRoute path={"/user/:userId"} component={User} />
+            <PrivateRoute path="/admin" component={AdminDashboard} />
             <PrivateRoute path="*" component={Home} />
           </Switch>
         </BrowserRouter>
