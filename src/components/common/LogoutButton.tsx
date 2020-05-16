@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import { useQuery } from "../../models/reactUtils"
 
-const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
+const LogoutButton: React.FunctionComponent<ButtonProps> = ({ children, ...props }) => {
   const { setQuery, store } = useQuery()
   const theme = useTheme()
 
@@ -16,7 +16,9 @@ const LogoutButton: React.FunctionComponent<ButtonProps> = (props) => {
       }}
       isDisabled={!store.currentUser}
       {...props}
-    />
+    >
+      {children}
+    </Button>
   )
 }
 
