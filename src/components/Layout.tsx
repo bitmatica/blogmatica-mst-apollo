@@ -1,9 +1,10 @@
+import { Box, Flex, useTheme } from "@chakra-ui/core"
 import React from "react"
 import Header from "./common/Header"
-import { Flex, Box } from "@chakra-ui/core"
-import theme from "../theme"
 
 const Layout: React.FunctionComponent = ({ children }) => {
+  const theme = useTheme()
+
   return (
     <Flex
       border="1px solid black"
