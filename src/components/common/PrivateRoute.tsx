@@ -17,7 +17,7 @@ const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
 }) => {
   const { loading, data } = useQuery((store) => store.getCurrentUser())
 
-  const isLoggedIn = Boolean(data?.whoAmI.id)
+  const isLoggedIn = Boolean(data?.whoAmI?.id)
   const shouldRedirect = mustBeLoggedOut ? isLoggedIn : !isLoggedIn
 
   return (
