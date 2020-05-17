@@ -7,7 +7,7 @@ import Layout from "../components/Layout"
 import { useQuery } from "../models/reactUtils"
 import { UserLoginArgs } from "../models/RootStore.base"
 
-const Login: React.FunctionComponent<RouteComponentProps> = () => {
+const Login: React.FC<RouteComponentProps> = () => {
   const { setQuery, store, error } = useQuery()
   const [errorMessage, setErrorMessage] = useState("")
 

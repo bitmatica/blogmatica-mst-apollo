@@ -9,7 +9,7 @@ interface UserProfileProps {
   userId: string
 }
 
-const UserProfile: React.FunctionComponent<UserProfileProps> = ({ userId }) => {
+const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
   const { loading, data } = useQuery((store) =>
     store.queryUser(
       { id: userId },

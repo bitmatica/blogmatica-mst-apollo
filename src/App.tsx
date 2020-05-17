@@ -14,7 +14,7 @@ import Test from "./pages/Test"
 import User from "./pages/User"
 import theme from "./styles/theme"
 
-const App: React.FunctionComponent = () => {
+const App: React.FC = () => {
   return (
     <StoreContext.Provider value={rootStore}>
       <ThemeProvider theme={theme}>

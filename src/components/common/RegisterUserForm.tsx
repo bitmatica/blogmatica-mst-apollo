@@ -1,8 +1,8 @@
+import { Box, Flex, Text } from "@chakra-ui/core"
 import React, { FormEvent } from "react"
-import { Text, Flex, Box } from "@chakra-ui/core"
+import Button from "./Button"
 import Form from "./Form"
 import InputWithLabel from "./InputWithLabel"
-import Button from "./Button"
 
 interface RegisterUserFormProps {
   inputs: { [key: string]: string | number }
@@ -11,7 +11,7 @@ interface RegisterUserFormProps {
   handleUpdate(event: React.FormEvent<HTMLInputElement>): void
 }
 
-const RegisterUserForm: React.FunctionComponent<RegisterUserFormProps> = ({
+const RegisterUserForm: React.FC<RegisterUserFormProps> = ({
   inputs,
   errorMessage,
   handleSubmit,

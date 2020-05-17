@@ -1,13 +1,13 @@
+import { observer } from "mobx-react-lite"
 import React from "react"
 import { RouteProps } from "react-router-dom"
-import UserProfile from "../components/UserProfile"
-import Layout from "../components/Layout"
-import CreatePostForm from "../components/CreatePostForm"
 import LoadingContainer from "../components/common/LoadingContainer"
+import CreatePostForm from "../components/CreatePostForm"
+import Layout from "../components/Layout"
+import UserProfile from "../components/UserProfile"
 import { useStore } from "../getMstGql"
-import { observer } from "mobx-react-lite"
 
-const Home: React.FunctionComponent<RouteProps> = () => {
+const Home: React.FC<RouteProps> = () => {
   const { currentUser } = useStore()
   const id = currentUser?.id || ""
   return (

@@ -1,12 +1,12 @@
 import React from "react"
-import PrivateRoute from "./PrivateRoute"
 import { RouteProps } from "react-router-dom"
+import PrivateRoute from "./PrivateRoute"
 
 interface OnlyLoggedOutRouteProps extends RouteProps {
   redirect?: string
 }
 
-export const OnlyLoggedOutRoute: React.FunctionComponent<OnlyLoggedOutRouteProps> = ({
+export const OnlyLoggedOutRoute: React.FC<OnlyLoggedOutRouteProps> = ({
   redirect,
   ...rest
 }) => {

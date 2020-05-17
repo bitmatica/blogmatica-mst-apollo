@@ -1,12 +1,12 @@
+import { Box, Text } from "@chakra-ui/core"
 import React from "react"
 import { PostModelType } from "../models"
-import { Text, Box } from "@chakra-ui/core"
 
 interface PostProps {
   post: Partial<PostModelType>
 }
 
-const Post: React.FunctionComponent<PostProps> = ({ post: { id, title, body } }) => (
+const Post: React.FC<PostProps> = ({ post: { id, title, body } }) => (
   <Box>
     <Text>Id: {id}</Text>
     <Text>Title: {title}</Text>

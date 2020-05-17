@@ -1,11 +1,11 @@
+import { Flex, Stack, Text } from "@chakra-ui/core"
+import { observer } from "mobx-react-lite"
 import React from "react"
-import { Flex, Text, Stack } from "@chakra-ui/core"
 import Button from "../components/common/Button"
 import Layout from "../components/Layout"
-import { observer } from "mobx-react-lite"
 import { useStore } from "../getMstGql"
 
-const ButtonClickTracker: React.FunctionComponent = observer(() => {
+const ButtonClickTracker: React.FC = observer(() => {
   const { isButtonClicked } = useStore()
 
   return (
@@ -31,7 +31,7 @@ const TestButton: React.FC = observer(() => {
   )
 })
 
-const WeatherData: React.FunctionComponent = observer(() => {
+const WeatherData: React.FC = observer(() => {
   const { weather } = useStore()
 
   return (
@@ -43,7 +43,7 @@ const WeatherData: React.FunctionComponent = observer(() => {
   )
 })
 
-const Test: React.FunctionComponent = () => {
+const Test: React.FC = () => {
   return (
     <Layout>
       <Flex direction="column" alignContent="center">

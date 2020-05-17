@@ -6,7 +6,7 @@ import ColorModeSwitcher from "./ColorModeSwitcher"
 import HeaderLogo from "./HeaderLogo"
 import HeaderMenu from "./HeaderMenu"
 
-const Header: React.FunctionComponent = () => {
+const Header: React.FC = () => {
   const { currentUser } = useStore()
   return (
     <Flex

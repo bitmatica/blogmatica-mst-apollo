@@ -1,13 +1,13 @@
 import React from "react"
 import { RouteComponentProps } from "react-router-dom"
-import UserProfile from "../components/UserProfile"
 import Layout from "../components/Layout"
+import UserProfile from "../components/UserProfile"
 
 interface MatchParams {
   userId: string
 }
 
-const User: React.FunctionComponent<RouteComponentProps<MatchParams>> = ({ match }) => {
+const User: React.FC<RouteComponentProps<MatchParams>> = ({ match }) => {
   return (
     <Layout>
       <UserProfile userId={match.params.userId} />

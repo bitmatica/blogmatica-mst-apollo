@@ -2,7 +2,7 @@ import { Box, Flex, useTheme } from "@chakra-ui/core"
 import React from "react"
 import Header from "./common/Header"
 
-const Layout: React.FunctionComponent = ({ children }) => {
+const Layout: React.FC = ({ children }) => {
   const theme = useTheme()
 
   return (

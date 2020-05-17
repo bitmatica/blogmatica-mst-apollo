@@ -7,7 +7,7 @@ interface PostsProps {
   posts?: Partial<PostModelType>[]
 }
 
-const Posts: React.FunctionComponent<PostsProps> = ({ posts }) =>
+const Posts: React.FC<PostsProps> = ({ posts }) =>
   posts?.length ? (
     <div>
       {posts.map(

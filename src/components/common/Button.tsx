@@ -10,11 +10,7 @@ interface ButtonProps extends ChakraButtonProps {
   themeVariant?: ButtonVariants
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
-  themeVariant = "primary",
-  children,
-  ...rest
-}) => {
+const Button: React.FC<ButtonProps> = ({ themeVariant = "primary", children, ...rest }) => {
   const theme = useTheme()
 
   return (
