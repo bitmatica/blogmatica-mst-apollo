@@ -1,4 +1,5 @@
 import { theme as defaultTheme } from "@chakra-ui/core"
+import { customIcons } from "./icons"
 
 const SIDE_NAV_WIDTH = "15rem"
 const HEADER_HEIGHT = "4rem"
@@ -47,14 +48,11 @@ const theme = {
     sideNavWidth: SIDE_NAV_WIDTH,
     headerHeight: HEADER_HEIGHT,
   },
-}
-
-export type CustomTheme = typeof theme
-
-declare module "@chakra-ui/core" {
-  export function useTheme(): CustomTheme
+  icons: {
+    ...defaultTheme.icons,
+    ...customIcons,
+    logo: defaultTheme.icons["view"],
+  },
 }
 
 export default theme
-
-export type ButtonVariants = keyof typeof theme.buttons.variants

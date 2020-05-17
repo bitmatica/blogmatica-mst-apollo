@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/core"
 import React from "react"
+import SideNavContent from "./SideNavContent"
 
 const SideNav: React.FC = () => {
   return (
@@ -15,7 +16,9 @@ const SideNav: React.FC = () => {
       display={["none", null, "block"]}
       maxWidth="sideNavWidth"
     >
-      <Box position="relative" overflowY="auto" height="full"></Box>
+      <Box position="relative" overflowY="auto" height="full">
+        <SideNavContent />
+      </Box>
     </Box>
   )
 }

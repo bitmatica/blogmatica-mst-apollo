@@ -12,7 +12,7 @@ import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
 import Test from "./pages/Test"
 import User from "./pages/User"
-import theme from "./theme"
+import theme from "./styles/theme"
 
 const App: React.FunctionComponent = () => {
   return (
