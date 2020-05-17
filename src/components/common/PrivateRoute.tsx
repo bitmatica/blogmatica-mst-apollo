@@ -1,7 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Redirect, Route, RouteProps } from "react-router-dom"
-import { useStore } from "../../getMstGql"
 import { useQuery } from "../../models/reactUtils"
 import LoadingContainer from "./LoadingContainer"
 
@@ -16,10 +15,9 @@ const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
   mustBeLoggedOut,
   ...rest
 }) => {
-  const { currentUser } = useStore()
-  const { loading } = useQuery((store) => store.getCurrentUser())
+  const { loading, data } = useQuery((store) => store.getCurrentUser())
 
-  const isLoggedIn = Boolean(currentUser?.id)
+  const isLoggedIn = Boolean(data?.whoAmI?.id)
   const shouldRedirect = mustBeLoggedOut ? isLoggedIn : !isLoggedIn
 
   return (
