@@ -1,12 +1,10 @@
-import { Box, Flex, Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/core"
-import { observer } from "mobx-react-lite"
+import { Box, Flex } from "@chakra-ui/core"
 import React from "react"
 import ColorModeSwitcher from "../../../components/common/ColorModeSwitcher"
-import { useStore } from "../../../getMstGql"
+import HeaderMenu from "../../../components/common/HeaderMenu"
 import MobileNav from "./MobileNav"
 
 const Header: React.FC = () => {
-  const { currentUser, logout } = useStore()
   return (
     <Box
       as="header"
@@ -23,23 +21,11 @@ const Header: React.FC = () => {
         <Flex width="100%" justify="flex-end" align="center">
           <ColorModeSwitcher />
 
-          <Menu>
-            <MenuButton>
-              <Image
-                rounded="full"
-                size="38px"
-                src={currentUser?.profileImageUrl}
-                alt="User profile"
-              />
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => logout()}>Logout</MenuItem>
-            </MenuList>
-          </Menu>
+          <HeaderMenu />
         </Flex>
       </Flex>
     </Box>
   )
 }
 
-export default observer(Header)
+export default Header

@@ -2,7 +2,7 @@ import { Box, Flex, Icon, Text } from "@chakra-ui/core"
 import React from "react"
 import { Link } from "react-router-dom"
 
-const SideNavLogo: React.FC = () => {
+const HeaderLogo: React.FC = () => {
   return (
     <Flex
       align="center"
@@ -23,4 +23,4 @@ const SideNavLogo: React.FC = () => {
   )
 }
 
-export default SideNavLogo
+export default HeaderLogo
