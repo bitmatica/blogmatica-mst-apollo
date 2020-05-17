@@ -1,6 +1,6 @@
 import { CSSReset, ThemeProvider } from "@chakra-ui/core"
 import React from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import OnlyLoggedOutRoute from "./components/common/OnlyLoggedOutRoute"
 import PrivateRoute from "./components/common/PrivateRoute"
 import { rootStore } from "./getMstGql"
@@ -26,6 +26,7 @@ const App: React.FunctionComponent = () => {
             <PrivateRoute path={"/user/:userId"} component={User} />
             <PrivateRoute path="/admin" component={AdminDashboard} />
             <PrivateRoute path="*" component={Home} />
+            <Route path="*" component={(): JSX.Element => <Redirect to="/" />} />
           </Switch>
         </BrowserRouter>
       </ThemeProvider>
