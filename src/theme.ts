@@ -1,5 +1,8 @@
 import { theme as defaultTheme } from "@chakra-ui/core"
 
+const SIDE_NAV_WIDTH = "15rem"
+const HEADER_HEIGHT = "4rem"
+
 const theme = {
   ...defaultTheme,
   breakpoints: ["30em", "48em", "62em", "80em"],
@@ -10,7 +13,7 @@ const theme = {
   },
   colors: {
     ...defaultTheme.colors,
-    primary: "purple",
+    primary: "#3f334d",
   },
   buttons: {
     variants: {
@@ -33,6 +36,16 @@ const theme = {
     "4xl": "2.25rem",
     "5xl": "3rem",
     "6xl": "4rem",
+  },
+  sizes: {
+    ...defaultTheme.sizes,
+    sideNavWidth: SIDE_NAV_WIDTH,
+    headerHeight: HEADER_HEIGHT,
+  },
+  space: {
+    ...defaultTheme.space,
+    sideNavWidth: SIDE_NAV_WIDTH,
+    headerHeight: HEADER_HEIGHT,
   },
 }
 
