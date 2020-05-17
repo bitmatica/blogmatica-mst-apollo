@@ -14,7 +14,7 @@ export const SideNavSection: React.FC<SideNavSectionProps> = ({
   const handleToggle = (): void => setShow(!show)
 
   return (
-    <Box {...props}>
+    <Box borderBottomWidth="1px" borderColor="rgba(255,255,255,0.16)" {...props}>
       <Flex
         onClick={handleToggle}
         p="4"
@@ -29,7 +29,9 @@ export const SideNavSection: React.FC<SideNavSectionProps> = ({
         </Text>
         <Icon name={show ? "chevron-up" : "chevron-down"} size="5" />
       </Flex>
-      <Collapse isOpen={show}>{children}</Collapse>
+      <Collapse isOpen={show} pb="4">
+        {children}
+      </Collapse>
     </Box>
   )
 }
