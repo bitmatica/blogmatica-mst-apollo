@@ -1,7 +1,10 @@
 import { IconButton, useColorMode } from "@chakra-ui/core"
+import { ButtonProps } from "@chakra-ui/core/dist/Button"
 import React from "react"
 
-const ColorModeSwitcher: React.FC = (props) => {
+export type ColorModeSwitcherProps = Omit<ButtonProps, "children">
+
+const ColorModeSwitcher: React.FC<ColorModeSwitcherProps> = (props) => {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
     <IconButton
@@ -12,6 +15,7 @@ const ColorModeSwitcher: React.FC = (props) => {
       fontSize="20px"
       onClick={toggleColorMode}
       icon={colorMode === "light" ? "moon" : "sun"}
+      _hover={{}}
       {...props}
     />
   )

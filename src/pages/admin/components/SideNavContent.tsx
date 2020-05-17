@@ -5,8 +5,8 @@ import HeaderLogo from "../../../components/common/HeaderLogo"
 
 const SideNavContent: React.FC = ({ ...props }) => (
   <Box as="nav" aria-label="Main navigation" fontSize="sm" {...props}>
-    <HeaderLogo />
-    <Box mt="6"></Box>
+    <HeaderLogo borderBottomWidth="1px" borderColor="rgba(255,255,255,0.16)" />
+    <Box mt="6" />
   </Box>
 )
 
