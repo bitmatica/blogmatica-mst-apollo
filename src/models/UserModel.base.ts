@@ -40,6 +40,7 @@ export const UserModelBase = withTypedRefs<Refs>()(
       ),
       roles: types.union(types.undefined, types.array(types.string)),
       gustoAccess: types.union(types.undefined, types.boolean),
+      profileImageUrl: types.union(types.undefined, types.string),
     })
     .views((self) => ({
       get store() {
@@ -67,6 +68,9 @@ export class UserModelSelector extends QueryBuilder {
   get gustoAccess() {
     return this.__attr(`gustoAccess`)
   }
+  get profileImageUrl() {
+    return this.__attr(`profileImageUrl`)
+  }
   posts(
     builder?:
       | string
@@ -89,4 +93,4 @@ export function selectFromUser() {
 }
 
 export const userModelPrimitives = selectFromUser().createdAt.updatedAt.email.roles
-  .gustoAccess
+  .gustoAccess.profileImageUrl
