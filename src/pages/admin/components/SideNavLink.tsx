@@ -24,7 +24,7 @@ export const SideNavLink: React.FC<SideNavLinkProps> = ({
           fontWeight={active ? "bold" : "normal"}
           px="4"
           py="2"
-          backgroundColor={active ? "whiteAlpha.400" : ""}
+          backgroundColor={active ? "whiteAlpha.300" : ""}
           cursor="pointer"
           width="100%"
           {...props}
