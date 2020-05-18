@@ -4,11 +4,17 @@ import { Link, useLocation } from "react-router-dom"
 
 type SideNavLinkProps = BoxProps & {
   to: string
+  exact?: boolean
 }
 
-export const SideNavLink: React.FC<SideNavLinkProps> = ({ children, to, ...props }) => {
+export const SideNavLink: React.FC<SideNavLinkProps> = ({
+  children,
+  to,
+  exact,
+  ...props
+}) => {
   const location = useLocation()
-  const active = location.pathname.startsWith(to)
+  const active = exact ? location.pathname.endsWith(to) : location.pathname.startsWith(to)
 
   return (
     <Link to={to}>
