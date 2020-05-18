@@ -1,5 +1,4 @@
-import { IconButton, useColorMode } from "@chakra-ui/core"
-import { ButtonProps } from "@chakra-ui/core/dist/Button"
+import { ButtonProps, IconButton, useColorMode } from "@chakra-ui/core"
 import React from "react"
 
 export type ColorModeSwitcherProps = Omit<ButtonProps, "children">

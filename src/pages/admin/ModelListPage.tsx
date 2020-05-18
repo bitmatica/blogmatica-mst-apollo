@@ -34,7 +34,7 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
   const records = getModelListData(model, data)
   const fields = getModelListFields(model)
   return (
-    <Card>
+    <Card m="8">
       <Card.Header>
         <Card.Header.Title>{pluralize(model.name)}</Card.Header.Title>
         <Card.Header.Text>Listing all {pluralizeModel(model)}</Card.Header.Text>

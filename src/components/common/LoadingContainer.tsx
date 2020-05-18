@@ -1,5 +1,4 @@
-import { Box, Spinner } from "@chakra-ui/core"
-import { BoxProps } from "@chakra-ui/core/dist"
+import { Box, BoxProps, Spinner } from "@chakra-ui/core"
 import React from "react"
 
 export type LoadingContainerProps = BoxProps & {

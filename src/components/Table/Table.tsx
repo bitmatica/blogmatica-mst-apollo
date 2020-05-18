@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@chakra-ui/core/dist"
+import { Box, BoxProps } from "@chakra-ui/core"
 import React from "react"
 
 import TableBody from "./components/TableBody"

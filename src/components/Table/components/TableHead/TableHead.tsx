@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/core/dist"
+import { Box } from "@chakra-ui/core"
 import React from "react"
 
 import TableHeadCell from "./TableHeadCell"

@@ -1,25 +1,22 @@
-import { Text, useColorMode } from "@chakra-ui/core"
-import styled from "@emotion/styled"
+import { PseudoBox, PseudoBoxProps, Text, useColorMode } from "@chakra-ui/core"
 import React, { useMemo } from "react"
+import { sharedCellProps } from "../sharedStyles"
 
-import { cell } from "../../modules/styles"
-
-const Wrapper = styled("th")`
-  ${cell};
-  text-transform: uppercase;
-  font-size: ${({ theme }: any) => theme.fontSizes.sm};
-  color: ${({ theme }: any) => theme.colors.gray[500]};
-`
-
-const TableHeadCell: React.FC = ({ children }) => {
+const TableHeadCell: React.FC<PseudoBoxProps> = ({ children, ...props }) => {
   const { colorMode } = useColorMode()
-
   const color = useMemo(() => (colorMode === "dark" ? "gray.400" : "gray.500"), [colorMode])
 
   return (
-    <Wrapper>
+    <PseudoBox
+      as="th"
+      textTransform="uppercase"
+      fontSize="sm"
+      color="gray.500"
+      {...sharedCellProps}
+      {...props}
+    >
       <Text color={color}>{children}</Text>
-    </Wrapper>
+    </PseudoBox>
   )
 }
 
