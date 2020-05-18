@@ -1,12 +1,12 @@
 import { Box } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
-import { IModelType } from "mobx-state-tree"
 import pluralize from "pluralize"
 import React, { useEffect, useState } from "react"
 
 import { Card, Table } from "../../components"
 import LoadingContainer from "../../components/common/LoadingContainer"
 import { useQuery } from "../../models/reactUtils"
+import { RegisteredModelConfig } from "./config"
 import {
   formatModelField,
   getModelListData,
@@ -16,29 +16,29 @@ import {
 } from "./utils"
 
 export type ModelListPageProps = {
-  model: IModelType<any, any>
+  modelConfig: RegisteredModelConfig<any>
 }
 
-const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
-  const [cachedModel, setCachedModel] = useState<IModelType<any, any> | undefined>(
+const ModelListPage: React.FC<ModelListPageProps> = ({ modelConfig }) => {
+  const [cachedModel, setCachedModel] = useState<RegisteredModelConfig<any> | undefined>(
     undefined,
   )
   const { setQuery, data, store, loading } = useQuery()
 
   useEffect(() => {
-    if (cachedModel !== model) {
-      setCachedModel(model)
-      setQuery(getModelListQuery(model, store))
+    if (cachedModel !== modelConfig) {
+      setCachedModel(modelConfig)
+      setQuery(getModelListQuery(modelConfig, store))
     }
-  }, [cachedModel, store, setQuery, model])
+  }, [cachedModel, store, setQuery, modelConfig])
 
-  const records = getModelListData(model, data)
-  const fields = getModelListFields(model)
+  const records = getModelListData(modelConfig, data)
+  const fields = getModelListFields(modelConfig)
   return (
     <Card m={[0, 4, 8]}>
       <Card.Header>
-        <Card.Header.Title>{pluralize(model.name)}</Card.Header.Title>
-        <Card.Header.Text>Listing all {pluralizeModel(model)}</Card.Header.Text>
+        <Card.Header.Title>{pluralize(modelConfig.model.name)}</Card.Header.Title>
+        <Card.Header.Text>Listing all {pluralizeModel(modelConfig)}</Card.Header.Text>
       </Card.Header>
 
       <LoadingContainer loading={loading} my="8">
@@ -57,7 +57,7 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
                 <Table.Body.Row key={record.id}>
                   {fields.map((field) => (
                     <Table.Body.Cell key={field.name}>
-                      {formatModelField(model, record, field)}
+                      {formatModelField(modelConfig, record, field)}
                     </Table.Body.Cell>
                   ))}
                 </Table.Body.Row>

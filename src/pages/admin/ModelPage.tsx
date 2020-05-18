@@ -9,13 +9,13 @@ export type ModelPageParams = {
 }
 
 const ModelPage: React.FC<RouteComponentProps<ModelPageParams>> = ({ match }) => {
-  const model = getModelFromPlural(match.params.modelName)
-  if (!model) {
+  const modelConfig = getModelFromPlural(match.params.modelName)
+  if (!modelConfig) {
     return <Redirect to="/admin" />
   }
   return (
     <div>
-      <ModelListPage model={model} />
+      <ModelListPage modelConfig={modelConfig} />
     </div>
   )
 }

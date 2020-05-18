@@ -5,22 +5,34 @@ import { IModelType } from "mobx-state-tree"
 import { Query } from "mst-gql"
 import pluralize from "pluralize"
 import { RootStoreType } from "../../models"
-import { REGISTERED_MODELS } from "./config"
+import { REGISTERED_MODELS, RegisteredModelConfig } from "./config"
 
-export function pluralizeModel(model: string | { name: string }): string {
-  const typeName = typeof model === "string" ? model : model.name
+export function getRegisteredModels(): Array<RegisteredModelConfig<any>> {
+  return REGISTERED_MODELS.map((modelOrConfig) => {
+    if (Object.keys(modelOrConfig).includes("model")) {
+      return modelOrConfig as RegisteredModelConfig<any>
+    }
+
+    return {
+      model: modelOrConfig as IModelType<any, any>,
+    }
+  })
+}
+
+export function pluralizeModel(config: RegisteredModelConfig<any>): string {
+  const typeName = config.model.name
   const newName = camelcase(typeName)
   const parts = newName.split(/(?=[A-Z])/)
   parts[parts.length - 1] = pluralize(parts[parts.length - 1])
   return parts.join("")
 }
 
-export function getModelLink(model: string | { name: string }): string {
-  return `/admin/models/${pluralizeModel(model)}`
+export function getModelLink(config: RegisteredModelConfig<any>): string {
+  return `/admin/models/${pluralizeModel(config)}`
 }
 
-export function getModelFromPlural(plural: string): IModelType<any, any> | undefined {
-  return REGISTERED_MODELS.find((model) => pluralizeModel(model) === plural)
+export function getModelFromPlural(plural: string): RegisteredModelConfig<any> | undefined {
+  return getRegisteredModels().find((config) => pluralizeModel(config) === plural)
 }
 
 export type ModelField = {
@@ -28,8 +40,8 @@ export type ModelField = {
   name: string
 }
 
-export function getModelListFields(model: IModelType<any, any>): Array<ModelField> {
-  const fields = Object.keys(model.properties)
+export function getModelListFields(config: RegisteredModelConfig<any>): Array<ModelField> {
+  const fields = Object.keys(config.model.properties)
     .filter((key) => {
       if (
         key === "__typename" ||
@@ -40,7 +52,7 @@ export function getModelListFields(model: IModelType<any, any>): Array<ModelFiel
         return false
       }
 
-      const property = model.properties[key] as { name: string }
+      const property = config.model.properties[key] as { name: string }
       return !property.name.includes("reference")
     })
     .map((key) => ({ label: startCase(key), name: key }))
@@ -54,18 +66,18 @@ export function getModelListFields(model: IModelType<any, any>): Array<ModelFiel
 }
 
 export function getModelListQuery(
-  model: IModelType<any, any>,
+  config: RegisteredModelConfig<any>,
   store: RootStoreType,
 ): Query {
-  const listQueryName = `query${pluralize(model.name)}`
+  const listQueryName = `query${pluralize(config.model.name)}`
   return store[listQueryName as keyof RootStoreType]()
 }
 
 export function getModelListData(
-  model: IModelType<any, any>,
+  config: RegisteredModelConfig<any>,
   data: any,
 ): Array<{ id: string }> {
-  return (data && data[pluralizeModel(model)]) || []
+  return (data && data[pluralizeModel(config)]) || []
 }
 
 export function formatDate(dateStr: string): string {
@@ -77,7 +89,7 @@ export function formatUUID(uuidStr: string): string {
 }
 
 export function formatModelField(
-  model: IModelType<any, any>,
+  config: RegisteredModelConfig<any>,
   record: any,
   field: ModelField,
 ): string {
