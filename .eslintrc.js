@@ -38,7 +38,7 @@ module.exports = {
     // Not sure if this is necessary, but it seems misleading to await
     // something that is not a Promise.
     "@typescript-eslint/await-thenable": "error",
-
+    "@typescript-eslint/no-explicit-any": 0,
     // This exception allows to write
     // const Box: React.FC = () => (<div>...</div>)
     // instead of
