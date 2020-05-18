@@ -4,7 +4,7 @@ import React from "react"
 const Content: React.FC = ({ children }) => {
   return (
     <Box ml={[0, null, "sideNavWidth"]} mt="headerHeight" height="100%">
-      <Box as="main" height="100%" mx="auto">
+      <Box as="main" mx="auto">
         {children}
       </Box>
     </Box>
