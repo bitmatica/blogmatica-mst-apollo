@@ -11,7 +11,7 @@ const INITIAL_REGISTER_USER_FORM_STATE = {
   password: "",
 }
 
-const RegisterUser: React.FunctionComponent = () => {
+const RegisterUser: React.FC = () => {
   const [inputs, setInputs] = useState(INITIAL_REGISTER_USER_FORM_STATE)
   const { setQuery, loading, store, error } = useQuery()
 

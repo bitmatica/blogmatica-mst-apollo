@@ -1,27 +1,26 @@
-import React from "react"
-import { Text, Icon, Flex } from "@chakra-ui/core"
-import LogoutButton from "./LogoutButton"
+import { Flex } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
+import React from "react"
 import { useStore } from "../../getMstGql"
-const ICON_MARGIN = 8
+import ColorModeSwitcher from "./ColorModeSwitcher"
+import HeaderLogo from "./HeaderLogo"
+import HeaderMenu from "./HeaderMenu"
 
-const Header: React.FunctionComponent = () => {
+const Header: React.FC = () => {
   const { currentUser } = useStore()
   return (
     <Flex
       direction="row"
       align="center"
-      height={16}
-      color={"white"}
+      height="headerHeight"
       backgroundColor={"primary"}
+      px="4"
     >
-      <Icon ml={ICON_MARGIN} name="view" size="24px" />
-      <Text ml={ICON_MARGIN} fontSize={"4xl"}>
-        Bitmatiblog
-      </Text>
-      <LogoutButton ml="auto" mr={4}>
-        {currentUser ? "Logout" : "Logged Out"}
-      </LogoutButton>
+      <HeaderLogo />
+      <Flex width="100%" align="center" justify="flex-end">
+        <ColorModeSwitcher color="white" />
+        {currentUser && <HeaderMenu />}
+      </Flex>
     </Flex>
   )
 }

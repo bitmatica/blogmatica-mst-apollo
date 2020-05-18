@@ -1,4 +1,8 @@
 import { theme as defaultTheme } from "@chakra-ui/core"
+import { customIcons } from "./icons"
+
+const SIDE_NAV_WIDTH = "15rem"
+const HEADER_HEIGHT = "4rem"
 
 const theme = {
   ...defaultTheme,
@@ -10,7 +14,7 @@ const theme = {
   },
   colors: {
     ...defaultTheme.colors,
-    primary: "purple",
+    primary: "#3f334d",
   },
   buttons: {
     variants: {
@@ -34,14 +38,21 @@ const theme = {
     "5xl": "3rem",
     "6xl": "4rem",
   },
-}
-
-export type CustomTheme = typeof theme
-
-declare module "@chakra-ui/core" {
-  export function useTheme(): CustomTheme
+  sizes: {
+    ...defaultTheme.sizes,
+    sideNavWidth: SIDE_NAV_WIDTH,
+    headerHeight: HEADER_HEIGHT,
+  },
+  space: {
+    ...defaultTheme.space,
+    sideNavWidth: SIDE_NAV_WIDTH,
+    headerHeight: HEADER_HEIGHT,
+  },
+  icons: {
+    ...defaultTheme.icons,
+    ...customIcons,
+    logo: defaultTheme.icons["view"],
+  },
 }
 
 export default theme
-
-export type ButtonVariants = keyof typeof theme.buttons.variants

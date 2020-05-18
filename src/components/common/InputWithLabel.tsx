@@ -1,5 +1,5 @@
-import React from "react"
 import { FormLabel, Input, InputProps, StackProps } from "@chakra-ui/core"
+import React from "react"
 import InlineStack from "./InlineStack"
 
 interface InputWithLabelProps extends StackProps {
@@ -14,7 +14,7 @@ interface InputWithLabelProps extends StackProps {
   handleUpdate(event: React.FormEvent<HTMLInputElement>): void
 }
 
-const InputWithLabel: React.FunctionComponent<InputWithLabelProps> = ({
+const InputWithLabel: React.FC<InputWithLabelProps> = ({
   name,
   label,
   type = "text",

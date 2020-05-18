@@ -9,7 +9,7 @@ interface PrivateRouteProps extends RouteProps {
   mustBeLoggedOut?: boolean
 }
 
-const PrivateRoute: React.FunctionComponent<PrivateRouteProps> = ({
+const PrivateRoute: React.FC<PrivateRouteProps> = ({
   redirect,
   location,
   mustBeLoggedOut,

@@ -8,7 +8,7 @@ interface CreatePostFormProps {
   authorId: string
 }
 
-const CreatePostForm: React.FunctionComponent<CreatePostFormProps> = () => {
+const CreatePostForm: React.FC<CreatePostFormProps> = () => {
   const { setQuery } = useQuery()
   const [title, setTitle] = useState("")
   const [body, setBody] = useState("")

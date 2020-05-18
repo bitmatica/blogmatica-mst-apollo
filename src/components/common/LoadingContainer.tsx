@@ -1,18 +1,27 @@
+import { Box, BoxProps, Spinner } from "@chakra-ui/core"
 import React from "react"
-import { Spinner } from "@chakra-ui/core"
 
-interface LoadingContainerProps {
+export type LoadingContainerProps = BoxProps & {
   loading: boolean
 }
 
-const LoadingContainer: React.FunctionComponent<LoadingContainerProps> = ({
+const LoadingContainer: React.FC<LoadingContainerProps> = ({
   loading,
   children,
+  ...props
 }) =>
   loading ? (
-    <Spinner thickness="3px" speed="1s" emptyColor="gray.200" color="blue.500" size="xl" />
+    <Box width="100%" textAlign="center" {...props}>
+      <Spinner
+        thickness="3px"
+        speed="1s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    </Box>
   ) : (
-    <div>{children}</div>
+    <>{children}</>
   )
 
 export default LoadingContainer

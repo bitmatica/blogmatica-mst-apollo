@@ -4,17 +4,13 @@ import {
   useTheme,
 } from "@chakra-ui/core"
 import React from "react"
-import { ButtonVariants } from "../../theme"
+import { ButtonVariants } from "../../styles/types"
 
 interface ButtonProps extends ChakraButtonProps {
   themeVariant?: ButtonVariants
 }
 
-const Button: React.FunctionComponent<ButtonProps> = ({
-  themeVariant = "primary",
-  children,
-  ...rest
-}) => {
+const Button: React.FC<ButtonProps> = ({ themeVariant = "primary", children, ...rest }) => {
   const theme = useTheme()
 
   return (

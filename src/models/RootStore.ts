@@ -116,9 +116,8 @@ export const RootStore = RootStoreBase.props({
     logout(): Query<{ logout: MutationResponseModelType }> {
       const query = self.mutateLogout()
       query.then(() => {
-        self.currentUser = null
         resetJwt()
-        getEnv(self).gqlHttpClient.setHeaders({ authorization: "" })
+        window.location.reload()
       })
       return query
     },

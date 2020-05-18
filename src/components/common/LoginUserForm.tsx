@@ -1,8 +1,8 @@
-import React, { useState, FormEvent } from "react"
-import { Text, Flex } from "@chakra-ui/core"
-import InputWithLabel from "./InputWithLabel"
-import Form from "./Form"
+import { Flex, Text } from "@chakra-ui/core"
+import React, { FormEvent, useState } from "react"
 import Button from "./Button"
+import Form from "./Form"
+import InputWithLabel from "./InputWithLabel"
 
 interface UserLoginArgs {
   email: string
@@ -14,10 +14,7 @@ interface LoginUserFormProps {
   handleSubmit(inputs: UserLoginArgs): void
 }
 
-const LoginUserForm: React.FunctionComponent<LoginUserFormProps> = ({
-  handleSubmit,
-  errorMessage,
-}) => {
+const LoginUserForm: React.FC<LoginUserFormProps> = ({ handleSubmit, errorMessage }) => {
   const [inputs, setInputs] = useState({ email: "", password: "" })
 
   const handleInputChange: React.FormEventHandler<HTMLInputElement> = (event) => {

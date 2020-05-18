@@ -2,20 +2,13 @@ Setup the app:
 
 - `npm install`
 
-Generate hooks from graphql:
-
-- add graphql query or mutation in `src/graphql/index.ts`
-- start your graphql server, so `codegen` can get the schema
-- `npm run codegen` will add an exported `use<queryNameHere>` hook to `src/graphql/index.ts` for use in any component, as well as all the typescript and graphql you need to use the query (or mutation...)
+Generate mobx-state-tree models and graphql queries
+- `npm run codegen`
+- docs here: https://mobx-state-tree.js.org/
 
 Run the app:
 
 - `npm run start`
-
-Graphql queries are managed by ApolloClient (although a good deal of the syntax is generated in the step above): https://www.apollographql.com/docs/react/
-
-Local State is managed with mobx-state-tree. Here's the quick start:
-https://mobx-state-tree.js.org/intro/getting-started
 
 Styling and UI Components use Chakra-ui: https://chakra-ui.com/
 We are hoping to build a component library as we go so as to avoid rebuilding simple components. Please try to only use UI Components from chakra-ui, or `src/components/common`. If you need new ui components, build them in the `common` folder as well, with an eye towards reuse

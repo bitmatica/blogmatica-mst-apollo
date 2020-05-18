@@ -1,6 +1,6 @@
-import React from "react"
 import capitalize from "lodash.capitalize"
 import get from "lodash.get"
+import React from "react"
 
 interface FormInputProps {
   values: { [key: string]: string | number }
@@ -9,7 +9,7 @@ interface FormInputProps {
 
 const SPECIAL_INPUTS = ["email", "password"]
 
-const FormInputs: React.FunctionComponent<FormInputProps> = ({ values, handleChange }) => {
+const FormInputs: React.FC<FormInputProps> = ({ values, handleChange }) => {
   return (
     <div>
       {Object.keys(values).map(
