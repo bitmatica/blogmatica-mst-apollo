@@ -1,6 +1,6 @@
-import React, { useMemo } from "react"
 import { Text, useColorMode } from "@chakra-ui/core"
 import styled from "@emotion/styled"
+import React, { useMemo } from "react"
 
 import { cell } from "../../modules/styles"
 
@@ -12,7 +12,7 @@ const Wrapper = styled("td")`
   border-top-width: 1px;
 `
 
-const TBodyTD: React.FC = ({ children }) => {
+const TableBodyCell: React.FC = ({ children }) => {
   const { colorMode } = useColorMode()
 
   const color = useMemo(() => (colorMode === "dark" ? "gray.300" : "gray.600"), [colorMode])
@@ -24,4 +24,4 @@ const TBodyTD: React.FC = ({ children }) => {
   )
 }
 
-export default TBodyTD
+export default TableBodyCell

@@ -1,5 +1,5 @@
-import React from "react"
 import styled from "@emotion/styled"
+import React from "react"
 
 const Wrapper = styled("tr")`
   &:nth-of-type(odd) {
@@ -7,6 +7,6 @@ const Wrapper = styled("tr")`
   }
 `
 
-const TBodyTR: React.FC = ({ children }) => <Wrapper>{children}</Wrapper>
+const TableBodyRow: React.FC = ({ children }) => <Wrapper>{children}</Wrapper>
 
-export default TBodyTR
+export default TableBodyRow

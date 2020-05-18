@@ -1,22 +1,21 @@
-import styled from "@emotion/styled"
+import { Box, BoxProps } from "@chakra-ui/core/dist"
 import React from "react"
 
-import TBody from "./components/TBody"
-import THead from "./components/THead"
-
-const Wrapper = styled("table")`
-  width: 100%;
-  max-width: 100%;
-`
+import TableBody from "./components/TableBody"
+import TableHead from "./components/TableHead"
 
 type CommonComponents = {
-  TBody: typeof TBody
-  THead: typeof THead
+  Body: typeof TableBody
+  Head: typeof TableHead
 }
 
-const Table: React.FC & CommonComponents = ({ children }) => <Wrapper>{children}</Wrapper>
+const Table: React.FC<BoxProps> & CommonComponents = ({ children, ...props }) => (
+  <Box as="table" width="100%" maxWidth="100%" {...props}>
+    {children}
+  </Box>
+)
 
-Table.TBody = TBody
-Table.THead = THead
+Table.Body = TableBody
+Table.Head = TableHead
 
 export default Table

@@ -25,7 +25,7 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
   const { setQuery, data, store, loading } = useQuery()
 
   useEffect(() => {
-    if (cachedModel != model) {
+    if (cachedModel !== model) {
       setCachedModel(model)
       setQuery(getModelListQuery(model, store))
     }
@@ -42,25 +42,25 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
 
       <LoadingContainer loading={loading} my="8">
         <Table>
-          <Table.THead>
-            <Table.THead.TR>
+          <Table.Head>
+            <Table.Head.Row>
               {fields.map((field) => (
-                <Table.THead.TH key={field.name}>{field.label}</Table.THead.TH>
+                <Table.Head.Cell key={field.name}>{field.label}</Table.Head.Cell>
               ))}
-            </Table.THead.TR>
-          </Table.THead>
+            </Table.Head.Row>
+          </Table.Head>
 
-          <Table.TBody>
+          <Table.Body>
             {records.map((record) => (
-              <Table.TBody.TR key={record.id}>
+              <Table.Body.Row key={record.id}>
                 {fields.map((field) => (
-                  <Table.TBody.TD key={field.name}>
+                  <Table.Body.Cell key={field.name}>
                     {formatModelField(model, record, field)}
-                  </Table.TBody.TD>
+                  </Table.Body.Cell>
                 ))}
-              </Table.TBody.TR>
+              </Table.Body.Row>
             ))}
-          </Table.TBody>
+          </Table.Body>
         </Table>
       </LoadingContainer>
     </Card>
