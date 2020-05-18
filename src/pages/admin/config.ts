@@ -1,16 +1,20 @@
 import { IModelType, Instance } from "mobx-state-tree"
 import { ModelProperties } from "mobx-state-tree/dist/types/complex-types/model"
-import { CommentModel, PostModel, UserModel } from "../../models"
+import { CommentModel, PostModel, UserModel, UserModelType } from "../../models"
+
+export type RegisteredModelFieldConfig<T> = {
+  label?: string
+  format?: (record: Instance<T>) => string | JSX.Element
+  disabled?: boolean
+}
+
+export type RegisteredModelFieldConfigMap<T> = {
+  [U in keyof Instance<T>]?: RegisteredModelFieldConfig<T>
+}
 
 export type RegisteredModelConfig<T extends IModelType<any, any>> = {
   model: T
-  fieldConfig?: {
-    [U in keyof Instance<T>]?:
-      | {
-          displayName?: string
-        }
-      | boolean
-  }
+  fieldConfig?: RegisteredModelFieldConfigMap<T>
 }
 
 export type RegisteredModel<PropTypes extends ModelProperties> =
@@ -18,15 +22,16 @@ export type RegisteredModel<PropTypes extends ModelProperties> =
   | RegisteredModelConfig<IModelType<PropTypes, any>>
 
 export const REGISTERED_MODELS: Array<RegisteredModel<any>> = [
-  {
-    model: PostModel,
-  },
+  PostModel,
   CommentModel,
   {
     model: UserModel,
     fieldConfig: {
-      profileImageUrl: false,
-      gustoAccess: false,
+      profileImageUrl: { disabled: true },
+      gustoAccess: { disabled: true },
+      roles: {
+        format: (record: UserModelType): string => (record?.roles || []).join(", "),
+      },
     },
   },
 ]

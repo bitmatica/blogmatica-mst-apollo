@@ -5,7 +5,12 @@ import { IModelType } from "mobx-state-tree"
 import { Query } from "mst-gql"
 import pluralize from "pluralize"
 import { RootStoreType } from "../../models"
-import { REGISTERED_MODELS, RegisteredModelConfig } from "./config"
+import {
+  REGISTERED_MODELS,
+  RegisteredModelConfig,
+  RegisteredModelFieldConfig,
+  RegisteredModelFieldConfigMap,
+} from "./config"
 
 export function getRegisteredModels(): Array<RegisteredModelConfig<any>> {
   return REGISTERED_MODELS.map((modelOrConfig) => {
@@ -40,11 +45,19 @@ export type ModelField = {
   name: string
 }
 
+export function getFieldConfig<T extends IModelType<any, any>>(
+  config: RegisteredModelConfig<T>,
+  fieldName: string,
+): RegisteredModelFieldConfig<T> {
+  const fieldConfigMap = config.fieldConfig || ({} as RegisteredModelFieldConfigMap<T>)
+  return fieldConfigMap[fieldName] || ({} as RegisteredModelFieldConfig<T>)
+}
+
 export function getModelListFields(config: RegisteredModelConfig<any>): Array<ModelField> {
   const fields = Object.keys(config.model.properties)
     .filter((key) => {
-      const fieldConfig = config.fieldConfig || ({} as Record<string, any>)
-      if (fieldConfig[key] === false) {
+      const fieldConfig = getFieldConfig(config, key)
+      if (fieldConfig.disabled) {
         return false
       }
       if (
@@ -59,7 +72,10 @@ export function getModelListFields(config: RegisteredModelConfig<any>): Array<Mo
       const property = config.model.properties[key] as { name: string }
       return !property.name.includes("reference")
     })
-    .map((key) => ({ label: startCase(key), name: key }))
+    .map((key) => {
+      const fieldConfig = getFieldConfig(config, key)
+      return { label: startCase(fieldConfig.label || key), name: key }
+    })
 
   return [
     { label: "ID", name: "id" },
@@ -92,11 +108,16 @@ export function formatUUID(uuidStr: string): string {
   return `${uuidStr.slice(0, 5)}...${uuidStr.slice(uuidStr.length - 5, uuidStr.length)}`
 }
 
-export function formatModelField(
-  config: RegisteredModelConfig<any>,
+export function formatModelField<T extends IModelType<any, any>>(
+  config: RegisteredModelConfig<T>,
   record: any,
   field: ModelField,
-): string {
+): string | JSX.Element {
+  const fieldConfig = getFieldConfig(config, field.name)
+  if (fieldConfig.format) {
+    return fieldConfig.format(record)
+  }
+
   const value = record[field.name as keyof typeof record]
   if (field.name === "createdAt" || field.name === "updatedAt") {
     return formatDate(value)
