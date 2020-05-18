@@ -14,11 +14,11 @@ export const SideNavSection: React.FC<SideNavSectionProps> = ({
   const handleToggle = (): void => setShow(!show)
 
   return (
-    <Box borderBottomWidth="1px" borderColor="rgba(255,255,255,0.16)" {...props}>
+    <Box borderBottomWidth="1px" borderColor="whiteAlpha.400" {...props}>
       <Flex
         onClick={handleToggle}
         p="4"
-        color="rgba(255,255,255,0.50)"
+        color="whiteAlpha.600"
         fontWeight="bold"
         fontSize="sm"
         letterSpacing="wide"

@@ -9,7 +9,7 @@ import { SideNavSection } from "./SideNavSection"
 const SideNavContent: React.FC = ({ ...props }) => {
   return (
     <Box as="nav" aria-label="Main navigation" fontSize="sm" {...props}>
-      <HeaderLogo borderBottomWidth="1px" borderColor="rgba(255,255,255,0.16)" />
+      <HeaderLogo borderBottomWidth="1px" borderColor="whiteAlpha.400" />
       <SideNavSection title="Admin">
         <SideNavLink to="/admin" exact>
           Dashboard
