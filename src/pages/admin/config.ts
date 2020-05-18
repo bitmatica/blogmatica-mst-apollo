@@ -1,15 +1,15 @@
-import { IModelType, Instance } from "mobx-state-tree"
+import { IModelType } from "mobx-state-tree"
 import { ModelProperties } from "mobx-state-tree/dist/types/complex-types/model"
 import { CommentModel, PostModel, UserModel, UserModelType } from "../../models"
 
-export type RegisteredModelFieldConfig<T> = {
+export type RegisteredModelFieldConfig<T extends IModelType<any, any>> = {
   label?: string
-  format?: (record: Instance<T>) => string | JSX.Element
+  format?: (record: T["Type"]) => string | JSX.Element
   disabled?: boolean
 }
 
-export type RegisteredModelFieldConfigMap<T> = {
-  [U in keyof Instance<T>]?: RegisteredModelFieldConfig<T>
+export type RegisteredModelFieldConfigMap<T extends IModelType<any, any>> = {
+  [U in keyof T["Type"]]?: RegisteredModelFieldConfig<T>
 }
 
 export type RegisteredModelConfig<T extends IModelType<any, any>> = {
