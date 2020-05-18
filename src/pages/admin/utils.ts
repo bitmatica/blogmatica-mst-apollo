@@ -1,4 +1,6 @@
 import camelcase from "camelcase"
+import startCase from "lodash/startCase"
+import { DateTime } from "luxon"
 import { IModelType } from "mobx-state-tree"
 import { Query } from "mst-gql"
 import pluralize from "pluralize"
@@ -41,7 +43,7 @@ export function getModelListFields(model: IModelType<any, any>): Array<ModelFiel
       const property = model.properties[key] as { name: string }
       return !property.name.includes("reference")
     })
-    .map((key) => ({ label: key, name: key }))
+    .map((key) => ({ label: startCase(key), name: key }))
 
   return [
     { label: "ID", name: "id" },
@@ -64,4 +66,28 @@ export function getModelListData(
   data: any,
 ): Array<{ id: string }> {
   return (data && data[pluralizeModel(model)]) || []
+}
+
+export function formatDate(dateStr: string): string {
+  return DateTime.fromISO(dateStr).toLocaleString(DateTime.DATETIME_SHORT)
+}
+
+export function formatUUID(uuidStr: string): string {
+  return `${uuidStr.slice(0, 5)}...${uuidStr.slice(uuidStr.length - 5, uuidStr.length)}`
+}
+
+export function formatModelField(
+  model: IModelType<any, any>,
+  record: any,
+  field: ModelField,
+): string {
+  const value = record[field.name as keyof typeof record]
+  if (field.name === "createdAt" || field.name === "updatedAt") {
+    return formatDate(value)
+  }
+  if (field.name.toLowerCase().endsWith("id")) {
+    return formatUUID(value)
+  }
+
+  return value
 }

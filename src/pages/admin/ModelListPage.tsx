@@ -7,6 +7,7 @@ import { Card, Table } from "../../components"
 import LoadingContainer from "../../components/common/LoadingContainer"
 import { useQuery } from "../../models/reactUtils"
 import {
+  formatModelField,
   getModelListData,
   getModelListFields,
   getModelListQuery,
@@ -18,7 +19,6 @@ export type ModelListPageProps = {
 }
 
 const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
-  console.log(model)
   const [cachedModel, setCachedModel] = useState<IModelType<any, any> | undefined>(
     undefined,
   )
@@ -55,7 +55,7 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ model }) => {
               <Table.TBody.TR key={record.id}>
                 {fields.map((field) => (
                   <Table.TBody.TD key={field.name}>
-                    {record[field.name as keyof typeof record]}
+                    {formatModelField(model, record, field)}
                   </Table.TBody.TD>
                 ))}
               </Table.TBody.TR>
