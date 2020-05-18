@@ -43,6 +43,10 @@ export type ModelField = {
 export function getModelListFields(config: RegisteredModelConfig<any>): Array<ModelField> {
   const fields = Object.keys(config.model.properties)
     .filter((key) => {
+      const fieldConfig = config.fieldConfig || ({} as Record<string, any>)
+      if (fieldConfig[key] === false) {
+        return false
+      }
       if (
         key === "__typename" ||
         key === "id" ||

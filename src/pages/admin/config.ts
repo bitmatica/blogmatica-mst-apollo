@@ -1,24 +1,32 @@
-import { IModelType } from "mobx-state-tree"
+import { IModelType, Instance } from "mobx-state-tree"
 import { ModelProperties } from "mobx-state-tree/dist/types/complex-types/model"
 import { CommentModel, PostModel, UserModel } from "../../models"
 
-export type RegisteredModelConfig<PropTypes extends ModelProperties> = {
-  model: IModelType<PropTypes, any>
+export type RegisteredModelConfig<T extends IModelType<any, any>> = {
+  model: T
   fieldConfig?: {
-    [U in keyof PropTypes]?: {
-      displayName?: string
-    }
+    [U in keyof Instance<T>]?:
+      | {
+          displayName?: string
+        }
+      | boolean
   }
 }
 
 export type RegisteredModel<PropTypes extends ModelProperties> =
   | IModelType<PropTypes, any>
-  | RegisteredModelConfig<PropTypes>
+  | RegisteredModelConfig<IModelType<PropTypes, any>>
 
 export const REGISTERED_MODELS: Array<RegisteredModel<any>> = [
   {
     model: PostModel,
   },
   CommentModel,
-  UserModel,
+  {
+    model: UserModel,
+    fieldConfig: {
+      profileImageUrl: false,
+      gustoAccess: false,
+    },
+  },
 ]
