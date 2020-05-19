@@ -1,11 +1,13 @@
 import { Flex } from "@chakra-ui/core"
-import { observer } from "mobx-react-lite"
 import React from "react"
-import { useStore } from "src/getMstGql"
-import { ColorModeSwitcher, HeaderLogo, HeaderMenu } from "./"
+import { Link } from "react-router-dom"
+import { HeaderLogo } from "./"
 
-const Header: React.FC = () => {
-  const { currentUser } = useStore()
+export type HeaderProps = {
+  logo: JSX.Element
+}
+
+const Header: React.FC<HeaderProps> = ({ logo, children }) => {
   return (
     <Flex
       direction="row"
@@ -14,13 +16,18 @@ const Header: React.FC = () => {
       backgroundColor={"primary"}
       px="4"
     >
-      <HeaderLogo />
+      <Flex align="center" height="headerHeight" px={4}>
+        <Link to="/" aria-label="Chakra UI, Back to homepage">
+          {logo}
+          <HeaderLogo />
+        </Link>
+      </Flex>
+
       <Flex width="100%" align="center" justify="flex-end">
-        <ColorModeSwitcher color="white" />
-        {currentUser && <HeaderMenu />}
+        {children}
       </Flex>
     </Flex>
   )
 }
 
-export default observer(Header)
+export default Header

@@ -2,9 +2,22 @@ import { Box } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import pluralize from "pluralize"
 import React, { useEffect, useState } from "react"
-import { useQuery } from "src/models/reactUtils"
 
-import { Card, LoadingContainer, Table } from "../../components"
+import {
+  Card,
+  CardHeader,
+  CardHeaderText,
+  CardHeaderTitle,
+  LoadingContainer,
+  Table,
+  TableBody,
+  TableBodyCell,
+  TableBodyRow,
+  TableHead,
+  TableHeadCell,
+  TableHeadRow,
+} from "src/components"
+import { useQuery } from "src/models/reactUtils"
 import { RegisteredModelConfig } from "./config"
 import {
   formatModelField,
@@ -18,7 +31,7 @@ export type ModelListPageProps = {
   modelConfig: RegisteredModelConfig<any>
 }
 
-const ModelListPage: React.FC<ModelListPageProps> = ({ modelConfig }) => {
+const ModelListPage: React.FunctionComponent<ModelListPageProps> = ({ modelConfig }) => {
   const [cachedModel, setCachedModel] = useState<RegisteredModelConfig<any> | undefined>(
     undefined,
   )
@@ -35,33 +48,33 @@ const ModelListPage: React.FC<ModelListPageProps> = ({ modelConfig }) => {
   const fields = getModelListFields(modelConfig)
   return (
     <Card m={[0, 4, 8]}>
-      <Card.Header>
-        <Card.Header.Title>{pluralize(modelConfig.model.name)}</Card.Header.Title>
-        <Card.Header.Text>Listing all {pluralizeModel(modelConfig)}</Card.Header.Text>
-      </Card.Header>
+      <CardHeader>
+        <CardHeaderTitle>{pluralize(modelConfig.model.name)}</CardHeaderTitle>
+        <CardHeaderText>Listing all {pluralizeModel(modelConfig)}</CardHeaderText>
+      </CardHeader>
 
       <LoadingContainer loading={loading} my="8">
         <Box overflowX="scroll">
           <Table>
-            <Table.Head>
-              <Table.Head.Row>
+            <TableHead>
+              <TableHeadRow>
                 {fields.map((field) => (
-                  <Table.Head.Cell key={field.name}>{field.label}</Table.Head.Cell>
+                  <TableHeadCell key={field.name}>{field.label}</TableHeadCell>
                 ))}
-              </Table.Head.Row>
-            </Table.Head>
+              </TableHeadRow>
+            </TableHead>
 
-            <Table.Body>
+            <TableBody>
               {records.map((record) => (
-                <Table.Body.Row key={record.id}>
+                <TableBodyRow key={record.id}>
                   {fields.map((field) => (
-                    <Table.Body.Cell key={field.name}>
+                    <TableBodyCell key={field.name}>
                       {formatModelField(modelConfig, record, field)}
-                    </Table.Body.Cell>
+                    </TableBodyCell>
                   ))}
-                </Table.Body.Row>
+                </TableBodyRow>
               ))}
-            </Table.Body>
+            </TableBody>
           </Table>
         </Box>
       </LoadingContainer>

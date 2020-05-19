@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/core"
 import React, { FormEvent, useState } from "react"
-import { Button, Form, InputWithLabel } from "./"
+import { Button, Form, InputWithLabel } from "../common"
 
 interface UserLoginArgs {
   email: string
@@ -9,6 +9,7 @@ interface UserLoginArgs {
 
 interface LoginUserFormProps {
   errorMessage: string
+
   handleSubmit(inputs: UserLoginArgs): void
 }
 

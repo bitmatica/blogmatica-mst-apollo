@@ -1,28 +1,25 @@
-import { Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/core"
-import { observer } from "mobx-react-lite"
+import { Image, Menu, MenuButton, MenuList } from "@chakra-ui/core"
 import React from "react"
-import { useHistory } from "react-router-dom"
-import { useQuery } from "src/models/reactUtils"
+import { UserModelType } from "../../models"
 
-const HeaderMenu: React.FC = () => {
-  const history = useHistory()
-  const { setQuery, store } = useQuery()
+export type HeaderMenuProps = {
+  currentUser: UserModelType
+}
+
+const HeaderMenu: React.FC<HeaderMenuProps> = ({ currentUser, children }) => {
   return (
     <Menu>
       <MenuButton>
         <Image
           rounded="full"
           size="38px"
-          src={store.currentUser?.profileImageUrl}
+          src={currentUser.profileImageUrl}
           alt="User profile"
         />
       </MenuButton>
-      <MenuList>
-        <MenuItem onClick={(): void => history.push("/admin")}>Admin Dashboard</MenuItem>
-        <MenuItem onClick={(): void => setQuery(store.logout())}>Logout</MenuItem>
-      </MenuList>
+      <MenuList>{children}</MenuList>
     </Menu>
   )
 }
 
-export default observer(HeaderMenu)
+export default HeaderMenu

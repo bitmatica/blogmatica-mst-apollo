@@ -11,6 +11,7 @@ interface InputWithLabelProps extends StackProps {
   inputProps?: InputProps
   isRequired?: boolean
   placeHolder?: string
+
   handleUpdate(event: React.FormEvent<HTMLInputElement>): void
 }
 

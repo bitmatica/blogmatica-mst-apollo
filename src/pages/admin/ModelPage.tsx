@@ -8,7 +8,9 @@ export type ModelPageParams = {
   modelName: string
 }
 
-const ModelPage: React.FC<RouteComponentProps<ModelPageParams>> = ({ match }) => {
+const ModelPage: React.FunctionComponent<RouteComponentProps<ModelPageParams>> = ({
+  match,
+}) => {
   const modelConfig = getModelFromPlural(match.params.modelName)
   if (!modelConfig) {
     return <Redirect to="/admin" />

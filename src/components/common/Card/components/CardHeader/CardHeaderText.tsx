@@ -1,5 +1,5 @@
-import React, { useMemo } from "react"
 import { BoxProps, Text, useColorMode } from "@chakra-ui/core"
+import React, { useMemo } from "react"
 
 const CardHeaderText: React.FC<BoxProps> = (props) => {
   const { colorMode } = useColorMode()
