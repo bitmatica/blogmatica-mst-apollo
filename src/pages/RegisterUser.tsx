@@ -1,8 +1,6 @@
 import React, { useState } from "react"
 import { Redirect } from "react-router-dom"
-import LoadingContainer from "../components/common/LoadingContainer"
-import RegisterUserForm from "../components/common/RegisterUserForm"
-import Layout from "../components/Layout"
+import { Layout, LoadingContainer, RegisterUserForm } from "../components"
 import { useQuery } from "../models/reactUtils"
 import { CreateUserInput } from "../models/RootStore.base"
 

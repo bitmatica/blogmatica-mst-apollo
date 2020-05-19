@@ -1,8 +1,7 @@
 import { Flex, Stack, Text } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import Button from "../components/common/Button"
-import Layout from "../components/Layout"
+import { Button, Layout } from "../components"
 import { useStore } from "../getMstGql"
 
 const ButtonClickTracker: React.FC = observer(() => {

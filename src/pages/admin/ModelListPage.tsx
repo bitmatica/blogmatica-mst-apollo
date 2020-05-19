@@ -3,8 +3,7 @@ import { observer } from "mobx-react-lite"
 import pluralize from "pluralize"
 import React, { useEffect, useState } from "react"
 
-import { Card, Table } from "../../components"
-import LoadingContainer from "../../components/common/LoadingContainer"
+import { Card, LoadingContainer, Table } from "../../components"
 import { useQuery } from "../../models/reactUtils"
 import { RegisteredModelConfig } from "./config"
 import {

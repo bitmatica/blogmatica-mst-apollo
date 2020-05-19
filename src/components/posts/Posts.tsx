@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { PostModelType } from "../models"
+import { PostModelType } from "../../models"
 import Post from "./Post"
 
 interface PostsProps {

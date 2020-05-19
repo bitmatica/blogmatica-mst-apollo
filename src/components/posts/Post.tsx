@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/core"
 import React from "react"
-import { PostModelType } from "../models"
+import { PostModelType } from "../../models"
 
 interface PostProps {
   post: Partial<PostModelType>

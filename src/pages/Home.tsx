@@ -1,10 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { RouteProps } from "react-router-dom"
-import LoadingContainer from "../components/common/LoadingContainer"
-import CreatePostForm from "../components/CreatePostForm"
-import Layout from "../components/Layout"
-import UserProfile from "../components/UserProfile"
+import { CreatePostForm, Layout, LoadingContainer, UserProfile } from "../components"
 import { useStore } from "../getMstGql"
 
 const Home: React.FC<RouteProps> = () => {

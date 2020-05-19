@@ -1,7 +1,6 @@
 import { Box, Flex } from "@chakra-ui/core"
 import React from "react"
-import ColorModeSwitcher from "../../../components/common/ColorModeSwitcher"
-import HeaderMenu from "../../../components/common/HeaderMenu"
+import { ColorModeSwitcher, HeaderMenu } from "../../../components"
 import MobileNav from "./MobileNav"
 
 const Header: React.FC = () => {
@@ -20,7 +19,6 @@ const Header: React.FC = () => {
         <MobileNav />
         <Flex width="100%" justify="flex-end" align="center">
           <ColorModeSwitcher />
-
           <HeaderMenu />
         </Flex>
       </Flex>

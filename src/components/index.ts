@@ -1,2 +1,3 @@
-export { default as Card } from "./Card"
-export { default as Table } from "./Table"
+export * from "./common"
+export * from "./posts"
+export * from "./users"
