@@ -1,6 +1,6 @@
 import { Box, Flex } from "@chakra-ui/core"
 import React from "react"
-import { ColorModeSwitcher, HeaderMenu } from "../../../components"
+import { ColorModeSwitcher, HeaderMenu } from "src/components"
 import MobileNav from "./MobileNav"
 
 const Header: React.FC = () => {

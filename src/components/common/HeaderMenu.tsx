@@ -2,7 +2,7 @@ import { Image, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useHistory } from "react-router-dom"
-import { useQuery } from "../../models/reactUtils"
+import { useQuery } from "src/models/reactUtils"
 
 const HeaderMenu: React.FC = () => {
   const history = useHistory()

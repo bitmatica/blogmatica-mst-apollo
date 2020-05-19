@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/core"
 import React, { useState } from "react"
-import { Form, InputWithLabel } from "../"
-import { useQuery } from "../../models/reactUtils"
+import { Form, InputWithLabel } from "src/components"
+import { useQuery } from "src/models/reactUtils"
 
 interface CreatePostFormProps {
   authorId: string

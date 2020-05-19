@@ -1,6 +1,6 @@
 import React from "react"
 import { RouteComponentProps } from "react-router-dom"
-import { Layout, UserProfile } from "../components"
+import { Layout, UserProfile } from "src/components"
 
 interface MatchParams {
   userId: string

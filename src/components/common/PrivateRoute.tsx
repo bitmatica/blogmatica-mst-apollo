@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { Redirect, Route, RouteProps } from "react-router-dom"
-import { useQuery } from "../../models/reactUtils"
-import LoadingContainer from "./LoadingContainer"
+import { useQuery } from "src/models/reactUtils"
+import { LoadingContainer } from "./"
 
 interface PrivateRouteProps extends RouteProps {
   redirect?: string

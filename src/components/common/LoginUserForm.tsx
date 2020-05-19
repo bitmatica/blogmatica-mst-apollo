@@ -1,8 +1,6 @@
 import { Flex, Text } from "@chakra-ui/core"
 import React, { FormEvent, useState } from "react"
-import Button from "./Button"
-import Form from "./Form"
-import InputWithLabel from "./InputWithLabel"
+import { Button, Form, InputWithLabel } from "./"
 
 interface UserLoginArgs {
   email: string

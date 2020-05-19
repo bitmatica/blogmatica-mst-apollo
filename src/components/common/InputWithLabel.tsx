@@ -1,6 +1,6 @@
 import { FormLabel, Input, InputProps, StackProps } from "@chakra-ui/core"
 import React from "react"
-import InlineStack from "./InlineStack"
+import { InlineStack } from "./"
 
 interface InputWithLabelProps extends StackProps {
   name: string

@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/core"
 import React from "react"
 
-import { HeaderLogo } from "../../../components"
+import { HeaderLogo } from "src/components"
 import { getModelLink, getRegisteredModels } from "../utils"
 import { SideNavLink } from "./SideNavLink"
 import { SideNavSection } from "./SideNavSection"

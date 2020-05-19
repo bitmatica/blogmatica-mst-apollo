@@ -4,7 +4,7 @@ import {
   useTheme,
 } from "@chakra-ui/core"
 import React from "react"
-import { ButtonVariants } from "../../styles/types"
+import { ButtonVariants } from "src/styles/types"
 
 interface ButtonProps extends ChakraButtonProps {
   themeVariant?: ButtonVariants

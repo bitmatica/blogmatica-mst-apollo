@@ -1,7 +1,7 @@
 import { Button, ButtonProps, useTheme } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useQuery } from "../../models/reactUtils"
+import { useQuery } from "src/models/reactUtils"
 
 const LogoutButton: React.FC<ButtonProps> = ({ children, ...props }) => {
   const { setQuery, store } = useQuery()

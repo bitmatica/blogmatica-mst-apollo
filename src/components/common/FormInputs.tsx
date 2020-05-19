@@ -1,5 +1,5 @@
-import capitalize from "lodash.capitalize"
-import get from "lodash.get"
+import capitalize from "lodash/capitalize"
+import get from "lodash/get"
 import React from "react"
 
 interface FormInputProps {

@@ -1,10 +1,8 @@
 import { Flex } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useStore } from "../../getMstGql"
-import ColorModeSwitcher from "./ColorModeSwitcher"
-import HeaderLogo from "./HeaderLogo"
-import HeaderMenu from "./HeaderMenu"
+import { useStore } from "src/getMstGql"
+import { ColorModeSwitcher, HeaderLogo, HeaderMenu } from "./"
 
 const Header: React.FC = () => {
   const { currentUser } = useStore()
