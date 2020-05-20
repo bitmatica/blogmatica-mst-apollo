@@ -8,8 +8,8 @@ import { Card, LoadingContainer, Table } from "../../components"
 import { RegisteredModelConfig } from "./config"
 import {
   formatModelField,
+  getModelFields,
   getModelListData,
-  getModelListFields,
   getModelListQuery,
   pluralizeModel,
 } from "./utils"
@@ -27,12 +27,12 @@ const ModelList: React.FC<ModelListProps> = ({ modelConfig }) => {
   useEffect(() => {
     if (cachedModel !== modelConfig) {
       setCachedModel(modelConfig)
-      setQuery(getModelListQuery(modelConfig, store))
+      setQuery(getModelListQuery(modelConfig, store)())
     }
   }, [cachedModel, store, setQuery, modelConfig])
 
   const records = getModelListData(modelConfig, data)
-  const fields = getModelListFields(modelConfig)
+  const fields = getModelFields(modelConfig)
   return (
     <Card m={[0, 4, 8]}>
       <Card.Header>

@@ -4,6 +4,8 @@ import { DateTime } from "luxon"
 import { IModelType } from "mobx-state-tree"
 import { Query } from "mst-gql"
 import pluralize from "pluralize"
+import React from "react"
+import { Link } from "src/components"
 import { RootStoreType } from "../../models"
 import {
   REGISTERED_MODELS,
@@ -32,8 +34,15 @@ export function pluralizeModel(config: RegisteredModelConfig<any>): string {
   return parts.join("")
 }
 
-export function getModelLink(config: RegisteredModelConfig<any>): string {
+export function getModelListLink(config: RegisteredModelConfig<any>): string {
   return `/admin/models/${pluralizeModel(config)}`
+}
+
+export function getModelDetailsLink(
+  config: RegisteredModelConfig<any>,
+  modelId: string,
+): string {
+  return `${getModelListLink(config)}/${modelId}`
 }
 
 export function getModelFromPlural(plural: string): RegisteredModelConfig<any> | undefined {
@@ -53,7 +62,7 @@ export function getFieldConfig<T extends IModelType<any, any>>(
   return fieldConfigMap[fieldName] || ({} as RegisteredModelFieldConfig<T>)
 }
 
-export function getModelListFields(config: RegisteredModelConfig<any>): Array<ModelField> {
+export function getModelFields(config: RegisteredModelConfig<any>): Array<ModelField> {
   const fields = Object.keys(config.model.properties)
     .filter((key) => {
       const fieldConfig = getFieldConfig(config, key)
@@ -78,19 +87,31 @@ export function getModelListFields(config: RegisteredModelConfig<any>): Array<Mo
     })
 
   return [
-    { label: "ID", name: "id" },
+    { label: "Id", name: "id" },
     ...fields,
     { label: "Created At", name: "createdAt" },
     { label: "Updated At", name: "updatedAt" },
   ]
 }
 
+export type ModelListQuery = () => Query
+
 export function getModelListQuery(
   config: RegisteredModelConfig<any>,
   store: RootStoreType,
-): Query {
+): ModelListQuery {
   const listQueryName = `query${pluralize(config.model.name)}`
-  return store[listQueryName as keyof RootStoreType]()
+  return store[listQueryName as keyof RootStoreType]
+}
+
+export type ModelDetailsQuery = (variables: { id: string }) => Query
+
+export function getModelDetailsQuery(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): ModelDetailsQuery {
+  const detailsQueryName = `query${config.model.name}`
+  return store[detailsQueryName as keyof RootStoreType]
 }
 
 export function getModelListData(
@@ -98,6 +119,21 @@ export function getModelListData(
   data: any,
 ): Array<{ id: string }> {
   return (data && data[pluralizeModel(config)]) || []
+}
+
+export type Model = {
+  id: string
+  createdAt: string
+  updatedAt: string
+}
+
+export function getModelDetailData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): Model | undefined {
+  const modelName: string = config.model.name
+  const modelKey = modelName.charAt(0).toLowerCase() + modelName.slice(1)
+  return data && data[modelKey]
 }
 
 export function formatDate(dateStr: string): string {
@@ -122,9 +158,17 @@ export function formatModelField<T extends IModelType<any, any>>(
   if (field.name === "createdAt" || field.name === "updatedAt") {
     return formatDate(value)
   }
+
+  if (field.name === "id") {
+    return React.createElement(
+      Link,
+      { to: getModelDetailsLink(config, value) },
+      formatUUID(value),
+    )
+  }
+
   if (field.name.toLowerCase().endsWith("id")) {
     return formatUUID(value)
   }
-
   return value
 }
