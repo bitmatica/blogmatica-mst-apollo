@@ -144,6 +144,25 @@ export function formatUUID(uuidStr: string): string {
   return `${uuidStr.slice(0, 5)}...${uuidStr.slice(uuidStr.length - 5, uuidStr.length)}`
 }
 
+function getReferenceFieldFromId(
+  config: RegisteredModelConfig<any>,
+  field: ModelField,
+): ModelField | undefined {
+  const referenceFieldKey = field.name.substr(0, field.name.length - 2)
+  return config.model.properties[referenceFieldKey]
+}
+
+export function getReferenceType(
+  config: RegisteredModelConfig<any>,
+  field: ModelField,
+): RegisteredModelConfig<any> | undefined {
+  const [match] = (field.name as string).match(/".+Model"/) || []
+  const referenceModelName = match.replace(/"/g, "")
+  return getRegisteredModels().find(
+    (model) => `${model.model.name}Model` === referenceModelName,
+  )
+}
+
 export function formatModelField<T extends IModelType<any, any>>(
   config: RegisteredModelConfig<T>,
   record: any,
@@ -168,15 +187,9 @@ export function formatModelField<T extends IModelType<any, any>>(
   }
 
   if (field.name.toLowerCase().endsWith("id")) {
-    const referenceFieldKey = field.name.substr(0, field.name.length - 2)
-    const referenceField = config.model.properties[referenceFieldKey]
+    const referenceField = getReferenceFieldFromId(config, field)
     if (referenceField) {
-      const [match] = (referenceField.name as string).match(/".+Model"/) || []
-      const referenceModelName = match.replace(/"/g, "")
-      const referenceModel = getRegisteredModels().find(
-        (model) => `${model.model.name}Model` === referenceModelName,
-      )
-
+      const referenceModel = getReferenceType(config, referenceField)
       if (referenceModel) {
         return React.createElement(
           Link,
