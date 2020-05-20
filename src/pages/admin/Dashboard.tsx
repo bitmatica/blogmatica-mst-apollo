@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import { Route, RouteProps, Switch } from "react-router-dom"
 import AdminLayout from "./components/Layout"
-import ModelPage from "./ModelPage"
+import ModelPage from "./ModelListPage"
 
 const AdminHome: React.FC = () => (
   <Box p={[2, 4, 8]}>
