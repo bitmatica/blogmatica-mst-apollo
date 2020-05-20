@@ -168,6 +168,24 @@ export function formatModelField<T extends IModelType<any, any>>(
   }
 
   if (field.name.toLowerCase().endsWith("id")) {
+    const referenceFieldKey = field.name.substr(0, field.name.length - 2)
+    const referenceField = config.model.properties[referenceFieldKey]
+    if (referenceField) {
+      const [match] = (referenceField.name as string).match(/".+Model"/) || []
+      const referenceModelName = match.replace(/"/g, "")
+      const referenceModel = getRegisteredModels().find(
+        (model) => `${model.model.name}Model` === referenceModelName,
+      )
+
+      if (referenceModel) {
+        return React.createElement(
+          Link,
+          { to: getModelDetailsLink(referenceModel, value) },
+          formatUUID(value),
+        )
+      }
+    }
+
     return formatUUID(value)
   }
   return value
