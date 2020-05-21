@@ -2,11 +2,13 @@ import camelcase from "camelcase"
 import startCase from "lodash/startCase"
 import { DateTime } from "luxon"
 import { IModelType } from "mobx-state-tree"
-import { Query } from "mst-gql"
+import { Query, QueryBuilder } from "mst-gql"
 import pluralize from "pluralize"
 import React from "react"
 import { Link } from "src/components"
-import { DeletionResponseModelType, RootStoreType } from "../../models"
+import * as Models from "src/models"
+import { DeletionResponseModelType, RootStoreType } from "src/models"
+
 import {
   REGISTERED_MODELS,
   RegisteredModelConfig,
@@ -32,6 +34,11 @@ export function pluralizeModel(config: RegisteredModelConfig<any>): string {
   const parts = newName.split(/(?=[A-Z])/)
   parts[parts.length - 1] = pluralize(parts[parts.length - 1])
   return parts.join("")
+}
+
+export function singularModelKey(config: RegisteredModelConfig<any>): string {
+  const modelName: string = config.model.name
+  return modelName.charAt(0).toLowerCase() + modelName.slice(1)
 }
 
 export function getModelListLink(config: RegisteredModelConfig<any>): string {
@@ -142,8 +149,8 @@ export function getDeleteModelMutation(
   config: RegisteredModelConfig<any>,
   store: RootStoreType,
 ): DeleteModelMutation {
-  const listQueryName = `mutateDelete${config.model.name}`
-  return store[listQueryName as keyof RootStoreType]
+  const deleteModelMutation = `mutateDelete${config.model.name}`
+  return store[deleteModelMutation as keyof RootStoreType]
 }
 
 export function getDeleteModelData(
@@ -152,6 +159,59 @@ export function getDeleteModelData(
 ): DeletionResponseModelType {
   const modelKey = `delete${config.model.name}`
   return data && data[modelKey]
+}
+
+export type CreateModelMutation = (variables: { input: any }) => Query
+
+export function getModelSelectorPrimitives(
+  config: RegisteredModelConfig<any>,
+): QueryBuilder {
+  return Models[
+    `${singularModelKey(config)}ModelPrimitives` as keyof typeof Models
+  ] as QueryBuilder
+}
+
+export function getCreateModelSelector(config: RegisteredModelConfig<any>): string {
+  const modelKey = singularModelKey(config)
+  const creationResponseSelector =
+    Models[`${modelKey}CreationResponseModelPrimitives` as keyof typeof Models]
+  return (creationResponseSelector[
+    modelKey as keyof typeof creationResponseSelector
+  ] as Function)(getModelSelectorPrimitives(config)).toString()
+}
+
+export function getCreateModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): CreateModelMutation {
+  const createMutationName = `mutateCreate${config.model.name}`
+  const selector = getCreateModelSelector(config)
+  return ({ input }): Query => {
+    return store[createMutationName as keyof RootStoreType]({ input }, selector)
+  }
+}
+
+export type CreateModelResponse = {
+  success: boolean
+  message: string
+  id?: string
+}
+
+export function getCreateModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): CreateModelResponse | undefined {
+  const modelKey = singularModelKey(config)
+  const mutationKey = `create${config.model.name}`
+  const response = data && data[mutationKey]
+  return {
+    ...response,
+    id: (response && response[modelKey]?.id) || undefined,
+  }
+}
+
+export function getCreateModelInput(config: RegisteredModelConfig<any>): string {
+  return `Create${config.model.name}Input`
 }
 
 export function formatDate(dateStr: string): string {

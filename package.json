@@ -25,11 +25,13 @@
     "@chakra-ui/core": "^0.7.0",
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "@types/yup": "^0.29.0",
     "apollo": "^2.27.4",
     "babel-plugin-macros": "^2.8.0",
     "camelcase": "^6.0.0",
     "emotion-theming": "^10.0.27",
     "eslint": "^6.8.0",
+    "formik": "^2.1.4",
     "graphql": "^14.4.1",
     "graphql-request": "^1.8.2",
     "lodash": "^4.17.15",
@@ -49,7 +51,8 @@
     "react-router-dom": "5.1.2",
     "react-scripts": "^3.4.1",
     "remotedev": "^0.2.9",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "yup": "^0.29.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -62,9 +62,8 @@ const DeleteModelPrompt: React.FC<DeleteModelPromptProps> = ({
         })
         onClose()
       }
-      console.log(data)
     }
-  }, [data, toast])
+  }, [data, toast, history, modelConfig, onClose])
 
   return (
     <AlertDialog

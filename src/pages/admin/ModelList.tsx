@@ -1,8 +1,18 @@
-import { Box } from "@chakra-ui/core"
+import {
+  Box,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+} from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
 import pluralize from "pluralize"
 import React, { useEffect, useState } from "react"
+import { BsThreeDots } from "react-icons/all"
 import { useQuery } from "src/models/reactUtils"
+import CreateModelDrawer from "src/pages/admin/CreateModelDrawer"
 
 import { Card, LoadingContainer, Table } from "../../components"
 import { RegisteredModelConfig } from "./config"
@@ -31,13 +41,27 @@ const ModelList: React.FC<ModelListProps> = ({ modelConfig }) => {
     }
   }, [cachedModel, store, setQuery, modelConfig])
 
+  const { isOpen, onClose, onOpen } = useDisclosure(false)
+
   const records = getModelListData(modelConfig, data)
   const fields = getModelFields(modelConfig)
   return (
     <Card m={[0, 4, 8]}>
       <Card.Header>
-        <Card.Header.Title>{pluralize(modelConfig.model.name)}</Card.Header.Title>
-        <Card.Header.Text>Listing all {pluralizeModel(modelConfig)}</Card.Header.Text>
+        <Flex>
+          <Box width="100%">
+            <Card.Header.Title>{pluralize(modelConfig.model.name)}</Card.Header.Title>
+            <Card.Header.Text>Listing all {pluralizeModel(modelConfig)}</Card.Header.Text>
+          </Box>
+          <Menu>
+            <MenuButton>
+              <Box as={BsThreeDots} size="24px" margin="auto" />
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={onOpen}>Create</MenuItem>
+            </MenuList>
+          </Menu>
+        </Flex>
       </Card.Header>
 
       <LoadingContainer loading={loading} my="8">
@@ -65,6 +89,7 @@ const ModelList: React.FC<ModelListProps> = ({ modelConfig }) => {
           </Table>
         </Box>
       </LoadingContainer>
+      <CreateModelDrawer modelConfig={modelConfig} isOpen={isOpen} onClose={onClose} />
     </Card>
   )
 }
