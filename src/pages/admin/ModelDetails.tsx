@@ -61,21 +61,20 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
       </Card.Header>
       <LoadingContainer loading={loading}>
         <Card.Body>
-          {!modelData
-            ? ((): JSX.Element => {
-                console.log(loading, data)
-                return <Redirect to={getModelListLink(modelConfig)} />
-              })()
-            : getModelFields(modelConfig).map((field) => {
-                return (
-                  <FormControl key={field.name} isReadOnly={true} mb={4}>
-                    <FormLabel fontSize="sm">{field.label}</FormLabel>
-                    <Text fontWeight="light">
-                      {formatModelField(modelConfig, modelData, field)}
-                    </Text>
-                  </FormControl>
-                )
-              })}
+          {!modelData ? (
+            <Redirect to={getModelListLink(modelConfig)} />
+          ) : (
+            getModelFields(modelConfig).map((field) => {
+              return (
+                <FormControl key={field.name} isReadOnly={true} mb={4}>
+                  <FormLabel fontSize="sm">{field.label}</FormLabel>
+                  <Text fontWeight="light">
+                    {formatModelField(modelConfig, modelData, field)}
+                  </Text>
+                </FormControl>
+              )
+            })
+          )}
         </Card.Body>
 
         <DeleteModelPrompt
