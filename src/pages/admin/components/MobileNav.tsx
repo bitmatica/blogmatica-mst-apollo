@@ -3,11 +3,12 @@ import {
   DrawerBody,
   DrawerContent,
   DrawerOverlay,
-  Icon,
   IconButton,
   useDisclosure,
 } from "@chakra-ui/core"
+import { Box } from "@chakra-ui/core/dist"
 import React from "react"
+import { GiHamburgerMenu } from "react-icons/gi"
 
 import SideNavContent from "./SideNavContent"
 
@@ -19,9 +20,8 @@ const MobileNav: React.FC = () => {
       <IconButton
         display={["inline", null, "none"]}
         aria-label="Navigation Menu"
-        fontSize="20px"
         variant="ghost"
-        icon={(): JSX.Element => <Icon name="hamburger" />}
+        icon={(): JSX.Element => <Box as={GiHamburgerMenu} size="24px" margin="auto" />}
         onClick={onToggle}
       />
 
