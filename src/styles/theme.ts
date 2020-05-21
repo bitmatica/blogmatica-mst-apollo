@@ -1,5 +1,4 @@
 import { theme as defaultTheme } from "@chakra-ui/core"
-import { customIcons } from "./icons"
 
 const SIDE_NAV_WIDTH = "15rem"
 const HEADER_HEIGHT = "4rem"
@@ -50,7 +49,6 @@ const theme = {
   },
   icons: {
     ...defaultTheme.icons,
-    ...customIcons,
     logo: defaultTheme.icons["view"],
   },
 }

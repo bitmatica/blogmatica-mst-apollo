@@ -6,7 +6,7 @@ import { Query } from "mst-gql"
 import pluralize from "pluralize"
 import React from "react"
 import { Link } from "src/components"
-import { RootStoreType } from "../../models"
+import { DeletionResponseModelType, RootStoreType } from "../../models"
 import {
   REGISTERED_MODELS,
   RegisteredModelConfig,
@@ -104,6 +104,13 @@ export function getModelListQuery(
   return store[listQueryName as keyof RootStoreType]
 }
 
+export function getModelListData(
+  config: RegisteredModelConfig<any>,
+  data: any,
+): Array<{ id: string }> {
+  return (data && data[pluralizeModel(config)]) || []
+}
+
 export type ModelDetailsQuery = (variables: { id: string }) => Query
 
 export function getModelDetailsQuery(
@@ -112,13 +119,6 @@ export function getModelDetailsQuery(
 ): ModelDetailsQuery {
   const detailsQueryName = `query${config.model.name}`
   return store[detailsQueryName as keyof RootStoreType]
-}
-
-export function getModelListData(
-  config: RegisteredModelConfig<any>,
-  data: any,
-): Array<{ id: string }> {
-  return (data && data[pluralizeModel(config)]) || []
 }
 
 export type Model = {
@@ -133,6 +133,24 @@ export function getModelDetailData(
 ): Model | undefined {
   const modelName: string = config.model.name
   const modelKey = modelName.charAt(0).toLowerCase() + modelName.slice(1)
+  return data && data[modelKey]
+}
+
+export type DeleteModelMutation = (variables: { id: string }) => Query
+
+export function getDeleteModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): DeleteModelMutation {
+  const listQueryName = `mutateDelete${config.model.name}`
+  return store[listQueryName as keyof RootStoreType]
+}
+
+export function getDeleteModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): DeletionResponseModelType {
+  const modelKey = `delete${config.model.name}`
   return data && data[modelKey]
 }
 
