@@ -11,8 +11,10 @@ import {
   useDisclosure,
 } from "@chakra-ui/core"
 import { observer } from "mobx-react-lite"
-import React, { useEffect } from "react"
+import { Query } from "mst-gql"
+import React, { useState } from "react"
 import { BsThreeDots } from "react-icons/all"
+import { Redirect } from "react-router-dom"
 import { Card, LoadingContainer } from "src/components"
 import { useStore } from "src/getMstGql"
 import { useQuery } from "src/models/reactUtils"
@@ -23,6 +25,7 @@ import {
   getModelDetailData,
   getModelDetailsQuery,
   getModelFields,
+  getModelListLink,
 } from "src/pages/admin/utils"
 
 export type ModelDetailsProps = {
@@ -32,12 +35,10 @@ export type ModelDetailsProps = {
 
 const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => {
   const store = useStore()
-  const { setQuery, data, loading } = useQuery()
+  const [query] = useState<Query>(getModelDetailsQuery(modelConfig, store)({ id: modelId }))
+  const { data, loading } = useQuery(query)
   const { isOpen: deleteIsOpen, onToggle: toggleDeletePrompt } = useDisclosure(false)
 
-  useEffect(() => {
-    setQuery(getModelDetailsQuery(modelConfig, store)({ id: modelId }))
-  }, [setQuery, modelId, modelConfig, store])
   const modelData = getModelDetailData(modelConfig, data)
   return (
     <Card m={[0, 4, 8]}>
@@ -61,7 +62,10 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
       <LoadingContainer loading={loading}>
         <Card.Body>
           {!modelData
-            ? "Not found"
+            ? ((): JSX.Element => {
+                console.log(loading, data)
+                return <Redirect to={getModelListLink(modelConfig)} />
+              })()
             : getModelFields(modelConfig).map((field) => {
                 return (
                   <FormControl key={field.name} isReadOnly={true} mb={4}>
