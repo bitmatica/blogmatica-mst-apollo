@@ -161,6 +161,10 @@ export function getDeleteModelData(
   return data && data[modelKey]
 }
 
+export function getCreateModelInput(config: RegisteredModelConfig<any>): string {
+  return `Create${config.model.name}Input`
+}
+
 export type CreateModelMutation = (variables: { input: any }) => Query
 
 export function getModelSelectorPrimitives(
@@ -210,8 +214,49 @@ export function getCreateModelData(
   }
 }
 
-export function getCreateModelInput(config: RegisteredModelConfig<any>): string {
-  return `Create${config.model.name}Input`
+export type UpdateModelMutation = (variables: { id: string; input: any }) => Query
+
+export function getUpdateModelSelector(config: RegisteredModelConfig<any>): string {
+  const modelKey = singularModelKey(config)
+  const creationResponseSelector =
+    Models[`${modelKey}UpdateResponseModelPrimitives` as keyof typeof Models]
+  return (creationResponseSelector[
+    modelKey as keyof typeof creationResponseSelector
+  ] as Function)(getModelSelectorPrimitives(config)).toString()
+}
+
+export function getUpdateModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): UpdateModelMutation {
+  const updateMutationName = `mutateUpdate${config.model.name}`
+  const selector = getUpdateModelSelector(config)
+  return ({ input, id }): Query => {
+    return store[updateMutationName as keyof RootStoreType]({ input, id }, selector)
+  }
+}
+
+export type UpdateModelResponse = {
+  success: boolean
+  message: string
+  id?: string
+}
+
+export function getUpdateModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): UpdateModelResponse | undefined {
+  const modelKey = singularModelKey(config)
+  const mutationKey = `update${config.model.name}`
+  const response = data && data[mutationKey]
+  return {
+    ...response,
+    id: (response && response[modelKey]?.id) || undefined,
+  }
+}
+
+export function getUpdateModelInput(config: RegisteredModelConfig<any>): string {
+  return `Update${config.model.name}Input`
 }
 
 export function formatDate(dateStr: string): string {

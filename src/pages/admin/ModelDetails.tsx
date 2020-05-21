@@ -20,6 +20,7 @@ import { useStore } from "src/getMstGql"
 import { useQuery } from "src/models/reactUtils"
 import { RegisteredModelConfig } from "src/pages/admin/config"
 import DeleteModelPrompt from "src/pages/admin/DeleteModelPrompt"
+import UpdateModelDrawer from "src/pages/admin/UpdateModelDrawer"
 import {
   formatModelField,
   getModelDetailData,
@@ -38,6 +39,7 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
   const [query] = useState<Query>(getModelDetailsQuery(modelConfig, store)({ id: modelId }))
   const { data, loading } = useQuery(query)
   const { isOpen: deleteIsOpen, onToggle: toggleDeletePrompt } = useDisclosure(false)
+  const { isOpen, onClose, onOpen } = useDisclosure(false)
 
   const modelData = getModelDetailData(modelConfig, data)
   return (
@@ -53,7 +55,7 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
               <Box as={BsThreeDots} size="24px" margin="auto" />
             </MenuButton>
             <MenuList>
-              <MenuItem>Edit</MenuItem>
+              <MenuItem onClick={onOpen}>Edit</MenuItem>
               <MenuItem onClick={toggleDeletePrompt}>Delete</MenuItem>
             </MenuList>
           </Menu>
@@ -82,6 +84,13 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
           modelId={modelId}
           isOpen={deleteIsOpen}
           onClose={toggleDeletePrompt}
+        />
+        <UpdateModelDrawer
+          modelConfig={modelConfig}
+          isOpen={isOpen}
+          onClose={onClose}
+          modelId={modelId}
+          record={modelData}
         />
       </LoadingContainer>
     </Card>
