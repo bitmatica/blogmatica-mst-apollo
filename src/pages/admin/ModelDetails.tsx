@@ -85,13 +85,15 @@ const ModelDetails: React.FC<ModelDetailsProps> = ({ modelConfig, modelId }) => 
           isOpen={deleteIsOpen}
           onClose={toggleDeletePrompt}
         />
-        <UpdateModelDrawer
-          modelConfig={modelConfig}
-          isOpen={isOpen}
-          onClose={onClose}
-          modelId={modelId}
-          record={modelData}
-        />
+        {isOpen && (
+          <UpdateModelDrawer
+            modelConfig={modelConfig}
+            isOpen={isOpen}
+            onClose={onClose}
+            modelId={modelId}
+            record={modelData}
+          />
+        )}
       </LoadingContainer>
     </Card>
   )

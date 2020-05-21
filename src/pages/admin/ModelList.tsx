@@ -89,7 +89,9 @@ const ModelList: React.FC<ModelListProps> = ({ modelConfig }) => {
           </Table>
         </Box>
       </LoadingContainer>
-      <CreateModelDrawer modelConfig={modelConfig} isOpen={isOpen} onClose={onClose} />
+      {isOpen && (
+        <CreateModelDrawer modelConfig={modelConfig} isOpen={isOpen} onClose={onClose} />
+      )}
     </Card>
   )
 }
