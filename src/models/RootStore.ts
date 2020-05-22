@@ -1,6 +1,6 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { Query } from "mst-gql"
-import { getAuthHeader, resetJwt, setJwt } from "../utilities/jwtHelpers"
+import { getAuthHeader } from "../utilities/jwtHelpers"
 import { MutationResponseModelType } from "./MutationResponseModel"
 import { PostCreationResponseModelType } from "./PostCreationResponseModel"
 import { postCreationResponseModelPrimitives } from "./PostCreationResponseModel.base"
@@ -16,6 +16,9 @@ import { UserLoginResponseModelType } from "./UserLoginResponseModel"
 import { UserModel, userModelPrimitives, UserModelType } from "./UserModel"
 import { UserModelSelector } from "./UserModel.base"
 import Weather, { fetchWeatherData, OpenWeatherResponse } from "./Weather"
+import ApiToken from "./ApiToken"
+
+
 
 export interface RootStoreType extends Instance<typeof RootStore.Type> {}
 
@@ -23,6 +26,7 @@ export const RootStore = RootStoreBase.props({
   buttonClicked: types.boolean,
   weather: types.maybeNull(Weather),
   currentUser: types.maybeNull(types.reference(UserModel)),
+  apiToken: ApiToken,
 })
   .actions((self) => ({
     createPost(
@@ -47,8 +51,8 @@ export const RootStore = RootStoreBase.props({
       return query
     },
     setLogin(token: string): void {
-      setJwt(token)
-      getEnv(self).gqlHttpClient.setHeaders({ Authorization: getAuthHeader() })
+      self.apiToken.token = token
+      getEnv(self).gqlHttpClient.setHeaders({ Authorization: getAuthHeader(token) })
     },
   }))
   .actions((self) => ({
@@ -63,13 +67,25 @@ export const RootStore = RootStoreBase.props({
       })
       return query
     },
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // https://github.com/mobxjs/mst-gql/issues/227
+    getApiToken: flow(function* refreshApiToken() {
+      if (self.apiToken.isValid()) {
+        // TODO: error handling
+        const response = self.mutateRefreshToken()
+        yield response.then(data => data.refreshToken.token)
+      } else {
+        yield self.apiToken
+      }
+    }),
   }))
   .actions((self) => ({
     logout(): Query<{ logout: MutationResponseModelType }> {
       const query = self.mutateLogout()
       query.then(() => {
         self.currentUser = null
-        resetJwt()
+        self.apiToken.token = null
         getEnv(self).gqlHttpClient.setHeaders({ authorization: "" })
       })
       return query
@@ -99,59 +115,4 @@ export const RootStore = RootStoreBase.props({
         console.log(error)
       }
     }),
-  }))
-  // to use a method already declared in actions, chain a new actions call
-  .actions((self) => ({
-    login(input: UserLoginArgs): Query<{ login: UserLoginResponseModelType }> {
-      const query = self.mutateLogin({ input })
-      query.then((data) => {
-        const { token, success } = data.login
-        if (token && success) {
-          self.setLogin(token)
-        }
-        return self.getCurrentUser()
-      })
-      return query
-    },
-    logout(): Query<{ logout: MutationResponseModelType }> {
-      const query = self.mutateLogout()
-      query.then(() => {
-        resetJwt()
-        window.location.reload()
-      })
-      return query
-    },
-    updateButtonClicked(): boolean {
-      return (self.buttonClicked = !self.buttonClicked)
-    },
-    createUserAndLogin(
-      input: CreateUserInput,
-    ): Query<{ createUser: UserCreationResponseModelType }> {
-      const query = self.mutateCreateUser({ input })
-      query.then(() => {
-        self.login(input)
-      })
-      return query
-    },
-    getTheWeather: flow(function* fetchWeather() {
-      try {
-        const weatherData: OpenWeatherResponse = yield fetchWeatherData()
-        self.weather = Weather.create({
-          temperature: weatherData.main.temp,
-          humidity: weatherData.main.humidity,
-          description: weatherData.weather.map((w) => w.description).join(" "),
-          status: "loaded",
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    }),
-  }))
-  .views((self) => ({
-    isLoggedIn(): boolean {
-      return Boolean(self.currentUser)
-    },
-    isButtonClicked(): string {
-      return self.buttonClicked ? "yes" : "no"
-    },
   }))

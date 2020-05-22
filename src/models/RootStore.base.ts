@@ -5,12 +5,12 @@ import { ObservableMap } from "mobx"
 import { types } from "mobx-state-tree"
 import { MSTGQLStore, configureStoreMixin, QueryOptions, withTypedRefs } from "mst-gql"
 
-import { PostModel, PostModelType } from "./PostModel"
-import { postModelPrimitives, PostModelSelector } from "./PostModel.base"
-import { UserModel, UserModelType } from "./UserModel"
-import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
 import { CommentModel, CommentModelType } from "./CommentModel"
 import { commentModelPrimitives, CommentModelSelector } from "./CommentModel.base"
+import { UserModel, UserModelType } from "./UserModel"
+import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
+import { PostModel, PostModelType } from "./PostModel"
+import { postModelPrimitives, PostModelSelector } from "./PostModel.base"
 import { GustoUserModel, GustoUserModelType } from "./GustoUserModel"
 import { gustoUserModelPrimitives, GustoUserModelSelector } from "./GustoUserModel.base"
 import { GustoRolesModel, GustoRolesModelType } from "./GustoRolesModel"
@@ -31,6 +31,35 @@ import {
   GustoCompanyLocationModelSelector,
 } from "./GustoCompanyLocationModel.base"
 import {
+  CommentCreationResponseModel,
+  CommentCreationResponseModelType,
+} from "./CommentCreationResponseModel"
+import {
+  commentCreationResponseModelPrimitives,
+  CommentCreationResponseModelSelector,
+} from "./CommentCreationResponseModel.base"
+import {
+  CommentUpdateResponseModel,
+  CommentUpdateResponseModelType,
+} from "./CommentUpdateResponseModel"
+import {
+  commentUpdateResponseModelPrimitives,
+  CommentUpdateResponseModelSelector,
+} from "./CommentUpdateResponseModel.base"
+import { DeletionResponseModel, DeletionResponseModelType } from "./DeletionResponseModel"
+import {
+  deletionResponseModelPrimitives,
+  DeletionResponseModelSelector,
+} from "./DeletionResponseModel.base"
+import {
+  GenerateAuthorizationUriResponseModel,
+  GenerateAuthorizationUriResponseModelType,
+} from "./GenerateAuthorizationUriResponseModel"
+import {
+  generateAuthorizationUriResponseModelPrimitives,
+  GenerateAuthorizationUriResponseModelSelector,
+} from "./GenerateAuthorizationUriResponseModel.base"
+import {
   PostUpdateResponseModel,
   PostUpdateResponseModelType,
 } from "./PostUpdateResponseModel"
@@ -38,11 +67,6 @@ import {
   postUpdateResponseModelPrimitives,
   PostUpdateResponseModelSelector,
 } from "./PostUpdateResponseModel.base"
-import { DeletionResponseModel, DeletionResponseModelType } from "./DeletionResponseModel"
-import {
-  deletionResponseModelPrimitives,
-  DeletionResponseModelSelector,
-} from "./DeletionResponseModel.base"
 import {
   PostCreationResponseModel,
   PostCreationResponseModelType,
@@ -81,32 +105,29 @@ import {
   MutationResponseModelSelector,
 } from "./MutationResponseModel.base"
 import {
-  GenerateAuthorizationUriResponseModel,
-  GenerateAuthorizationUriResponseModelType,
-} from "./GenerateAuthorizationUriResponseModel"
+  RefreshTokenResponseModel,
+  RefreshTokenResponseModelType,
+} from "./RefreshTokenResponseModel"
 import {
-  generateAuthorizationUriResponseModelPrimitives,
-  GenerateAuthorizationUriResponseModelSelector,
-} from "./GenerateAuthorizationUriResponseModel.base"
-import {
-  CommentCreationResponseModel,
-  CommentCreationResponseModelType,
-} from "./CommentCreationResponseModel"
-import {
-  commentCreationResponseModelPrimitives,
-  CommentCreationResponseModelSelector,
-} from "./CommentCreationResponseModel.base"
-import {
-  CommentUpdateResponseModel,
-  CommentUpdateResponseModelType,
-} from "./CommentUpdateResponseModel"
-import {
-  commentUpdateResponseModelPrimitives,
-  CommentUpdateResponseModelSelector,
-} from "./CommentUpdateResponseModel.base"
+  refreshTokenResponseModelPrimitives,
+  RefreshTokenResponseModelSelector,
+} from "./RefreshTokenResponseModel.base"
 
 import { OAuthProvider } from "./OAuthProviderEnum"
 
+export type CreateCommentInput = {
+  body: string
+  authorId: string
+  postId: string
+}
+export type UpdateCommentInput = {
+  body?: string
+  authorId?: string
+  postId?: string
+}
+export type GenerateAuthorizationUriInput = {
+  provider: OAuthProvider
+}
 export type UpdatePostInput = {
   title?: string
   body?: string
@@ -128,24 +149,11 @@ export type UserLoginArgs = {
   email: string
   password: string
 }
-export type GenerateAuthorizationUriInput = {
-  provider: OAuthProvider
-}
-export type CreateCommentInput = {
-  body: string
-  authorId: string
-  postId: string
-}
-export type UpdateCommentInput = {
-  body?: string
-  authorId?: string
-  postId?: string
-}
 /* The TypeScript type that explicits the refs to other models in order to prevent a circular refs issue */
 type Refs = {
-  posts: ObservableMap<string, PostModelType>
-  users: ObservableMap<string, UserModelType>
   comments: ObservableMap<string, CommentModelType>
+  users: ObservableMap<string, UserModelType>
+  posts: ObservableMap<string, PostModelType>
 }
 
 /**
@@ -156,35 +164,120 @@ export const RootStoreBase = withTypedRefs<Refs>()(
     .extend(
       configureStoreMixin(
         [
-          ["Post", () => PostModel],
-          ["User", () => UserModel],
           ["Comment", () => CommentModel],
+          ["User", () => UserModel],
+          ["Post", () => PostModel],
           ["GustoUser", () => GustoUserModel],
           ["GustoRoles", () => GustoRolesModel],
           ["GustoRole", () => GustoRoleModel],
           ["GustoCompany", () => GustoCompanyModel],
           ["GustoCompanyLocation", () => GustoCompanyLocationModel],
-          ["PostUpdateResponse", () => PostUpdateResponseModel],
+          ["CommentCreationResponse", () => CommentCreationResponseModel],
+          ["CommentUpdateResponse", () => CommentUpdateResponseModel],
           ["DeletionResponse", () => DeletionResponseModel],
+          ["GenerateAuthorizationUriResponse", () => GenerateAuthorizationUriResponseModel],
+          ["PostUpdateResponse", () => PostUpdateResponseModel],
           ["PostCreationResponse", () => PostCreationResponseModel],
           ["UserUpdateResponse", () => UserUpdateResponseModel],
           ["UserCreationResponse", () => UserCreationResponseModel],
           ["UserLoginResponse", () => UserLoginResponseModel],
           ["MutationResponse", () => MutationResponseModel],
-          ["GenerateAuthorizationUriResponse", () => GenerateAuthorizationUriResponseModel],
-          ["CommentCreationResponse", () => CommentCreationResponseModel],
-          ["CommentUpdateResponse", () => CommentUpdateResponseModel],
+          ["RefreshTokenResponse", () => RefreshTokenResponseModel],
         ],
-        ["Post", "User", "Comment"],
+        ["Comment", "User", "Post"],
         "js",
       ),
     )
     .props({
-      posts: types.optional(types.map(types.late((): any => PostModel)), {}),
-      users: types.optional(types.map(types.late((): any => UserModel)), {}),
       comments: types.optional(types.map(types.late((): any => CommentModel)), {}),
+      users: types.optional(types.map(types.late((): any => UserModel)), {}),
+      posts: types.optional(types.map(types.late((): any => PostModel)), {}),
     })
     .actions((self) => ({
+      queryComment(
+        variables: { id: string },
+        resultSelector:
+          | string
+          | ((
+              qb: CommentModelSelector,
+            ) => CommentModelSelector) = commentModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ comment: CommentModelType }>(
+          `query comment($id: ID!) { comment(id: $id) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new CommentModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryComments(
+        variables?: {},
+        resultSelector:
+          | string
+          | ((
+              qb: CommentModelSelector,
+            ) => CommentModelSelector) = commentModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ comments: CommentModelType[] }>(
+          `query comments { comments {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new CommentModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryGustoCurrentUser(
+        variables?: {},
+        resultSelector:
+          | string
+          | ((
+              qb: GustoUserModelSelector,
+            ) => GustoUserModelSelector) = gustoUserModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ gustoCurrentUser: GustoUserModelType }>(
+          `query gustoCurrentUser { gustoCurrentUser {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new GustoUserModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryGustoCompanyById(
+        variables: { id: number },
+        resultSelector:
+          | string
+          | ((
+              qb: GustoCompanyModelSelector,
+            ) => GustoCompanyModelSelector) = gustoCompanyModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ gustoCompanyById: GustoCompanyModelType }>(
+          `query gustoCompanyById($id: Float!) { gustoCompanyById(id: $id) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new GustoCompanyModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
       queryPost(
         variables: { id: string },
         resultSelector:
@@ -280,88 +373,90 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           options,
         )
       },
-      queryComment(
+      mutateCreateComment(
+        variables: { input: CreateCommentInput },
+        resultSelector:
+          | string
+          | ((
+              qb: CommentCreationResponseModelSelector,
+            ) => CommentCreationResponseModelSelector) = commentCreationResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{ createComment: CommentCreationResponseModelType }>(
+          `mutation createComment($input: CreateCommentInput!) { createComment(input: $input) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new CommentCreationResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
+      mutateUpdateComment(
+        variables: { input: UpdateCommentInput; id: string },
+        resultSelector:
+          | string
+          | ((
+              qb: CommentUpdateResponseModelSelector,
+            ) => CommentUpdateResponseModelSelector) = commentUpdateResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{ updateComment: CommentUpdateResponseModelType }>(
+          `mutation updateComment($input: UpdateCommentInput!, $id: ID!) { updateComment(input: $input, id: $id) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new CommentUpdateResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
+      mutateDeleteComment(
         variables: { id: string },
         resultSelector:
           | string
           | ((
-              qb: CommentModelSelector,
-            ) => CommentModelSelector) = commentModelPrimitives.toString(),
-        options: QueryOptions = {},
+              qb: DeletionResponseModelSelector,
+            ) => DeletionResponseModelSelector) = deletionResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
       ) {
-        return self.query<{ comment: CommentModelType }>(
-          `query comment($id: ID!) { comment(id: $id) {
+        return self.mutate<{ deleteComment: DeletionResponseModelType }>(
+          `mutation deleteComment($id: ID!) { deleteComment(id: $id) {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new CommentModelSelector()).toString()
+            ? resultSelector(new DeletionResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
           variables,
-          options,
+          optimisticUpdate,
         )
       },
-      queryComments(
-        variables?: {},
+      mutateGenerateAuthorizationUri(
+        variables: { input: GenerateAuthorizationUriInput },
         resultSelector:
           | string
           | ((
-              qb: CommentModelSelector,
-            ) => CommentModelSelector) = commentModelPrimitives.toString(),
-        options: QueryOptions = {},
+              qb: GenerateAuthorizationUriResponseModelSelector,
+            ) => GenerateAuthorizationUriResponseModelSelector) = generateAuthorizationUriResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
       ) {
-        return self.query<{ comments: CommentModelType[] }>(
-          `query comments { comments {
+        return self.mutate<{
+          generateAuthorizationUri: GenerateAuthorizationUriResponseModelType
+        }>(
+          `mutation generateAuthorizationUri($input: GenerateAuthorizationUriInput!) { generateAuthorizationUri(input: $input) {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new CommentModelSelector()).toString()
+            ? resultSelector(new GenerateAuthorizationUriResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
           variables,
-          options,
-        )
-      },
-      queryGustoCurrentUser(
-        variables?: {},
-        resultSelector:
-          | string
-          | ((
-              qb: GustoUserModelSelector,
-            ) => GustoUserModelSelector) = gustoUserModelPrimitives.toString(),
-        options: QueryOptions = {},
-      ) {
-        return self.query<{ gustoCurrentUser: GustoUserModelType }>(
-          `query gustoCurrentUser { gustoCurrentUser {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new GustoUserModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          options,
-        )
-      },
-      queryGustoCompanyById(
-        variables: { id: number },
-        resultSelector:
-          | string
-          | ((
-              qb: GustoCompanyModelSelector,
-            ) => GustoCompanyModelSelector) = gustoCompanyModelPrimitives.toString(),
-        options: QueryOptions = {},
-      ) {
-        return self.query<{ gustoCompanyById: GustoCompanyModelType }>(
-          `query gustoCompanyById($id: Float!) { gustoCompanyById(id: $id) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new GustoCompanyModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          options,
+          optimisticUpdate,
         )
       },
       mutateUpdatePost(
@@ -532,85 +627,20 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           optimisticUpdate,
         )
       },
-      mutateGenerateAuthorizationUri(
-        variables: { input: GenerateAuthorizationUriInput },
+      mutateRefreshToken(
+        variables?: {},
         resultSelector:
           | string
           | ((
-              qb: GenerateAuthorizationUriResponseModelSelector,
-            ) => GenerateAuthorizationUriResponseModelSelector) = generateAuthorizationUriResponseModelPrimitives.toString(),
+              qb: RefreshTokenResponseModelSelector,
+            ) => RefreshTokenResponseModelSelector) = refreshTokenResponseModelPrimitives.toString(),
         optimisticUpdate?: () => void,
       ) {
-        return self.mutate<{
-          generateAuthorizationUri: GenerateAuthorizationUriResponseModelType
-        }>(
-          `mutation generateAuthorizationUri($input: GenerateAuthorizationUriInput!) { generateAuthorizationUri(input: $input) {
+        return self.mutate<{ refreshToken: RefreshTokenResponseModelType }>(
+          `mutation refreshToken { refreshToken {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new GenerateAuthorizationUriResponseModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          optimisticUpdate,
-        )
-      },
-      mutateCreateComment(
-        variables: { input: CreateCommentInput },
-        resultSelector:
-          | string
-          | ((
-              qb: CommentCreationResponseModelSelector,
-            ) => CommentCreationResponseModelSelector) = commentCreationResponseModelPrimitives.toString(),
-        optimisticUpdate?: () => void,
-      ) {
-        return self.mutate<{ createComment: CommentCreationResponseModelType }>(
-          `mutation createComment($input: CreateCommentInput!) { createComment(input: $input) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new CommentCreationResponseModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          optimisticUpdate,
-        )
-      },
-      mutateUpdateComment(
-        variables: { input: UpdateCommentInput; id: string },
-        resultSelector:
-          | string
-          | ((
-              qb: CommentUpdateResponseModelSelector,
-            ) => CommentUpdateResponseModelSelector) = commentUpdateResponseModelPrimitives.toString(),
-        optimisticUpdate?: () => void,
-      ) {
-        return self.mutate<{ updateComment: CommentUpdateResponseModelType }>(
-          `mutation updateComment($input: UpdateCommentInput!, $id: ID!) { updateComment(input: $input, id: $id) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new CommentUpdateResponseModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          optimisticUpdate,
-        )
-      },
-      mutateDeleteComment(
-        variables: { id: string },
-        resultSelector:
-          | string
-          | ((
-              qb: DeletionResponseModelSelector,
-            ) => DeletionResponseModelSelector) = deletionResponseModelPrimitives.toString(),
-        optimisticUpdate?: () => void,
-      ) {
-        return self.mutate<{ deleteComment: DeletionResponseModelType }>(
-          `mutation deleteComment($id: ID!) { deleteComment(id: $id) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new DeletionResponseModelSelector()).toString()
+            ? resultSelector(new RefreshTokenResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
