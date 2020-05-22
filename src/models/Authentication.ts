@@ -1,13 +1,13 @@
-import { types } from "mobx-state-tree"
 import jwtDecode from "jwt-decode"
+import { types } from "mobx-state-tree"
 
 interface DecodedJwt {
   exp: number
 }
 
-const ApiToken = types
-  .model("ApiToken", {
-    token: types.string,
+const Authentication = types
+  .model("Authentication", {
+    token: types.maybeNull(types.string),
   })
   .views((self) => ({
     isValid() {
@@ -17,4 +17,4 @@ const ApiToken = types
     },
   }))
 
-export default ApiToken
+export default Authentication

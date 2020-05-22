@@ -2,9 +2,13 @@ import camelcase from "camelcase"
 import startCase from "lodash/startCase"
 import { DateTime } from "luxon"
 import { IModelType } from "mobx-state-tree"
-import { Query } from "mst-gql"
+import { Query, QueryBuilder } from "mst-gql"
 import pluralize from "pluralize"
-import { RootStoreType } from "../../models"
+import React from "react"
+import { Link } from "src/components"
+import * as Models from "src/models"
+import { MutationResponseModelType, RootStoreType } from "src/models"
+
 import {
   REGISTERED_MODELS,
   RegisteredModelConfig,
@@ -32,8 +36,20 @@ export function pluralizeModel(config: RegisteredModelConfig<any>): string {
   return parts.join("")
 }
 
-export function getModelLink(config: RegisteredModelConfig<any>): string {
+export function singularModelKey(config: RegisteredModelConfig<any>): string {
+  const modelName: string = config.model.name
+  return modelName.charAt(0).toLowerCase() + modelName.slice(1)
+}
+
+export function getModelListLink(config: RegisteredModelConfig<any>): string {
   return `/admin/models/${pluralizeModel(config)}`
+}
+
+export function getModelDetailsLink(
+  config: RegisteredModelConfig<any>,
+  modelId: string,
+): string {
+  return `${getModelListLink(config)}/${modelId}`
 }
 
 export function getModelFromPlural(plural: string): RegisteredModelConfig<any> | undefined {
@@ -53,7 +69,7 @@ export function getFieldConfig<T extends IModelType<any, any>>(
   return fieldConfigMap[fieldName] || ({} as RegisteredModelFieldConfig<T>)
 }
 
-export function getModelListFields(config: RegisteredModelConfig<any>): Array<ModelField> {
+export function getModelFields(config: RegisteredModelConfig<any>): Array<ModelField> {
   const fields = Object.keys(config.model.properties)
     .filter((key) => {
       const fieldConfig = getFieldConfig(config, key)
@@ -78,19 +94,21 @@ export function getModelListFields(config: RegisteredModelConfig<any>): Array<Mo
     })
 
   return [
-    { label: "ID", name: "id" },
+    { label: "Id", name: "id" },
     ...fields,
     { label: "Created At", name: "createdAt" },
     { label: "Updated At", name: "updatedAt" },
   ]
 }
 
+export type ModelListQuery = () => Query
+
 export function getModelListQuery(
   config: RegisteredModelConfig<any>,
   store: RootStoreType,
-): Query {
+): ModelListQuery {
   const listQueryName = `query${pluralize(config.model.name)}`
-  return store[listQueryName as keyof RootStoreType]()
+  return store[listQueryName as keyof RootStoreType]
 }
 
 export function getModelListData(
@@ -100,12 +118,172 @@ export function getModelListData(
   return (data && data[pluralizeModel(config)]) || []
 }
 
+export type ModelDetailsQuery = (variables: { id: string }) => Query
+
+export function getModelDetailsQuery(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): ModelDetailsQuery {
+  const detailsQueryName = `query${config.model.name}`
+  return store[detailsQueryName as keyof RootStoreType]
+}
+
+export type Model = {
+  id: string
+  createdAt: string
+  updatedAt: string
+}
+
+export function getModelDetailData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): Model | undefined {
+  const modelName: string = config.model.name
+  const modelKey = modelName.charAt(0).toLowerCase() + modelName.slice(1)
+  return data && data[modelKey]
+}
+
+export type DeleteModelMutation = (variables: { id: string }) => Query
+
+export function getDeleteModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): DeleteModelMutation {
+  const deleteModelMutation = `mutateDelete${config.model.name}`
+  return store[deleteModelMutation as keyof RootStoreType]
+}
+
+export function getDeleteModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): MutationResponseModelType {
+  const modelKey = `delete${config.model.name}`
+  return data && data[modelKey]
+}
+
+export function getCreateModelInput(config: RegisteredModelConfig<any>): string {
+  return `Create${config.model.name}Input`
+}
+
+export type CreateModelMutation = (variables: { input: any }) => Query
+
+export function getModelSelectorPrimitives(
+  config: RegisteredModelConfig<any>,
+): QueryBuilder {
+  return Models[
+    `${singularModelKey(config)}ModelPrimitives` as keyof typeof Models
+  ] as QueryBuilder
+}
+
+export function getCreateModelSelector(config: RegisteredModelConfig<any>): string {
+  const modelKey = singularModelKey(config)
+  const creationResponseSelector =
+    Models[`${modelKey}CreationResponseModelPrimitives` as keyof typeof Models]
+  return (creationResponseSelector[
+    modelKey as keyof typeof creationResponseSelector
+  ] as Function)(getModelSelectorPrimitives(config)).toString()
+}
+
+export function getCreateModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): CreateModelMutation {
+  const createMutationName = `mutateCreate${config.model.name}`
+  const selector = getCreateModelSelector(config)
+  return ({ input }): Query => {
+    return store[createMutationName as keyof RootStoreType]({ input }, selector)
+  }
+}
+
+export type CreateModelResponse = {
+  success: boolean
+  message: string
+  id?: string
+}
+
+export function getCreateModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): CreateModelResponse | undefined {
+  const modelKey = singularModelKey(config)
+  const mutationKey = `create${config.model.name}`
+  const response = data && data[mutationKey]
+  return {
+    ...response,
+    id: (response && response[modelKey]?.id) || undefined,
+  }
+}
+
+export type UpdateModelMutation = (variables: { id: string; input: any }) => Query
+
+export function getUpdateModelSelector(config: RegisteredModelConfig<any>): string {
+  const modelKey = singularModelKey(config)
+  const creationResponseSelector =
+    Models[`${modelKey}UpdateResponseModelPrimitives` as keyof typeof Models]
+  return (creationResponseSelector[
+    modelKey as keyof typeof creationResponseSelector
+  ] as Function)(getModelSelectorPrimitives(config)).toString()
+}
+
+export function getUpdateModelMutation(
+  config: RegisteredModelConfig<any>,
+  store: RootStoreType,
+): UpdateModelMutation {
+  const updateMutationName = `mutateUpdate${config.model.name}`
+  const selector = getUpdateModelSelector(config)
+  return ({ input, id }): Query => {
+    return store[updateMutationName as keyof RootStoreType]({ input, id }, selector)
+  }
+}
+
+export type UpdateModelResponse = {
+  success: boolean
+  message: string
+  id?: string
+}
+
+export function getUpdateModelData(
+  config: RegisteredModelConfig<any>,
+  data?: any,
+): UpdateModelResponse | undefined {
+  const modelKey = singularModelKey(config)
+  const mutationKey = `update${config.model.name}`
+  const response = data && data[mutationKey]
+  return {
+    ...response,
+    id: (response && response[modelKey]?.id) || undefined,
+  }
+}
+
+export function getUpdateModelInput(config: RegisteredModelConfig<any>): string {
+  return `Update${config.model.name}Input`
+}
+
 export function formatDate(dateStr: string): string {
   return DateTime.fromISO(dateStr).toLocaleString(DateTime.DATETIME_SHORT)
 }
 
 export function formatUUID(uuidStr: string): string {
   return `${uuidStr.slice(0, 5)}...${uuidStr.slice(uuidStr.length - 5, uuidStr.length)}`
+}
+
+function getReferenceFieldFromId(
+  config: RegisteredModelConfig<any>,
+  field: ModelField,
+): ModelField | undefined {
+  const referenceFieldKey = field.name.substr(0, field.name.length - 2)
+  return config.model.properties[referenceFieldKey]
+}
+
+export function getReferenceType(
+  config: RegisteredModelConfig<any>,
+  field: ModelField,
+): RegisteredModelConfig<any> | undefined {
+  const [match] = (field.name as string).match(/".+Model"/) || []
+  const referenceModelName = match.replace(/"/g, "")
+  return getRegisteredModels().find(
+    (model) => `${model.model.name}Model` === referenceModelName,
+  )
 }
 
 export function formatModelField<T extends IModelType<any, any>>(
@@ -122,9 +300,29 @@ export function formatModelField<T extends IModelType<any, any>>(
   if (field.name === "createdAt" || field.name === "updatedAt") {
     return formatDate(value)
   }
-  if (field.name.toLowerCase().endsWith("id")) {
-    return formatUUID(value)
+
+  if (field.name === "id") {
+    return React.createElement(
+      Link,
+      { to: getModelDetailsLink(config, value) },
+      formatUUID(value),
+    )
   }
 
+  if (field.name.toLowerCase().endsWith("id")) {
+    const referenceField = getReferenceFieldFromId(config, field)
+    if (referenceField) {
+      const referenceModel = getReferenceType(config, referenceField)
+      if (referenceModel) {
+        return React.createElement(
+          Link,
+          { to: getModelDetailsLink(referenceModel, value) },
+          formatUUID(value),
+        )
+      }
+    }
+
+    return formatUUID(value)
+  }
   return value
 }

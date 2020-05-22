@@ -1,5 +1,6 @@
 import { flow, getEnv, Instance, types } from "mobx-state-tree"
 import { Query } from "mst-gql"
+import Authentication from "src/models/Authentication"
 import { getAuthHeader } from "../utilities/jwtHelpers"
 import { MutationResponseModelType } from "./MutationResponseModel"
 import { PostCreationResponseModelType } from "./PostCreationResponseModel"
@@ -15,18 +16,12 @@ import { UserCreationResponseModelType } from "./UserCreationResponseModel"
 import { UserLoginResponseModelType } from "./UserLoginResponseModel"
 import { UserModel, userModelPrimitives, UserModelType } from "./UserModel"
 import { UserModelSelector } from "./UserModel.base"
-import Weather, { fetchWeatherData, OpenWeatherResponse } from "./Weather"
-import ApiToken from "./ApiToken"
 
-
-
-export interface RootStoreType extends Instance<typeof RootStore.Type> {}
+export interface RootStoreType extends Instance<typeof RootStore> {}
 
 export const RootStore = RootStoreBase.props({
-  buttonClicked: types.boolean,
-  weather: types.maybeNull(Weather),
   currentUser: types.maybeNull(types.reference(UserModel)),
-  apiToken: ApiToken,
+  authentication: Authentication,
 })
   .actions((self) => ({
     createPost(
@@ -51,7 +46,7 @@ export const RootStore = RootStoreBase.props({
       return query
     },
     setLogin(token: string): void {
-      self.apiToken.token = token
+      self.authentication.token = token
       getEnv(self).gqlHttpClient.setHeaders({ Authorization: getAuthHeader(token) })
     },
   }))
@@ -71,12 +66,12 @@ export const RootStore = RootStoreBase.props({
     // @ts-ignore
     // https://github.com/mobxjs/mst-gql/issues/227
     getApiToken: flow(function* refreshApiToken() {
-      if (self.apiToken.isValid()) {
+      if (self.authentication.isValid()) {
         // TODO: error handling
         const response = self.mutateRefreshToken()
-        yield response.then(data => data.refreshToken.token)
+        yield response.then((data) => data.refreshToken.token)
       } else {
-        yield self.apiToken
+        yield self.authentication
       }
     }),
   }))
@@ -85,13 +80,10 @@ export const RootStore = RootStoreBase.props({
       const query = self.mutateLogout()
       query.then(() => {
         self.currentUser = null
-        self.apiToken.token = null
+        self.authentication.token = null
         getEnv(self).gqlHttpClient.setHeaders({ authorization: "" })
       })
       return query
-    },
-    updateButtonClicked(): boolean {
-      return (self.buttonClicked = !self.buttonClicked)
     },
     createUserAndLogin(
       input: CreateUserInput,
@@ -102,17 +94,9 @@ export const RootStore = RootStoreBase.props({
       })
       return query
     },
-    getTheWeather: flow(function* fetchWeather() {
-      try {
-        const weatherData: OpenWeatherResponse = yield fetchWeatherData()
-        self.weather = Weather.create({
-          temperature: weatherData.main.temp,
-          humidity: weatherData.main.humidity,
-          description: weatherData.weather.map((w) => w.description).join(" "),
-          status: "loaded",
-        })
-      } catch (error) {
-        console.log(error)
-      }
-    }),
+  }))
+  .views((self) => ({
+    isLoggedIn(): boolean {
+      return Boolean(self.currentUser)
+    },
   }))

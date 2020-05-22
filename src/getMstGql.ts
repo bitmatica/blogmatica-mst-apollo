@@ -9,6 +9,9 @@ const defaultState = {
   currentUser: null,
   buttonClicked: false,
   weather: null,
+  authentication: {
+    token: undefined,
+  },
 }
 
 export const rootStore = RootStore.create(defaultState, {

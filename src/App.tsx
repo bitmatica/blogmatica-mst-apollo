@@ -9,7 +9,6 @@ import { AdminDashboard } from "./pages/admin"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
-import Test from "./pages/Test"
 import User from "./pages/User"
 import theme from "./styles/theme"
 
@@ -38,7 +37,6 @@ const App: React.FC = () => {
 
           <BrowserRouter>
             <Switch>
-              <Route path="/test" component={Test} />
               <OnlyLoggedOutRoute path="/login" component={Login} />
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />

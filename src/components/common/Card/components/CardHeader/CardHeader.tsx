@@ -1,5 +1,5 @@
-import React from "react"
 import { Box, BoxProps } from "@chakra-ui/core"
+import React from "react"
 
 import CardHeaderText from "./CardHeaderText"
 import CardHeaderTitle from "./CardHeaderTitle"

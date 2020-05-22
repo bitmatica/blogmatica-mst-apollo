@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/core"
 import React from "react"
 
 import { HeaderLogo } from "src/components"
-import { getModelLink, getRegisteredModels } from "../utils"
+import { getModelListLink, getRegisteredModels } from "../utils"
 import { SideNavLink } from "./SideNavLink"
 import { SideNavSection } from "./SideNavSection"
 
@@ -18,7 +18,7 @@ const SideNavContent: React.FC = ({ ...props }) => {
 
       <SideNavSection title="Models">
         {getRegisteredModels().map((config) => (
-          <SideNavLink key={config.model.name} to={getModelLink(config)}>
+          <SideNavLink key={config.model.name} to={getModelListLink(config)}>
             {config.model.name}
           </SideNavLink>
         ))}
