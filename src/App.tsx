@@ -37,7 +37,7 @@ const App: React.FC = () => {
 
           <BrowserRouter>
             <Switch>
-              <OnlyLoggedOutRoute path="/login" component={Login} />
+              <Route path="/login" component={Login} />
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />
               <PrivateRoute path="/admin" component={AdminDashboard} />

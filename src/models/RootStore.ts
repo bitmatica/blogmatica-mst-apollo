@@ -45,35 +45,38 @@ export const RootStore = RootStoreBase.props({
       })
       return query
     },
-    setLogin(token: string): void {
-      self.authentication.token = token
-      getEnv(self).gqlHttpClient.setHeaders({ Authorization: getAuthHeader(token) })
-    },
+  }))
+  .actions((self) => ({
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // https://github.com/mobxjs/mst-gql/issues/227
+    maybeRefreshAuthToken: flow(function* () {
+      if (!self.authentication.isValid()) {
+        yield self.mutateRefreshToken()
+          .then((response) => {
+            const {refreshToken: { token, success, message }} = response
+            if (token && success) {
+              self.authentication.token = token || null
+              getEnv(self).gqlHttpClient.setHeaders({
+                Authorization: getAuthHeader(token),
+              })
+            } else {
+              throw new Error(message)
+            }
+          })
+      }
+    }),
   }))
   .actions((self) => ({
     login(input: UserLoginArgs): Query<{ login: UserLoginResponseModelType }> {
       const query = self.mutateLogin({ input })
-      query.then((data) => {
-        const { token, success } = data.login
-        if (token && success) {
-          self.setLogin(token)
-        }
-        return self.getCurrentUser()
+      query.then(async () => {
+        await self.maybeRefreshAuthToken()
+        // TODO: error handling
       })
+
       return query
     },
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    // https://github.com/mobxjs/mst-gql/issues/227
-    getApiToken: flow(function* refreshApiToken() {
-      if (self.authentication.isValid()) {
-        // TODO: error handling
-        const response = self.mutateRefreshToken()
-        yield response.then((data) => data.refreshToken.token)
-      } else {
-        yield self.authentication
-      }
-    }),
   }))
   .actions((self) => ({
     logout(): Query<{ logout: MutationResponseModelType }> {
