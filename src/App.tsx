@@ -13,9 +13,8 @@ import User from "./pages/User"
 import theme from "./styles/theme"
 import { observer } from "mobx-react-lite"
 
-
 const AuthProvider: React.FC = observer(({ children }) => {
-  const { loading } = useQuery(store => store.refreshTokenAndSetTimeOut())
+  const { loading } = useQuery((store) => store.refreshTokenAndSetTimeOut())
   return loading ? null : <Fragment>{children}</Fragment>
 })
 
@@ -44,7 +43,7 @@ const App: React.FC = () => (
 
           <BrowserRouter>
             <Switch>
-              <Route path="/login" component={Login} />
+              <OnlyLoggedOutRoute path="/login" component={Login} />
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />
               <PrivateRoute path="/admin" component={AdminDashboard} />

@@ -1,4 +1,4 @@
-import { getEnv, Instance, types } from "mobx-state-tree"
+import { getEnv, Instance } from "mobx-state-tree"
 import { Query } from "mst-gql"
 import Authentication from "src/models/Authentication"
 import { MutationResponseModelType } from "./MutationResponseModel"
@@ -13,14 +13,13 @@ import {
 } from "./RootStore.base"
 import { UserCreationResponseModelType } from "./UserCreationResponseModel"
 import { UserLoginResponseModelType } from "./UserLoginResponseModel"
-import { UserModel, userModelPrimitives } from "./UserModel"
+import { userModelPrimitives } from "./UserModel"
 
 export interface RootStoreType extends Instance<typeof RootStore> {}
 
 const REFRESH_API_TOKEN_INTERVAL = 900000
 
 export const RootStore = RootStoreBase.props({
-  currentUser: types.maybeNull(types.reference(UserModel)),
   authentication: Authentication,
 })
   .actions((self) => ({
@@ -40,7 +39,9 @@ export const RootStore = RootStoreBase.props({
       const query = self.mutateRefreshToken()
 
       query.then((response) => {
-        const { refreshToken: { token }} = response
+        const {
+          refreshToken: { token },
+        } = response
         if (token) {
           self.authentication.setToken(token)
           setTimeout(() => {
@@ -76,7 +77,6 @@ export const RootStore = RootStoreBase.props({
     logout(): Query<{ logout: MutationResponseModelType }> {
       const query = self.mutateLogout()
       query.then(() => {
-        self.currentUser = null
         self.authentication.token = null
         getEnv(self).gqlHttpClient.setHeaders({ authorization: "" })
       })
@@ -90,10 +90,5 @@ export const RootStore = RootStoreBase.props({
         self.login(input)
       })
       return query
-    },
-  }))
-  .views((self) => ({
-    isLoggedIn(): boolean {
-      return Boolean(self.currentUser)
     },
   }))

@@ -3,12 +3,10 @@ import React from "react"
 import { RouteProps } from "react-router-dom"
 import { CreatePostForm, Layout, LoadingContainer, UserProfile } from "../components"
 import { useQuery } from "../models/reactUtils"
-import { selectFromUser } from "../models"
+import { selectIdFromUser } from "../models"
 
 const Home: React.FC<RouteProps> = () => {
-  const { loading, data } = useQuery(
-    store => store.queryWhoAmI({}, selectFromUser().id.toString())
-  )
+  const { loading, data } = useQuery((store) => store.queryWhoAmI({}, selectIdFromUser))
   const id = data?.whoAmI.id || ""
   return (
     <Layout>

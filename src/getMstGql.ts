@@ -4,9 +4,7 @@ import { SERVER_URI } from "./config"
 import { RootStore, RootStoreType } from "./models"
 import { StoreContext } from "./models/reactUtils"
 
-
 const defaultState = {
-  currentUser: null,
   buttonClicked: false,
   authentication: {
     token: undefined,

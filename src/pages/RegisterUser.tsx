@@ -22,7 +22,7 @@ const RegisterUser: React.FC = () => {
     setInputs((inputs): CreateUserInput => ({ ...inputs, [name]: value }))
   }
 
-  return store.currentUser ? (
+  return store.authentication.isLoggedIn() ? (
     <Redirect to="/" />
   ) : (
     <Layout>

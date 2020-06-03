@@ -14,7 +14,7 @@ const LogoutButton: React.FC<ButtonProps> = ({ children, ...props }) => {
       onClick={(): void => {
         setQuery(store.logout())
       }}
-      isDisabled={!store.currentUser}
+      isDisabled={!store.authentication.isLoggedIn()}
       {...props}
     >
       {children}
