@@ -13,7 +13,7 @@ const HeaderMenu: React.FC = () => {
   return (
     <Menu>
       <MenuButton width="38px">
-        {profileImageUrl && <Avatar rounded="full" src={profileImageUrl} />}
+        <Avatar rounded="full" src={profileImageUrl} />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={(): void => history.push("/admin")}>Admin Dashboard</MenuItem>

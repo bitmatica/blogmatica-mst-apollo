@@ -14,22 +14,19 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({
   mustBeLoggedOut,
   ...rest
 }) => {
-  const store = useStore()
-
-  const isLoggedIn = store.authentication.isLoggedIn()
+  const { authentication } = useStore()
+  const isLoggedIn = authentication.isLoggedIn()
   const shouldRedirect = mustBeLoggedOut ? isLoggedIn : !isLoggedIn
 
-  return (
-    shouldRedirect ? (
-      <Redirect
-        to={{
-          pathname: redirect || "/login",
-          state: { from: location },
-        }}
-      />
-    ) : (
-      <Route {...rest} />
-    )
+  return shouldRedirect ? (
+    <Redirect
+      to={{
+        pathname: redirect || "/login",
+        state: { from: location },
+      }}
+    />
+  ) : (
+    <Route {...rest} />
   )
 }
 
