@@ -1,22 +1,17 @@
 import { ColorModeProvider, CSSReset, ThemeProvider } from "@chakra-ui/core"
 import { css, Global } from "@emotion/core"
-import React, { Fragment } from "react"
+import React from "react"
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom"
 import { OnlyLoggedOutRoute, PrivateRoute } from "./components"
 import { rootStore } from "./getMstGql"
-import { StoreContext, useQuery } from "./models/reactUtils"
+import { StoreContext } from "./models/reactUtils"
 import { AdminDashboard } from "./pages/admin"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
 import User from "./pages/User"
 import theme from "./styles/theme"
-import { observer } from "mobx-react-lite"
-
-const AuthProvider: React.FC = observer(({ children }) => {
-  const { loading } = useQuery((store) => store.refreshTokenAndSetTimeOut())
-  return loading ? null : <Fragment>{children}</Fragment>
-})
+import AuthProvider from "./components/AuthProvider"
 
 const App: React.FC = () => (
   <StoreContext.Provider value={rootStore}>
