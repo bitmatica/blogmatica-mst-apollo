@@ -57,9 +57,9 @@
     "yup": "^0.29.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "NODE_ENV=development react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_SERVER_URI=$REACT_APP_SERVER_URI react-scripts start",
+    "dev": "NODE_ENV=development REACT_APP_SERVER_URI=$REACT_APP_SERVER_URI react-scripts start",
+    "build": "REACT_APP_SERVER_URI=$REACT_APP_SERVER_URI react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
