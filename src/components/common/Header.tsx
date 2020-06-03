@@ -5,7 +5,7 @@ import { useStore } from "src/getMstGql"
 import { ColorModeSwitcher, HeaderLogo, HeaderMenu } from "./"
 
 const Header: React.FC = () => {
-  const { currentUser } = useStore()
+  const { authentication } = useStore()
   return (
     <Flex
       direction="row"
@@ -17,7 +17,7 @@ const Header: React.FC = () => {
       <HeaderLogo />
       <Flex width="100%" align="center" justify="flex-end">
         <ColorModeSwitcher color="white" />
-        {currentUser && <HeaderMenu />}
+        {authentication.isLoggedIn() && <HeaderMenu />}
       </Flex>
     </Flex>
   )

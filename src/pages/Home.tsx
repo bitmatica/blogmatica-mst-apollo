@@ -2,14 +2,15 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import { RouteProps } from "react-router-dom"
 import { CreatePostForm, Layout, LoadingContainer, UserProfile } from "../components"
-import { useStore } from "../getMstGql"
+import { useQuery } from "../models/reactUtils"
+import { selectIdFromUser } from "../models"
 
 const Home: React.FC<RouteProps> = () => {
-  const { currentUser } = useStore()
-  const id = currentUser?.id || ""
+  const { loading, data } = useQuery((store) => store.queryWhoAmI({}, selectIdFromUser))
+  const id = data?.whoAmI.id || ""
   return (
     <Layout>
-      <LoadingContainer loading={!currentUser}>
+      <LoadingContainer loading={loading}>
         <CreatePostForm authorId={id} />
         <UserProfile userId={id} />
       </LoadingContainer>

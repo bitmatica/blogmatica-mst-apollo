@@ -9,13 +9,13 @@ import { AdminDashboard } from "./pages/admin"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
-import Test from "./pages/Test"
 import User from "./pages/User"
 import theme from "./styles/theme"
+import AuthProvider from "./components/AuthProvider"
 
-const App: React.FC = () => {
-  return (
-    <StoreContext.Provider value={rootStore}>
+const App: React.FC = () => (
+  <StoreContext.Provider value={rootStore}>
+    <AuthProvider>
       <ThemeProvider theme={theme}>
         <ColorModeProvider value="light">
           <CSSReset />
@@ -38,7 +38,6 @@ const App: React.FC = () => {
 
           <BrowserRouter>
             <Switch>
-              <Route path="/test" component={Test} />
               <OnlyLoggedOutRoute path="/login" component={Login} />
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />
@@ -49,8 +48,8 @@ const App: React.FC = () => {
           </BrowserRouter>
         </ColorModeProvider>
       </ThemeProvider>
-    </StoreContext.Provider>
-  )
-}
+    </AuthProvider>
+  </StoreContext.Provider>
+)
 
 export default App

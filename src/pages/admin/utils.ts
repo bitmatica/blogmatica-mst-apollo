@@ -7,7 +7,7 @@ import pluralize from "pluralize"
 import React from "react"
 import { Link } from "src/components"
 import * as Models from "src/models"
-import { DeletionResponseModelType, RootStoreType } from "src/models"
+import { MutationResponseModelType, RootStoreType } from "src/models"
 
 import {
   REGISTERED_MODELS,
@@ -156,7 +156,7 @@ export function getDeleteModelMutation(
 export function getDeleteModelData(
   config: RegisteredModelConfig<any>,
   data?: any,
-): DeletionResponseModelType {
+): MutationResponseModelType {
   const modelKey = `delete${config.model.name}`
   return data && data[modelKey]
 }

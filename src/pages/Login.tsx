@@ -6,6 +6,7 @@ import { Layout, LoginUserForm } from "../components"
 import { useQuery } from "../models/reactUtils"
 import { UserLoginArgs } from "../models/RootStore.base"
 
+
 const Login: React.FC<RouteComponentProps> = () => {
   const { setQuery, store, error } = useQuery()
   const [errorMessage, setErrorMessage] = useState("")
@@ -17,16 +18,20 @@ const Login: React.FC<RouteComponentProps> = () => {
   const handleSubmit = async (variables: UserLoginArgs): Promise<void> => {
     setQuery((store) => store.login(variables))
   }
+  const isLoggedIn = store.authentication.isLoggedIn()
 
-  return store.isLoggedIn() ? (
-    <Redirect to={"/"} />
-  ) : (
-    <Layout>
-      <Box>
-        <LoginUserForm handleSubmit={handleSubmit} errorMessage={errorMessage} />
-      </Box>
-    </Layout>
+  return (
+    isLoggedIn ? (
+      <Redirect to={"/"} />
+    ) : (
+      <Layout>
+        <Box>
+          <LoginUserForm handleSubmit={handleSubmit} errorMessage={errorMessage} />
+        </Box>
+      </Layout>
+    )
   )
 }
+
 
 export default observer(Login)

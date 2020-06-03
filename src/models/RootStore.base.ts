@@ -11,6 +11,11 @@ import { UserModel, UserModelType } from "./UserModel"
 import { userModelPrimitives, UserModelSelector } from "./UserModel.base"
 import { PostModel, PostModelType } from "./PostModel"
 import { postModelPrimitives, PostModelSelector } from "./PostModel.base"
+import { ObjectPropertyModel, ObjectPropertyModelType } from "./ObjectPropertyModel"
+import {
+  objectPropertyModelPrimitives,
+  ObjectPropertyModelSelector,
+} from "./ObjectPropertyModel.base"
 import { GustoUserModel, GustoUserModelType } from "./GustoUserModel"
 import { gustoUserModelPrimitives, GustoUserModelSelector } from "./GustoUserModel.base"
 import { GustoRolesModel, GustoRolesModelType } from "./GustoRolesModel"
@@ -30,11 +35,27 @@ import {
   gustoCompanyLocationModelPrimitives,
   GustoCompanyLocationModelSelector,
 } from "./GustoCompanyLocationModel.base"
-import { ObjectPropertyModel, ObjectPropertyModelType } from "./ObjectPropertyModel"
 import {
-  objectPropertyModelPrimitives,
-  ObjectPropertyModelSelector,
-} from "./ObjectPropertyModel.base"
+  UserLoginResponseModel,
+  UserLoginResponseModelType,
+} from "./UserLoginResponseModel"
+import {
+  userLoginResponseModelPrimitives,
+  UserLoginResponseModelSelector,
+} from "./UserLoginResponseModel.base"
+import { MutationResponseModel, MutationResponseModelType } from "./MutationResponseModel"
+import {
+  mutationResponseModelPrimitives,
+  MutationResponseModelSelector,
+} from "./MutationResponseModel.base"
+import {
+  RefreshTokenResponseModel,
+  RefreshTokenResponseModelType,
+} from "./RefreshTokenResponseModel"
+import {
+  refreshTokenResponseModelPrimitives,
+  RefreshTokenResponseModelSelector,
+} from "./RefreshTokenResponseModel.base"
 import {
   CommentCreationResponseModel,
   CommentCreationResponseModelType,
@@ -51,11 +72,6 @@ import {
   commentUpdateResponseModelPrimitives,
   CommentUpdateResponseModelSelector,
 } from "./CommentUpdateResponseModel.base"
-import { DeletionResponseModel, DeletionResponseModelType } from "./DeletionResponseModel"
-import {
-  deletionResponseModelPrimitives,
-  DeletionResponseModelSelector,
-} from "./DeletionResponseModel.base"
 import {
   GenerateAuthorizationUriResponseModel,
   GenerateAuthorizationUriResponseModelType,
@@ -96,22 +112,13 @@ import {
   userCreationResponseModelPrimitives,
   UserCreationResponseModelSelector,
 } from "./UserCreationResponseModel.base"
-import {
-  UserLoginResponseModel,
-  UserLoginResponseModelType,
-} from "./UserLoginResponseModel"
-import {
-  userLoginResponseModelPrimitives,
-  UserLoginResponseModelSelector,
-} from "./UserLoginResponseModel.base"
-import { MutationResponseModel, MutationResponseModelType } from "./MutationResponseModel"
-import {
-  mutationResponseModelPrimitives,
-  MutationResponseModelSelector,
-} from "./MutationResponseModel.base"
 
 import { OAuthProvider } from "./OAuthProviderEnum"
 
+export type UserLoginArgs = {
+  email: string
+  password: string
+}
 export type CreateCommentInput = {
   body: string
   authorId: string
@@ -142,10 +149,6 @@ export type CreateUserInput = {
   email: string
   password: string
 }
-export type UserLoginArgs = {
-  email: string
-  password: string
-}
 /* The TypeScript type that explicits the refs to other models in order to prevent a circular refs issue */
 type Refs = {
   comments: ObservableMap<string, CommentModelType>
@@ -164,22 +167,22 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           ["Comment", () => CommentModel],
           ["User", () => UserModel],
           ["Post", () => PostModel],
+          ["ObjectProperty", () => ObjectPropertyModel],
           ["GustoUser", () => GustoUserModel],
           ["GustoRoles", () => GustoRolesModel],
           ["GustoRole", () => GustoRoleModel],
           ["GustoCompany", () => GustoCompanyModel],
           ["GustoCompanyLocation", () => GustoCompanyLocationModel],
-          ["ObjectProperty", () => ObjectPropertyModel],
+          ["UserLoginResponse", () => UserLoginResponseModel],
+          ["MutationResponse", () => MutationResponseModel],
+          ["RefreshTokenResponse", () => RefreshTokenResponseModel],
           ["CommentCreationResponse", () => CommentCreationResponseModel],
           ["CommentUpdateResponse", () => CommentUpdateResponseModel],
-          ["DeletionResponse", () => DeletionResponseModel],
           ["GenerateAuthorizationUriResponse", () => GenerateAuthorizationUriResponseModel],
           ["PostUpdateResponse", () => PostUpdateResponseModel],
           ["PostCreationResponse", () => PostCreationResponseModel],
           ["UserUpdateResponse", () => UserUpdateResponseModel],
           ["UserCreationResponse", () => UserCreationResponseModel],
-          ["UserLoginResponse", () => UserLoginResponseModel],
-          ["MutationResponse", () => MutationResponseModel],
         ],
         ["Comment", "User", "Post"],
         "js",
@@ -226,6 +229,27 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         ${
           typeof resultSelector === "function"
             ? resultSelector(new CommentModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          options,
+        )
+      },
+      queryGetObjectProperties(
+        variables: { objectName: string },
+        resultSelector:
+          | string
+          | ((
+              qb: ObjectPropertyModelSelector,
+            ) => ObjectPropertyModelSelector) = objectPropertyModelPrimitives.toString(),
+        options: QueryOptions = {},
+      ) {
+        return self.query<{ getObjectProperties: ObjectPropertyModelType[] }>(
+          `query getObjectProperties($objectName: String!) { getObjectProperties(objectName: $objectName) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new ObjectPropertyModelSelector()).toString()
             : resultSelector
         }
       } }`,
@@ -313,27 +337,6 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           options,
         )
       },
-      queryGetObjectProperties(
-        variables: { objectName: string },
-        resultSelector:
-          | string
-          | ((
-              qb: ObjectPropertyModelSelector,
-            ) => ObjectPropertyModelSelector) = objectPropertyModelPrimitives.toString(),
-        options: QueryOptions = {},
-      ) {
-        return self.query<{ getObjectProperties: ObjectPropertyModelType[] }>(
-          `query getObjectProperties($objectName: String!) { getObjectProperties(objectName: $objectName) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new ObjectPropertyModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          options,
-        )
-      },
       queryUser(
         variables: { id: string },
         resultSelector:
@@ -391,6 +394,69 @@ export const RootStoreBase = withTypedRefs<Refs>()(
           options,
         )
       },
+      mutateLogin(
+        variables: { input: UserLoginArgs },
+        resultSelector:
+          | string
+          | ((
+              qb: UserLoginResponseModelSelector,
+            ) => UserLoginResponseModelSelector) = userLoginResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{ login: UserLoginResponseModelType }>(
+          `mutation login($input: UserLoginArgs!) { login(input: $input) {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new UserLoginResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
+      mutateLogout(
+        variables?: {},
+        resultSelector:
+          | string
+          | ((
+              qb: MutationResponseModelSelector,
+            ) => MutationResponseModelSelector) = mutationResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{ logout: MutationResponseModelType }>(
+          `mutation logout { logout {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new MutationResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
+      mutateRefreshToken(
+        variables?: {},
+        resultSelector:
+          | string
+          | ((
+              qb: RefreshTokenResponseModelSelector,
+            ) => RefreshTokenResponseModelSelector) = refreshTokenResponseModelPrimitives.toString(),
+        optimisticUpdate?: () => void,
+      ) {
+        return self.mutate<{ refreshToken: RefreshTokenResponseModelType }>(
+          `mutation refreshToken { refreshToken {
+        ${
+          typeof resultSelector === "function"
+            ? resultSelector(new RefreshTokenResponseModelSelector()).toString()
+            : resultSelector
+        }
+      } }`,
+          variables,
+          optimisticUpdate,
+        )
+      },
       mutateCreateComment(
         variables: { input: CreateCommentInput },
         resultSelector:
@@ -438,15 +504,15 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         resultSelector:
           | string
           | ((
-              qb: DeletionResponseModelSelector,
-            ) => DeletionResponseModelSelector) = deletionResponseModelPrimitives.toString(),
+              qb: MutationResponseModelSelector,
+            ) => MutationResponseModelSelector) = mutationResponseModelPrimitives.toString(),
         optimisticUpdate?: () => void,
       ) {
-        return self.mutate<{ deleteComment: DeletionResponseModelType }>(
+        return self.mutate<{ deleteComment: MutationResponseModelType }>(
           `mutation deleteComment($id: ID!) { deleteComment(id: $id) {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new DeletionResponseModelSelector()).toString()
+            ? resultSelector(new MutationResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
@@ -503,15 +569,15 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         resultSelector:
           | string
           | ((
-              qb: DeletionResponseModelSelector,
-            ) => DeletionResponseModelSelector) = deletionResponseModelPrimitives.toString(),
+              qb: MutationResponseModelSelector,
+            ) => MutationResponseModelSelector) = mutationResponseModelPrimitives.toString(),
         optimisticUpdate?: () => void,
       ) {
-        return self.mutate<{ deletePost: DeletionResponseModelType }>(
+        return self.mutate<{ deletePost: MutationResponseModelType }>(
           `mutation deletePost($id: ID!) { deletePost(id: $id) {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new DeletionResponseModelSelector()).toString()
+            ? resultSelector(new MutationResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
@@ -566,15 +632,15 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         resultSelector:
           | string
           | ((
-              qb: DeletionResponseModelSelector,
-            ) => DeletionResponseModelSelector) = deletionResponseModelPrimitives.toString(),
+              qb: MutationResponseModelSelector,
+            ) => MutationResponseModelSelector) = mutationResponseModelPrimitives.toString(),
         optimisticUpdate?: () => void,
       ) {
-        return self.mutate<{ deleteUser: DeletionResponseModelType }>(
+        return self.mutate<{ deleteUser: MutationResponseModelType }>(
           `mutation deleteUser($id: ID!) { deleteUser(id: $id) {
         ${
           typeof resultSelector === "function"
-            ? resultSelector(new DeletionResponseModelSelector()).toString()
+            ? resultSelector(new MutationResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
@@ -596,48 +662,6 @@ export const RootStoreBase = withTypedRefs<Refs>()(
         ${
           typeof resultSelector === "function"
             ? resultSelector(new UserCreationResponseModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          optimisticUpdate,
-        )
-      },
-      mutateLogin(
-        variables: { input: UserLoginArgs },
-        resultSelector:
-          | string
-          | ((
-              qb: UserLoginResponseModelSelector,
-            ) => UserLoginResponseModelSelector) = userLoginResponseModelPrimitives.toString(),
-        optimisticUpdate?: () => void,
-      ) {
-        return self.mutate<{ login: UserLoginResponseModelType }>(
-          `mutation login($input: UserLoginArgs!) { login(input: $input) {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new UserLoginResponseModelSelector()).toString()
-            : resultSelector
-        }
-      } }`,
-          variables,
-          optimisticUpdate,
-        )
-      },
-      mutateLogout(
-        variables?: {},
-        resultSelector:
-          | string
-          | ((
-              qb: MutationResponseModelSelector,
-            ) => MutationResponseModelSelector) = mutationResponseModelPrimitives.toString(),
-        optimisticUpdate?: () => void,
-      ) {
-        return self.mutate<{ logout: MutationResponseModelType }>(
-          `mutation logout { logout {
-        ${
-          typeof resultSelector === "function"
-            ? resultSelector(new MutationResponseModelSelector()).toString()
             : resultSelector
         }
       } }`,
