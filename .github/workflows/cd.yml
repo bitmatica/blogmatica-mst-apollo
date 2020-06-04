@@ -30,9 +30,10 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           SERVER_URI: ${{ secrets.SERVER_URI }}
+          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
           APP_VERSION=0.0.0
           npm install
           echo "SERVER_URI: $SERVER_URI"
-          REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${SERVER_URI}/${APP_VERSION} npm run build
+          REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${APP_VERSION} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/${APP_VERSION} --recursive
