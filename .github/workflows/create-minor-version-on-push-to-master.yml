@@ -6,7 +6,7 @@ on:
       - master
 jobs:
   build:
-    name: Create patch version on push to master
+    name: Create minor version on push to master
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     strategy:
@@ -26,5 +26,5 @@ jobs:
           RELEASE_TYPE=minor
           git tag ${RELEASE_TYPE}
           git push origin ${RELEASE_TYPE}
-          git tag --delete ${RELEASE_TYPE}
-          git push --delete origin ${RELEASE_TYPE}
+#          git tag --delete ${RELEASE_TYPE}
+#          git push --delete origin ${RELEASE_TYPE}
