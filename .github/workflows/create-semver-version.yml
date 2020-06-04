@@ -1,12 +1,15 @@
 name: Continuous Delivery
-# This workflow is triggered on semver tags
+# This workflow is triggered on version bump tags
 on:
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+      - prerelease
+      - patch
+      - minor
+      - major
 jobs:
   build:
-    name: Build production bundle and upload to s3
+    name: Create semantic version tag based on version bump tag
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -14,6 +17,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -24,8 +31,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Set Release Version
-        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+      - name: Set Release Type
+        run: echo ::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/*/}
       - name: Build, tag, and push build to Amazon S3
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
@@ -33,5 +40,7 @@ jobs:
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
           npm install
+          npm version ${RELEASE_TYPE} -m "Updating version to %s"
+          git push --tags origin master
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
