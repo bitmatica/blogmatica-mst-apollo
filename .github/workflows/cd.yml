@@ -25,5 +25,6 @@ jobs:
           SERVER_URI: ${{ secrets.SERVER_URI }}
         run: |
           npm install
+          echo "SERVER_URI: $SERVER_URI"
           REACT_APP_SERVER_URI=${SERVER_URI} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/valpha --recursive
