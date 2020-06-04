@@ -23,5 +23,6 @@ jobs:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
+          npm install
           npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/
