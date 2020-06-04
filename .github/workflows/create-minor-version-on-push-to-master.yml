@@ -1,13 +1,14 @@
 name: Continuous Delivery
-# This workflow is triggered on version bump tags
+# This workflow is triggered on pushes to master
 on:
   push:
-    tags:
-      - patch | minor | major
+    branches:
+      - master
 jobs:
   build:
-    name: Create semantic version tag based on version bump tag
+    name: Create patch version on push to master
     runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     strategy:
       matrix:
         node-version: [12.x]
@@ -22,6 +23,8 @@ jobs:
         run: echo ::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/*/}
       - name: Build, tag, and push build to Amazon S3
         run: |
-          npm install
-          npm version ${RELEASE_TYPE} -m "Updating version to %s [skip-ci]"
-          git push --tags origin master
+          RELEASE_TYPE=minor
+          git tag ${RELEASE_TYPE}
+          git push origin ${RELEASE_TYPE}
+          git tag --delete ${RELEASE_TYPE}
+          git push --delete origin ${RELEASE_TYPE}
