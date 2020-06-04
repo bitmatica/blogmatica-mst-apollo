@@ -29,7 +29,6 @@ jobs:
       - name: Build, tag, and push build to Amazon S3
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_REGION: ${{ secrets.AWS_REGION }}
           SERVER_URI: ${{ secrets.SERVER_URI }}
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
