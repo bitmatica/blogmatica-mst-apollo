@@ -35,4 +35,4 @@ jobs:
           npm install
           echo "SERVER_URI: $SERVER_URI"
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${SERVER_URI}/${APP_VERSION} npm run build
-          aws s3 cp build/ s3://${AWS_S3_BUCKET}/valpha --recursive
+          aws s3 cp build/ s3://${AWS_S3_BUCKET}/${APP_VERSION} --recursive
