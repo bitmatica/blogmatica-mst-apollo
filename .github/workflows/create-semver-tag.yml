@@ -1,0 +1,27 @@
+name: Continuous Delivery
+# This workflow is triggered on version bump tags
+on:
+  push:
+    tags:
+      - patch | minor | major
+jobs:
+  build:
+    name: Create semantic version tag based on version bump tag
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Create release tag
+        run: echo ::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/*/}
+      - name: Build, tag, and push build to Amazon S3
+        run: |
+          npm install
+          npm version ${RELEASE_TYPE}
+          git push --tags origin master
