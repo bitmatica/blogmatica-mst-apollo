@@ -1,0 +1,27 @@
+name: Continuous Delivery
+# This workflow is triggered on pushes to the repository.
+on: push
+#  push:
+#    branches:
+#      - master
+
+jobs:
+  build:
+    name: Build production bundle and upload to s3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Build, tag, and push build to Amazon S3
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          npm run build
+          aws s3 cp build/ s3://${AWS_S3_BUCKET}/
