@@ -3,7 +3,10 @@ name: Continuous Delivery
 on:
   push:
     tags:
-      - patch | minor | major
+      - prerelease
+      - patch
+      - minor
+      - major
 jobs:
   build:
     name: Create semantic version tag based on version bump tag
