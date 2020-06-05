@@ -39,7 +39,7 @@ jobs:
           SERVER_URI: ${{ secrets.SERVER_URI }}
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
-          npm install
+          yarn install
           git config --global user.email "github-actions@bitmatica.com"
           git config --global user.name "github actions"
           RELEASE_VERSION=$(npm version ${RELEASE_TYPE} -m "Updating version to %s")
