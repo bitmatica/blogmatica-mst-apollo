@@ -1,10 +1,14 @@
-import React, { Fragment } from "react"
 import { observer } from "mobx-react-lite"
-import { useQuery } from "../models/reactUtils"
+import React, { Fragment, useEffect } from "react"
+import { useStore } from "src/getMstGql"
 
 const AuthProvider: React.FC = observer(({ children }) => {
-  const { loading } = useQuery((store) => store.refreshTokenAndSetTimeOut())
-  return loading ? null : <Fragment>{children}</Fragment>
+  const store = useStore()
+  useEffect(() => {
+    store.initializeApp()
+  }, [store])
+
+  return !store.initialized ? null : <Fragment>{children}</Fragment>
 })
 
 export default AuthProvider

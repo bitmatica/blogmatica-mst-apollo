@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode"
-import { types, getEnv } from "mobx-state-tree"
+import { getEnv, Instance, types } from "mobx-state-tree"
+import { UserModel, UserModelType } from "src/models/UserModel"
 import { getAuthHeader } from "../utilities/jwtHelpers"
 
 interface DecodedJwt {
@@ -9,6 +10,7 @@ interface DecodedJwt {
 const Authentication = types
   .model("Authentication", {
     token: types.maybeNull(types.string),
+    currentUser: types.maybeNull(types.reference(UserModel)),
   })
   .views((self) => ({
     isLoggedIn() {
@@ -25,6 +27,9 @@ const Authentication = types
       getEnv(self).gqlHttpClient.setHeaders({
         Authorization: getAuthHeader(token),
       })
+    },
+    setCurrentUser(user: Instance<UserModelType>) {
+      self.currentUser = user
     },
   }))
 
