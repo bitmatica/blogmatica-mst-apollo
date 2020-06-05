@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite"
 import React, { Fragment } from "react"
-import { usePromise, useStore } from "src/getMstGql"
+import { useStore } from "src/getMstGql"
+import { usePromise } from "src/utilities/promises"
 
 const AuthProvider: React.FC = observer(({ children }) => {
   const store = useStore()
