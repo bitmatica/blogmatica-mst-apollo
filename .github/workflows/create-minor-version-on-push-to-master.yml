@@ -8,7 +8,6 @@ jobs:
   build:
     name: Create minor version on push to master
     runs-on: ubuntu-latest
-    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
     strategy:
       matrix:
         node-version: [12.x]
@@ -19,12 +18,24 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Create release tag
-        run: echo ::set-env name=RELEASE_TYPE::${GITHUB_REF#refs/*/}
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Build, tag, and push build to Amazon S3
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          SERVER_URI: ${{ secrets.SERVER_URI }}
+          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
-          RELEASE_TYPE=minor
-          git tag ${RELEASE_TYPE}
-          git push origin ${RELEASE_TYPE}
-#          git tag --delete ${RELEASE_TYPE}
-#          git push --delete origin ${RELEASE_TYPE}
+          npm install
+          RELEASE_VERSION=$(npm version minor -m "Updating version to %s")
+          git push --tags origin master
+          REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
+          aws s3 cp build/ s3://${AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
