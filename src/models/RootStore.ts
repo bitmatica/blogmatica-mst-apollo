@@ -22,7 +22,6 @@ const REFRESH_API_TOKEN_INTERVAL = 900000
 
 export const RootStore = RootStoreBase.props({
   authentication: Authentication,
-  initialized: false,
 })
   .actions((self) => ({
     createPost(
@@ -66,7 +65,6 @@ export const RootStore = RootStoreBase.props({
         }
         const token = refreshTokenResponse.refreshToken.token
         if (!token) {
-          self.initialized = true
           return
         }
 
@@ -81,8 +79,6 @@ export const RootStore = RootStoreBase.props({
         self.authentication.setCurrentUser(whoAmIResponse.whoAmI)
       } catch (error) {
         console.error(`Error initializing app: ${error}`)
-      } finally {
-        self.initialized = true
       }
     }),
   }))
