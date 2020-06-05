@@ -79,6 +79,7 @@ export const RootStore = RootStoreBase.props({
         self.authentication.setCurrentUser(whoAmIResponse.whoAmI)
       } catch (error) {
         console.error(`Error initializing app: ${error}`)
+        throw error
       }
     }),
   }))
