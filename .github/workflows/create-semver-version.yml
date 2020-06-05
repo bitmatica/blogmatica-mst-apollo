@@ -46,3 +46,4 @@ jobs:
           git push --tags origin master
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
+          git push --delete origin $RELEASE_TYPE
