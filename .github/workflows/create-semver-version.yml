@@ -40,6 +40,8 @@ jobs:
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
           npm install
+          git config --global user.email "github-actions@bitmatica.com"
+          git config --global user.name "github actions"
           RELEASE_VERSION=$(npm version ${RELEASE_TYPE} -m "Updating version to %s")
           git push --tags origin master
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
