@@ -1,5 +1,6 @@
 import jwtDecode from "jwt-decode"
-import { types, getEnv } from "mobx-state-tree"
+import { getEnv, types } from "mobx-state-tree"
+import { UserModel } from "src/models/UserModel"
 import { getAuthHeader } from "../utilities/jwtHelpers"
 
 interface DecodedJwt {
@@ -9,6 +10,7 @@ interface DecodedJwt {
 const Authentication = types
   .model("Authentication", {
     token: types.maybeNull(types.string),
+    currentUser: types.maybeNull(types.reference(UserModel)),
   })
   .views((self) => ({
     isLoggedIn() {

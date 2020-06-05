@@ -1,9 +1,12 @@
-import React, { Fragment } from "react"
 import { observer } from "mobx-react-lite"
-import { useQuery } from "../models/reactUtils"
+import React, { Fragment } from "react"
+import { useStore } from "src/getMstGql"
+import { usePromise } from "src/utilities/promises"
 
 const AuthProvider: React.FC = observer(({ children }) => {
-  const { loading } = useQuery((store) => store.refreshTokenAndSetTimeOut())
+  const store = useStore()
+  const { loading } = usePromise(store.initializeApp())
+
   return loading ? null : <Fragment>{children}</Fragment>
 })
 
