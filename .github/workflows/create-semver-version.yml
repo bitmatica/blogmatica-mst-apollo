@@ -44,7 +44,8 @@ jobs:
           git config --global user.name "github actions"
           RELEASE_VERSION=$(npm version ${RELEASE_TYPE} -m "Updating version to %s")
           echo "RELEASE_VERSION: ${RELEASE_VERSION}"
-          git push origin $RELEASE_VERSION
+          git fetch
+          git push —-tags origin master
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
           git push --delete origin $RELEASE_TYPE
