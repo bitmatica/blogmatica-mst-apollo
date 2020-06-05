@@ -74,9 +74,9 @@ export const RootStore = RootStoreBase.props({
         }, REFRESH_API_TOKEN_INTERVAL)
 
         const whoAmIResponse = (yield self.queryWhoAmI().currentPromise()) as {
-          whoAmI: UserModelType
+          whoAmI: UserModelType | undefined
         }
-        self.authentication.setCurrentUser(whoAmIResponse.whoAmI)
+        self.authentication.currentUser = whoAmIResponse.whoAmI || null
       } catch (error) {
         console.error(`Error initializing app: ${error}`)
         throw error
