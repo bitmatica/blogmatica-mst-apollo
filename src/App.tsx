@@ -12,6 +12,7 @@ import RegisterUser from "./pages/RegisterUser"
 import User from "./pages/User"
 import theme from "./styles/theme"
 import AuthProvider from "./components/AuthProvider"
+import GraphPlayground from "./pages/GraphPlayground"
 
 const App: React.FC = () => (
   <StoreContext.Provider value={rootStore}>
@@ -42,6 +43,7 @@ const App: React.FC = () => (
               <OnlyLoggedOutRoute path="/register" component={RegisterUser} />
               <PrivateRoute path={"/user/:userId"} component={User} />
               <PrivateRoute path="/admin" component={AdminDashboard} />
+              <Route path="/graph" component={GraphPlayground} />
               <PrivateRoute path="*" component={Home} />
               <Route path="*" component={(): JSX.Element => <Redirect to="/" />} />
             </Switch>
