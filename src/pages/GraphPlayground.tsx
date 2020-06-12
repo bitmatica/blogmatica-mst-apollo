@@ -10,6 +10,7 @@ import last from "lodash.last"
 import {
   ComposedChart,
   Area,
+  Line,
   Bar,
   Tooltip,
   Rectangle,
@@ -18,8 +19,9 @@ import {
   BarData,
   Cell,
   ReferenceLine,
+  ResponsiveContainer,
 } from "recharts"
-import { Text } from "@chakra-ui/core"
+import { Text, Box } from "@chakra-ui/core"
 
 interface SpendingData {
   quarter: number
@@ -97,29 +99,33 @@ const GraphPlayground: React.FunctionComponent = () => {
   return (
     <Fragment>
       <Text>Rechart</Text>
-      <ComposedChart
-        data={allSpendingData}
-        height={400}
-        width={800}
-        onMouseOver={(): void => {
-          setIsHover(true)
-        }}
-        onMouseOut={(): void => {
-          setIsHover(false)
-        }}
-      >
-        <Area dataKey="balance" type="monotone" />
-        <Bar dataKey={getActivity} barSize={10}>
-          {allSpendingData.map((entry, index) => {
-            return (
-              <Cell key={`cell-${index}`} fill={entry.activity > 0 ? "green" : "red"} />
-            )
-          })}
-        </Bar>
-        {!isHovering && <ReferenceLine x={4} />}
-        {isHovering && <Tooltip content={(): string => ""} />}
-      </ComposedChart>
-
+      <Box width="100%" height={400}>
+        <ResponsiveContainer>
+          <ComposedChart
+            data={allSpendingData}
+            height={400}
+            width={800}
+            onMouseOver={(): void => {
+              setIsHover(true)
+            }}
+            onMouseOut={(): void => {
+              setIsHover(false)
+            }}
+          >
+            <Area dataKey="balance" type="monotone" />
+            <Line dataKey="balance" type="monotone" />
+            <Bar dataKey={getActivity} barSize={10}>
+              {allSpendingData.map((entry, index) => {
+                return (
+                  <Cell key={`cell-${index}`} fill={entry.activity > 0 ? "green" : "red"} />
+                )
+              })}
+            </Bar>
+            {!isHovering && <ReferenceLine x={4} />}
+            {isHovering && <Tooltip content={(): string => ""} />}
+          </ComposedChart>
+        </ResponsiveContainer>
+      </Box>
       <Text>Victory</Text>
 
       <VictoryChart
