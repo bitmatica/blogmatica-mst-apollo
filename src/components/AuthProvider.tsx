@@ -5,7 +5,7 @@ import { usePromise } from "src/utilities/promises"
 
 const AuthProvider: React.FC = observer(({ children }) => {
   const store = useStore()
-  const { loading } = usePromise(store.initializeApp())
+  const { loading } = usePromise(() => store.initializeApp())
 
   return loading ? null : <Fragment>{children}</Fragment>
 })
