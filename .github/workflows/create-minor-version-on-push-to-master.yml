@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   build:
     name: Create minor version on push to master
@@ -14,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+        with:
+          path: main
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -29,11 +32,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build, tag, and push build to Amazon S3
+        id: build-push
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           SERVER_URI: ${{ secrets.SERVER_URI }}
           PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
         run: |
+          cd $GITHUB_WORKSPACE/main
           yarn install
           git config --global user.email "github-actions@bitmatica.com"
           git config --global user.name "github actions"
@@ -43,3 +48,24 @@ jobs:
           git push origin $RELEASE_VERSION
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
+          echo "::set-output name=RELEASE_VERSION::$RELEASE_VERSION"
+      - name: Checkout Terraform Repo
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ secrets.TERRAFORM_REPO_ORG }}/${{ secrets.TERRAFORM_REPO_NAME }}
+          ssh-key: ${{ secrets.TERRAFORM_DEPLOY_KEY }}
+          path: ${{ secrets.TERRAFORM_REPO_NAME }}
+      - name: Update Dev Environment with new assets version
+        env:
+          RELEASE_VERSION: ${{ steps.build-push.outputs.RELEASE_VERSION }}
+          TERRAFORM_REPO_NAME: ${{ secrets.TERRAFORM_REPO_NAME }}
+          TERRAFORM_REPO_VERSION_PATH: ${{ secrets.TERRAFORM_REPO_VERSION_PATH }}
+        run: |
+          git config --global user.email "github-actions@bitmatica.com"
+          git config --global user.name "github actions"
+          cd $GITHUB_WORKSPACE/$TERRAFORM_REPO_NAME
+          echo -n "$RELEASE_VERSION" > $TERRAFORM_REPO_VERSION_PATH
+          git add $TERRAFORM_REPO_VERSION_PATH
+          git commit -m "$GITHUB_REPOSITORY: update dev version to $RELEASE_VERSION"
+          git push origin master
+          echo "Dev version updated in terraform.  See terraform repo's github actions for deploy progress."
