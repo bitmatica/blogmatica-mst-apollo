@@ -45,7 +45,7 @@ jobs:
           RELEASE_VERSION=$(npm version minor -m "Updating version to %s")
           echo "RELEASE_VERSION: ${RELEASE_VERSION}"
           echo "current branch: $(git branch)"
-          git push origin master
+          git push origin ci_cd_versions
           echo "current branch: $(git branch)"
           git push origin $RELEASE_VERSION
           REACT_APP_SERVER_URI=${SERVER_URI} PUBLIC_URL=${PUBLIC_URL}/${RELEASE_VERSION} npm run build
