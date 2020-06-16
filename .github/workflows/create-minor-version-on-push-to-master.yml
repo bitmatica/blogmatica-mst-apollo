@@ -1,9 +1,10 @@
 name: Continuous Delivery
 # This workflow is triggered on pushes to master
-on: push
-#  push:
-#    branches:
-#      - master
+on:
+  push:
+    branches:
+      - master
+
 jobs:
   build:
     name: Create minor version on push to master
