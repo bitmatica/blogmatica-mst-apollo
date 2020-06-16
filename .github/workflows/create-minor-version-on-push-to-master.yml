@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Build, tag, and push build to Amazon S3
-        id: build-push-assets
+        id: build-push
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           SERVER_URI: ${{ secrets.SERVER_URI }}
@@ -57,7 +57,7 @@ jobs:
           path: ${{ secrets.TERRAFORM_REPO_NAME }}
       - name: Update Dev Environment with new assets version
         env:
-          RELEASE_VERSION: ${{ steps.build-push-assets.outputs.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ steps.build-push.outputs.RELEASE_VERSION }}
           TERRAFORM_REPO_NAME: ${{ secrets.TERRAFORM_REPO_NAME }}
           TERRAFORM_REPO_VERSION_PATH: ${{ secrets.TERRAFORM_REPO_VERSION_PATH }}
         run: |
