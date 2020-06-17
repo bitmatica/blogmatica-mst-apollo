@@ -35,8 +35,10 @@ jobs:
         id: build-push
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          SERVER_URI: ${{ secrets.SERVER_URI }}
-          PUBLIC_URL: ${{ secrets.PUBLIC_URL }}
+          DEV_SERVER_URI: ${{ secrets.DEV_SERVER_URI }}
+          STAGING_SERVER_URI: ${{ secrets.STAGING_SERVER_URI }}
+          DEV_PUBLIC_URL: ${{ secrets.DEV_PUBLIC_URL }}
+          STAGING_PUBLIC_URL: ${{ secrets.STAGING_PUBLIC_URL }}
         run: |
           cd $GITHUB_WORKSPACE/main
           yarn install
