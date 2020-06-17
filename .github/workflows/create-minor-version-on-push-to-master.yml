@@ -44,8 +44,10 @@ jobs:
           git config --global user.name "github actions"
           RELEASE_VERSION=$(npm version minor -m "Updating version to %s")
           echo "RELEASE_VERSION: ${RELEASE_VERSION}"
+          echo "Creating dev build with server URI $DEV_SERVER_URI"
           REACT_APP_SERVER_URI=${DEV_SERVER_URI} PUBLIC_URL=${DEV_PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${DEV_AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
+          echo "Creating staging build with server URI STAGING_SERVER_URI"
           REACT_APP_SERVER_URI=${STAGING_SERVER_URI} PUBLIC_URL=${STAGING_PUBLIC_URL}/${RELEASE_VERSION} npm run build
           aws s3 cp build/ s3://${STAGING_AWS_S3_BUCKET}/${RELEASE_VERSION} --recursive
           git push origin master
