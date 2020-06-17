@@ -34,7 +34,8 @@ jobs:
       - name: Build, tag, and push build to Amazon S3
         id: build-push
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          DEV_AWS_S3_BUCKET: ${{ secrets.DEV_AWS_S3_BUCKET }}
+          STAGING_AWS_S3_BUCKET: ${{ secrets.STAGING_AWS_S3_BUCKET }}
           DEV_SERVER_URI: ${{ secrets.DEV_SERVER_URI }}
           STAGING_SERVER_URI: ${{ secrets.STAGING_SERVER_URI }}
           DEV_PUBLIC_URL: ${{ secrets.DEV_PUBLIC_URL }}
