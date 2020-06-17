@@ -66,13 +66,13 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.build-push.outputs.RELEASE_VERSION }}
           TERRAFORM_REPO_NAME: ${{ secrets.TERRAFORM_REPO_NAME }}
-          TERRAFORM_REPO_VERSION_PATH: ${{ secrets.TERRAFORM_REPO_VERSION_PATH }}
+          TERRAFORM_REPO_DEV_VERSION_PATH: ${{ secrets.TERRAFORM_REPO_DEV_VERSION_PATH }}
         run: |
           git config --global user.email "github-actions@bitmatica.com"
           git config --global user.name "github actions"
           cd $GITHUB_WORKSPACE/$TERRAFORM_REPO_NAME
-          echo -n "$RELEASE_VERSION" > $TERRAFORM_REPO_VERSION_PATH
-          git add $TERRAFORM_REPO_VERSION_PATH
+          echo -n "$RELEASE_VERSION" > $TERRAFORM_REPO_DEV_VERSION_PATH
+          git add $TERRAFORM_REPO_DEV_VERSION_PATH
           git commit -m "$GITHUB_REPOSITORY: update dev version to $RELEASE_VERSION"
           git push origin master
           echo "Dev version updated in terraform.  See terraform repo's github actions for deploy progress."
