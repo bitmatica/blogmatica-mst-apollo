@@ -31,7 +31,7 @@
     "babel-plugin-macros": "^2.8.0",
     "camelcase": "^6.0.0",
     "emotion-theming": "^10.0.27",
-    "eslint": "^6.8.0",
+    "eslint": "^9.26.0",
     "formik": "^2.1.4",
     "graphql": "^14.4.1",
     "graphql-request": "^1.8.2",
